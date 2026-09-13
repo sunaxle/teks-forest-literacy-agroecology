@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SombraTEKS: RGV Living Canopy & Forest Literacy Guide (UTRGV Agroecology Standard)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700;800&family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --terracotta: #a64b38;
+      --rust-dark: #8b3a2b;
+      --sage-green: #476848;
+      --forest-dark: #2d503b;
+      --deep-canopy: #1b382b;
+      --pechita-gold: #d89a42;
+      --amber-dark: #b87b20;
+      --soil-rich: #3a2618;
+      --soil-deep: #25160d;
+      --bg-cream: #fcfaf4;
+      --bg-warm: #f6f3eb;
+      --card-white: #ffffff;
+      --text-main: #2b231d;
+      --text-muted: #5e544c;
+      --border-dotted: #b8a698;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: #ece8df;
+      color: var(--text-main);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Floating Navigation Action Bar (Hidden on Print) */
+    .no-print-bar {
+      position: sticky;
+      top: 0;
+      z-index: 9999;
+      background: #ffffff;
+      border-bottom: 2px solid var(--terracotta);
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    }
+    .no-print-bar .title {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--forest-dark);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .no-print-bar .actions {
+      display: flex;
+      gap: 10px;
+    }
+    .action-btn {
+      padding: 8px 16px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      border-radius: 6px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+    }
+    .btn-print {
+      background: var(--terracotta);
+      color: #ffffff;
+    }
+    .btn-print:hover {
+      background: var(--rust-dark);
+    }
+    .btn-link {
+      background: #e4decb;
+      color: var(--soil-rich);
+    }
+    .btn-link:hover {
+      background: #d5cdb8;
+    }
+
+    /* Container for 8.5x11 Sheets */
+    .manual-wrapper {
+      max-width: 880px;
+      margin: 30px auto;
+      padding: 0 15px;
+    }
+
+    .guide-sheet {
+      background: var(--bg-cream);
+      width: 100%;
+      min-height: 1100px;
+      border-radius: 4px;
+      padding: 50px 55px 40px 55px;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.12);
+      margin-bottom: 40px;
+      border: 1px solid #dcd5c5;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+    }
+
+    /* PAGE STYLING: Print Boundaries */
+    @page {
+      size: letter portrait;
+      margin: 0.35in;
+    }
+
+    @media print {
+      body {
+        background: #ffffff !important;
+      }
+      .no-print-bar {
+        display: none !important;
+      }
+      .manual-wrapper {
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      .guide-sheet {
+        box-shadow: none !important;
+        border: none !important;
+        margin: 0 !important;
+        padding: 0.3in !important;
+        page-break-before: always;
+        break-before: page;
+        min-height: 98vh !important;
+      }
+      .guide-sheet.cover-page {
+        min-height: 98vh !important;
+      }
+    }
+
+    /* ==========================================================================
+       PAGE 1: COVER PAGE (UTRGV GROWER'S GUIDE MAGAZINE STANDARD)
+       ========================================================================== */
+    .cover-page {
+      background: #2b1c14 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" opacity="0.05"><path d="M20,20 Q60,5 100,20 T180,20" stroke="%23ffffff" fill="none" stroke-width="2"/><circle cx="50" cy="80" r="3" fill="%23ffffff"/><circle cx="120" cy="140" r="4" fill="%23ffffff"/></svg>') repeat;
+      color: #ffffff;
+      border: 12px solid #3a2618;
+      position: relative;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .cover-botanical-header {
+      background: linear-gradient(180deg, #1b382b 0%, #2d503b 100%);
+      padding: 40px 45px 30px 45px;
+      border-bottom: 5px solid var(--pechita-gold);
+      position: relative;
+    }
+
+    .cover-badge-corner {
+      position: absolute;
+      top: 0;
+      right: 45px;
+      background: var(--terracotta);
+      color: #ffffff;
+      padding: 10px 18px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 0.82rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      border-bottom-left-radius: 6px;
+      border-bottom-right-radius: 6px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+    }
+
+    .cover-top-sub {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #dbe7df;
+      margin-bottom: 4px;
+    }
+
+    .cover-main-title {
+      font-family: 'Fredoka', 'Montserrat', sans-serif;
+      font-size: 4.2rem;
+      font-weight: 800;
+      line-height: 0.95;
+      letter-spacing: 1px;
+      color: #ffffff;
+      text-shadow: 4px 6px 0px rgba(0,0,0,0.3);
+      margin: 12px 0 16px 0;
+    }
+
+    .cover-sub-strap {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.85rem;
+      font-weight: 600;
+      color: var(--pechita-gold);
+      letter-spacing: 0.5px;
+    }
+
+    .cover-body-art {
+      padding: 35px 45px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+    }
+
+    .cover-hero-card {
+      background: rgba(255, 255, 255, 0.08);
+      border: 2px dashed rgba(216, 154, 66, 0.6);
+      border-radius: 12px;
+      padding: 25px 30px;
+      backdrop-filter: blur(4px);
+    }
+
+    .cover-hero-quote {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      line-height: 1.4;
+      color: #fff9ed;
+      margin-bottom: 12px;
+    }
+
+    .cover-hero-desc {
+      font-size: 0.95rem;
+      color: #e0d5c8;
+      line-height: 1.6;
+    }
+
+    .cover-footer-banner {
+      background: #1e130b;
+      border-top: 4px solid var(--terracotta);
+      padding: 25px 45px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .cover-footer-left .institution {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--pechita-gold);
+    }
+
+    .cover-footer-left .department {
+      font-size: 0.85rem;
+      color: #bfa99b;
+      margin-top: 2px;
+    }
+
+    .cover-issue-tag {
+      text-align: right;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 0.85rem;
+      color: #ffffff;
+      letter-spacing: 1px;
+    }
+
+    /* ==========================================================================
+       SIGNATURE UTRGV MARGIN LAYOUT (VERTICAL ROTATED HEADERS + DOTTED SPINE)
+       ========================================================================== */
+    .sheet-grid {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 25px;
+      height: 100%;
+    }
+
+    .sidebar-spine {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+
+    .vertical-title {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-family: 'Montserrat', 'Fredoka', sans-serif;
+      font-size: 1.65rem;
+      font-weight: 900;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--soil-rich);
+      white-space: nowrap;
+      margin-bottom: 15px;
+    }
+
+    .dotted-spine {
+      flex-grow: 1;
+      width: 2px;
+      border-left: 3px dotted var(--border-dotted);
+      margin: 10px 0;
+    }
+
+    .sheet-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* Header Section inside content */
+    .section-headline {
+      font-family: 'Fredoka', 'Montserrat', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--terracotta);
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+
+    .lead-paragraph {
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: var(--soil-deep);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .summary-outline-box {
+      margin-bottom: 25px;
+    }
+
+    .outline-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--soil-rich);
+      margin-bottom: 12px;
+    }
+
+    .outline-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .pill-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #f1ebd9;
+      padding: 8px 14px;
+      border-radius: 25px;
+      border: 1px solid #dfd4be;
+    }
+
+    .pill-num {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--terracotta);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 0.78rem;
+      flex-shrink: 0;
+    }
+
+    .pill-text {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--soil-deep);
+      letter-spacing: 0.5px;
+    }
+
+    .horizontal-dots {
+      width: 100%;
+      border-top: 3px dotted var(--terracotta);
+      margin: 18px 0 24px 0;
+    }
+
+    /* Mission Banner (UTRGV GROWER GUIDE STANDARD) */
+    .mission-slogan-block {
+      background: var(--card-white);
+      border-left: 6px solid var(--sage-green);
+      padding: 20px 24px;
+      border-radius: 6px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+      margin: 20px 0;
+    }
+
+    .mission-quote {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.45rem;
+      font-weight: 900;
+      color: var(--soil-rich);
+      line-height: 1.25;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .mission-quote span {
+      color: var(--terracotta);
+    }
+
+    /* Page Footer Numbers */
+    .page-footer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-top: 15px;
+      margin-top: 20px;
+      border-top: 1px solid #e0d8c7;
+    }
+
+    .page-number-bold {
+      font-family: 'Fredoka', 'Montserrat', sans-serif;
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--soil-rich);
+      letter-spacing: 2px;
+    }
+
+    /* ==========================================================================
+       INFOGRAPHIC FLOWCHART (MATCHING PAGE 3 OF RGV GROWERS GUIDE)
+       ========================================================================== */
+    .flowchart-container {
+      background: #fbf8f0;
+      border: 2px solid #e5dcce;
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin: 15px 0;
+    }
+
+    .flowchart-title {
+      font-family: 'Fredoka', 'Montserrat', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--terracotta);
+      text-align: center;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .flow-tree-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .flow-node {
+      background: var(--card-white);
+      border: 2px solid #d8cfc0;
+      border-radius: 8px;
+      padding: 12px 14px;
+      position: relative;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    }
+
+    .flow-node.highlight {
+      border-color: var(--terracotta);
+      background: #fffbfa;
+    }
+
+    .flow-node-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--forest-dark);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .flow-node-desc {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .flow-badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 12px;
+      margin-top: 6px;
+      background: #e4eedf;
+      color: var(--forest-dark);
+    }
+
+    /* ==========================================================================
+       TABLES & MODULE CARDS
+       ========================================================================== */
+    .curriculum-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 15px 0;
+      font-size: 0.86rem;
+    }
+
+    .curriculum-table th {
+      background: var(--forest-dark);
+      color: #ffffff;
+      padding: 10px 12px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      text-align: left;
+    }
+
+    .curriculum-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #e2dacb;
+      vertical-align: top;
+    }
+
+    .curriculum-table tr:nth-child(even) td {
+      background: #f5f0e3;
+    }
+
+    .tag-pill {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-right: 3px;
+      margin-bottom: 2px;
+    }
+
+    .tag-sci { background: #2d6a4f; }
+    .tag-math { background: #1d3557; }
+    .tag-elar { background: #6b2d5c; }
+    .tag-art { background: #b05c2a; }
+    .tag-health { background: #9c1919; }
+    .tag-ss { background: #73570f; }
+
+    /* Photo Tape Accents */
+    .photo-frame {
+      position: relative;
+      background: #ffffff;
+      border: 1px solid #d0c8b6;
+      padding: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+      border-radius: 4px;
+      margin: 10px 0;
+    }
+
+    .tape-corner {
+      position: absolute;
+      width: 55px;
+      height: 20px;
+      background: rgba(224, 215, 186, 0.75);
+      transform: rotate(-15deg);
+      top: -8px;
+      left: -12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Navigation Toolbar -->
+  <div class="no-print-bar">
+    <div class="title">
+      <span>🌳</span> SombraTEKS: Living Canopy Guide (UTRGV Agroecology Standard)
+    </div>
+    <div class="actions">
+      <button class="action-btn btn-print" onclick="window.print()">
+        <span>🖨️</span> Export PDF Guide (Letter)
+      </button>
+      <a href="outdoor_lab_curriculum_hub.html" class="action-btn btn-link">
+        <span>🧪</span> SombraTEKS Lab Hub
+      </a>
+      <a href="index.html" class="action-btn btn-link">
+        <span>🗺️</span> Standards DAG
+      </a>
+    </div>
+  </div>
+
+  <div class="manual-wrapper">
+
+    <!-- ========================================================================
+         PAGE 1: COVER PAGE
+         ======================================================================== -->
+    <div class="guide-sheet cover-page">
+      <div class="cover-badge-corner">
+        ISSUE 01 · 2026
+      </div>
+
+      <div class="cover-botanical-header">
+        <div class="cover-top-sub">RIO GRANDE VALLEY · TEXAS</div>
+        <h1 class="cover-main-title">SOMBRATEKS</h1>
+        <div class="cover-sub-strap">Living Canopy & Forest Literacy Guide</div>
+      </div>
+
+      <div class="cover-body-art">
+        <div class="cover-hero-card">
+          <div class="cover-hero-quote">
+            "A Single 45-Minute Outdoor Lab Under the Canopy Multiplies Across 6 Disciplines."
+          </div>
+          <div class="cover-hero-desc">
+            Designed specifically for Texas K–12 educators and school district leaders. Integrating TEKS 3D Science, Mathematics, Social Studies, Dual-Language ELAR, Fine Arts, and Heat Health under native Tamaulipan Thornscrub schoolyard canopies.
+          </div>
+        </div>
+      </div>
+
+      <div class="cover-footer-banner">
+        <div class="cover-footer-left">
+          <div class="institution">Center for Sustainable Agriculture & Rural Advancement</div>
+          <div class="department">Department of Biology · UTRGV Agroecology Research Lab</div>
+        </div>
+        <div class="cover-issue-tag">
+          FALL | 2026<br>
+          EDITION
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================================
+         PAGE 2: INTRODUCTION & REGIONAL ECOSYSTEM
+         ======================================================================== -->
+    <div class="guide-sheet">
+      <div class="sheet-grid">
+        <div class="sidebar-spine">
+          <div class="vertical-title">INTRODUCTION</div>
+          <div class="dotted-spine"></div>
+        </div>
+
+        <div class="sheet-content">
+          <div>
+            <h2 class="section-headline">Comprehensive & Accessible</h2>
+            <p class="lead-paragraph">
+              Across Texas, K–12 teachers face severe instructional pacing fatigue managing over 14,000 discrete TEKS standards. <strong>SombraTEKS</strong> transforms the schoolyard tree canopy into an interdisciplinary outdoor laboratory—enabling teachers to fulfill 7 to 10 standards across science, math, history, and health in a single 45-minute lesson.
+            </p>
+
+            <div class="mission-slogan-block">
+              <div class="mission-quote">
+                WE STRIVE · WE BELIEVE<br>
+                <span>IN A RESILIENT TOMORROW</span>
+              </div>
+            </div>
+
+            <h3 style="font-family: 'Montserrat', sans-serif; font-size: 1.1rem; color: var(--soil-rich); margin-bottom: 8px;">
+              Tailored to the Lower Rio Grande Valley
+            </h3>
+            <p style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 15px;">
+              The Lower Rio Grande Valley—spanning Starr, Hidalgo, Willacy, and Cameron counties—faces extreme urban surface heat (120°F+ asphalt playgrounds) coupled with extraordinary native ecological richness. SombraTEKS harnesses native keystone species like the Honey Mesquite (<em>Prosopis glandulosa</em>), Texas Ebony (<em>Ebenopsis ebano</em>), and Anacahuita (<em>Cordia boissieri</em>) as living apparatuses for direct student measurement.
+            </p>
+
+            <div class="photo-frame">
+              <div class="tape-corner"></div>
+              <div style="font-size: 0.85rem; font-weight: 700; color: var(--forest-dark);">
+                🌳 Sombra Sana: The Pediatric Heat Shield
+              </div>
+              <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;">
+                Direct thermal imaging demonstrates a <strong>25°F to 35°F reduction</strong> in ambient ground temperature beneath mature South Texas canopies, safeguarding students while unlocking empirical thermodynamic science.
+              </div>
+            </div>
+          </div>
+
+          <div class="page-footer">
+            <div class="page-number-bold">00</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================================
+         PAGE 3: TABLE OF CONTENTS & CHAPTER OUTLINE
+         ======================================================================== -->
+    <div class="guide-sheet">
+      <div class="sheet-grid">
+        <div class="sidebar-spine">
+          <div class="vertical-title">CONTENTS</div>
+          <div class="dotted-spine"></div>
+        </div>
+
+        <div class="sheet-content">
+          <div>
+            <h2 class="section-headline">Program Contents</h2>
+            <div class="horizontal-dots"></div>
+
+            <div class="summary-outline-box">
+              <div class="outline-title">Core Learning Tracks:</div>
+              <div class="outline-grid">
+                <div class="pill-item">
+                  <div class="pill-num">01</div>
+                  <div class="pill-text">The Living Campus Multiplier</div>
+                </div>
+                <div class="pill-item">
+                  <div class="pill-num">02</div>
+                  <div class="pill-text">Native Tree Decision Tree</div>
+                </div>
+                <div class="pill-item">
+                  <div class="pill-num">03</div>
+                  <div class="pill-text">Transpiration & Microclimates</div>
+                </div>
+                <div class="pill-item">
+                  <div class="pill-num">04</div>
+                  <div class="pill-text">Albedo & Shadow Geometry</div>
+                </div>
+                <div class="pill-item">
+                  <div class="pill-num">05</div>
+                  <div class="pill-text">Ethnobotany & Pechita Milling</div>
+                </div>
+                <div class="pill-item">
+                  <div class="pill-num">06</div>
+                  <div class="pill-text">Sensory Nature Journaling</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="summary-outline-box" style="margin-top: 15px;">
+              <div class="outline-title">District Implementation & Funding:</div>
+              <div class="outline-grid">
+                <div class="pill-item">
+                  <div class="pill-num">07</div>
+                  <div class="pill-text">13-Module Master Scope & Sequence</div>
+                </div>
+                <div class="pill-item">
+                  <div class="pill-num">08</div>
+                  <div class="pill-text">Sole-Source Procurement (TEC §44.031)</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="flowchart-container" style="margin-top: 20px;">
+              <div class="flowchart-title">The SombraTEKS 7-in-1 Multiplier</div>
+              <div class="flow-tree-grid">
+                <div class="flow-node highlight">
+                  <div class="flow-node-title">🌿 Science TEKS</div>
+                  <div class="flow-node-desc">3D SEPs, latent heat transpiration, and food web trophic energetics.</div>
+                  <div class="flow-badge">Sci 5.12B / 8.10B</div>
+                </div>
+                <div class="flow-node">
+                  <div class="flow-node-title">📐 Math TEKS</div>
+                  <div class="flow-node-desc">Trigonometric clinometers, shadow radius, and canopy area $A=\pi r^2$.</div>
+                  <div class="flow-badge">Math 5.4H / 8.7B</div>
+                </div>
+                <div class="flow-node">
+                  <div class="flow-node-title">🪵 Social Studies</div>
+                  <div class="flow-node-desc">Coahuiltecan indigenous land stewardship & Pechita flour harvesting.</div>
+                  <div class="flow-badge">SS 4.1A / 8.11A</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="page-footer">
+            <div class="page-number-bold">01</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================================
+         PAGE 4: DECISION FLOWCHART (UTRGV GROWER'S GUIDE STYLE)
+         ======================================================================== -->
+    <div class="guide-sheet">
+      <div class="sheet-grid">
+        <div class="sidebar-spine">
+          <div class="vertical-title">TREE IDENTIFIER</div>
+          <div class="dotted-spine"></div>
+        </div>
+
+        <div class="sheet-content">
+          <div>
+            <h2 class="section-headline">RGV Native Tree Key by Feel & Leaf</h2>
+            <p class="lead-paragraph">
+              Students identify keystone Tamaulipan Thornscrub canopy trees using sensory field indicators without electronic field guides:
+            </p>
+
+            <div class="flowchart-container">
+              <div class="flowchart-title">Field Decision Flowchart</div>
+              <div class="flow-tree-grid" style="grid-template-columns: 1fr 1fr; gap: 16px;">
+                <div class="flow-node highlight">
+                  <div class="flow-node-title">1. Compound Feather Leaves?</div>
+                  <div class="flow-node-desc">Tiny bipinnate leaflets adapted to minimize midday moisture transpiration.</div>
+                  <div class="flow-badge">YES ➔ Honey Mesquite or Texas Ebony</div>
+                </div>
+                <div class="flow-node">
+                  <div class="flow-node-title">2. Rough Sandpaper Leaves?</div>
+                  <div class="flow-node-desc">Oval, coarse leaves with white trumpet-shaped flowers and sweet olive fruit.</div>
+                  <div class="flow-badge">YES ➔ Anacahuita (Wild Olive)</div>
+                </div>
+                <div class="flow-node">
+                  <div class="flow-node-title">3. Woody Dark Seed Pods?</div>
+                  <div class="flow-node-desc">Thick, dark-brown segmented seed pods containing hard seeds used for jewelry.</div>
+                  <div class="flow-badge">Texas Ebony (Ébano)</div>
+                </div>
+                <div class="flow-node">
+                  <div class="flow-node-title">4. Golden Pechita Pods?</div>
+                  <div class="flow-node-desc">Long sweet yellowish pods rich in protein and milled into traditional flour.</div>
+                  <div class="flow-badge">Honey Mesquite (Mezquite)</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mission-slogan-block" style="margin-top: 15px; padding: 14px 20px;">
+              <div style="font-family: 'Montserrat', sans-serif; font-size: 0.92rem; font-weight: 800; color: var(--forest-dark);">
+                🌱 Pedagogical Principle:
+              </div>
+              <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 2px;">
+                Observational taxonomy builds empirical scientific classification (TEKS Sci 1.12A, 2.12B, 5.12B) while fostering cultural grounding in regional flora.
+              </div>
+            </div>
+          </div>
+
+          <div class="page-footer">
+            <div class="page-number-bold">02</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================================
+         PAGE 5: 13-MODULE MASTER SCOPE & SEQUENCE
+         ======================================================================== -->
+    <div class="guide-sheet">
+      <div class="sheet-grid">
+        <div class="sidebar-spine">
+          <div class="vertical-title">CURRICULUM</div>
+          <div class="dotted-spine"></div>
+        </div>
+
+        <div class="sheet-content">
+          <div>
+            <h2 class="section-headline">13 Flagship Outdoor Modules</h2>
+            <div class="horizontal-dots"></div>
+
+            <table class="curriculum-table">
+              <thead>
+                <tr>
+                  <th style="width: 12%;">Mod</th>
+                  <th style="width: 42%;">Title & Phenomenon</th>
+                  <th style="width: 16%;">Grade</th>
+                  <th style="width: 30%;">TEKS Matrix</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>01</strong></td>
+                  <td><strong>Microclimate & Transpiration Audit</strong><br><small>Ziploc branch transpiration & IR heat transect.</small></td>
+                  <td>Grades 3–5</td>
+                  <td><span class="tag-pill tag-sci">Sci 5.12B</span><span class="tag-pill tag-math">Math 5.4H</span></td>
+                </tr>
+                <tr>
+                  <td><strong>02</strong></td>
+                  <td><strong>Albedo & Shadow Geometry</strong><br><small>Surface albedo ($\alpha$) & clinometer trigonometry.</small></td>
+                  <td>Grades 6–8</td>
+                  <td><span class="tag-pill tag-sci">Sci 8.10B</span><span class="tag-pill tag-math">Math 8.7B</span></td>
+                </tr>
+                <tr>
+                  <td><strong>03</strong></td>
+                  <td><strong>Subtropical Agroecology & Komorebi</strong><br><small>Rhizobial nitrogen nodules & Beer-Lambert light.</small></td>
+                  <td>Grades 9–12</td>
+                  <td><span class="tag-pill tag-sci">Bio 12.B</span><span class="tag-pill tag-art">Art 4.2C</span></td>
+                </tr>
+                <tr>
+                  <td><strong>04</strong></td>
+                  <td><strong>Sensory Nature Journaling</strong><br><small>Sit spot observation & Komorebi chiaroscuro.</small></td>
+                  <td>Grades 3–5</td>
+                  <td><span class="tag-pill tag-elar">ELAR 5.11A</span><span class="tag-pill tag-art">Art 5.1B</span></td>
+                </tr>
+                <tr>
+                  <td><strong>05</strong></td>
+                  <td><strong>Tree Hugger Sensory Anatomy</strong><br><small>Roots, trunk, crown & tactile bark logging.</small></td>
+                  <td>Grades K–2</td>
+                  <td><span class="tag-pill tag-sci">Sci 1.12B</span><span class="tag-pill tag-math">Math 1.7A</span></td>
+                </tr>
+                <tr>
+                  <td><strong>06</strong></td>
+                  <td><strong>Fallen Leaf Detective Sort</strong><br><small>Bipinnate leaf margins & compound structures.</small></td>
+                  <td>Grades K–2</td>
+                  <td><span class="tag-pill tag-sci">Sci 2.12B</span><span class="tag-pill tag-art">Art 2.1B</span></td>
+                </tr>
+                <tr>
+                  <td><strong>07</strong></td>
+                  <td><strong>Who Lives in the Tree? Habitat Tally</strong><br><small>Micro-habitat bioblitz & nest cavity counts.</small></td>
+                  <td>Grades K–2</td>
+                  <td><span class="tag-pill tag-sci">Sci K.12A</span><span class="tag-pill tag-ss">SS K.11A</span></td>
+                </tr>
+                <tr>
+                  <td><strong>08</strong></td>
+                  <td><strong>Eco-Canvas Bark Impressions</strong><br><small>Wax rubbing texture transfer & symmetry.</small></td>
+                  <td>Grades K–2</td>
+                  <td><span class="tag-pill tag-art">Art 2.2B</span><span class="tag-pill tag-sci">Sci 2.1B</span></td>
+                </tr>
+                <tr>
+                  <td><strong>09</strong></td>
+                  <td><strong>Solar Energy Flow & Food Webs</strong><br><small>Trophic 10% transfer & soil decomposers.</small></td>
+                  <td>Grades 3–5</td>
+                  <td><span class="tag-pill tag-sci">Sci 5.12B</span><span class="tag-pill tag-ss">SS 5.9A</span></td>
+                </tr>
+                <tr>
+                  <td><strong>10</strong></td>
+                  <td><strong>Tree Geometry: Shade Area & Pacing</strong><br><small>Canopy recess carrying capacity ($A=\pi r^2$).</small></td>
+                  <td>Grades 3–5</td>
+                  <td><span class="tag-pill tag-math">Math 5.4H</span><span class="tag-pill tag-health">Health 5.3A</span></td>
+                </tr>
+                <tr>
+                  <td><strong>11</strong></td>
+                  <td><strong>Roots of the RGV: Pechita Ethnobotany</strong><br><small>Coahuiltecan pod milling & desert adaptations.</small></td>
+                  <td>Grades 3–5</td>
+                  <td><span class="tag-pill tag-ss">SS 4.1A</span><span class="tag-pill tag-sci">Sci 5.12B</span></td>
+                </tr>
+                <tr>
+                  <td><strong>12</strong></td>
+                  <td><strong>Beat the Heat: Thermoregulation</strong><br><small>Surface heat stress & evaporative sweat models.</small></td>
+                  <td>Grades 3–5</td>
+                  <td><span class="tag-pill tag-health">Health 5.3A</span><span class="tag-pill tag-sci">Sci 5.12B</span></td>
+                </tr>
+                <tr>
+                  <td><strong>13</strong></td>
+                  <td><strong>Photosynthesis Carbon Vault</strong><br><small>DBH caliper tree allometry & carbon tonnage ($M_C$).</small></td>
+                  <td>Grades 6–8</td>
+                  <td><span class="tag-pill tag-sci">Sci 8.12A</span><span class="tag-pill tag-math">Math 8.7B</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="page-footer">
+            <div class="page-number-bold">03</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================================
+         PAGE 6: DISTRICT SOLE-SOURCE PROCUREMENT MEMORANDUM
+         ======================================================================== -->
+    <div class="guide-sheet">
+      <div class="sheet-grid">
+        <div class="sidebar-spine">
+          <div class="vertical-title">PROCUREMENT</div>
+          <div class="dotted-spine"></div>
+        </div>
+
+        <div class="sheet-content">
+          <div>
+            <h2 class="section-headline">Sole-Source Procurement Package</h2>
+            <div class="horizontal-dots"></div>
+
+            <div class="summary-outline-box">
+              <div class="outline-title">Statutory Bidding Exemption:</div>
+              <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.55; margin-bottom: 15px;">
+                Under <strong>Texas Education Code § 44.031(j)</strong> and <strong>2 CFR § 200.320(c)(2)</strong>, educational goods and professional development workshops priced under the statutory threshold may be procured via direct purchase order without formal RFP competitive bidding.
+              </p>
+            </div>
+
+            <div class="flow-tree-grid" style="grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 15px 0;">
+              <div class="flow-node">
+                <div class="flow-node-title">Campus Starter</div>
+                <div style="font-family: 'Fredoka', sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--terracotta);">$2,500</div>
+                <div class="flow-node-desc">1 Campus · Up to 15 teachers · 4.0 SBEC CPE Credits · 1 Field Equipment Kit.</div>
+              </div>
+              <div class="flow-node highlight">
+                <div class="flow-node-title">Multi-Campus</div>
+                <div style="font-family: 'Fredoka', sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--forest-dark);">$3,500</div>
+                <div class="flow-node-desc">Up to 4 Campuses · 25 teachers · 6.0 CPE Credits · 2 Kits · Pacing Crosswalk.</div>
+              </div>
+              <div class="flow-node">
+                <div class="flow-node-title">District Accelerator</div>
+                <div style="font-family: 'Fredoka', sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--pechita-gold);">$4,500</div>
+                <div class="flow-node-desc">Full District · 35 teachers · Administrator briefing · 4 Campus Toolkits.</div>
+              </div>
+            </div>
+
+            <div class="mission-slogan-block" style="margin-top: 20px;">
+              <div style="font-family: 'Montserrat', sans-serif; font-size: 0.95rem; font-weight: 800; color: var(--soil-rich);">
+                Eligible District Funding Codes:
+              </div>
+              <ul style="font-size: 0.85rem; color: var(--text-muted); margin-left: 20px; margin-top: 6px; line-height: 1.5;">
+                <li><strong>Title II, Part A:</strong> Supporting Effective Instruction (Teacher Quality & PD).</li>
+                <li><strong>Title IV, Part A:</strong> Student Support & Academic Enrichment (STEM & Environmental Health).</li>
+                <li><strong>CTE / Local Funds:</strong> Agricultural Science, Applied Ecology & Natural Resources.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="page-footer">
+            <div class="page-number-bold">04</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
