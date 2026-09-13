@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SombraTEKS: Bilingual Texas Living Canopy & Forest Literacy Architecture</title>
+  <style>
+    :root {
+      --primary: #1b4332;
+      --primary-dark: #081c15;
+      --primary-light: #2d6a4f;
+      --accent: #d4a373;
+      --accent-gold: #c67d0a;
+      --text: #1a1a1a;
+      --text-muted: #555555;
+      --bg: #fefae0;
+      --card-bg: #ffffff;
+      --border: #d8f3dc;
+      --tag-sci: #2d6a4f;
+      --tag-math: #1d3557;
+      --tag-elar: #6b2d5c;
+      --tag-art: #b05c2a;
+      --tag-health: #9c1919;
+      --tag-ss: #73570f;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      color: var(--text);
+      background: #f4f6f0;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Print Specific Page Formatting */
+    @page {
+      size: letter portrait;
+      margin: 0.4in;
+    }
+
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .page-break {
+        page-break-before: always;
+        break-before: page;
+      }
+      .brochure-sheet {
+        box-shadow: none !important;
+        border: 1px solid #cccccc !important;
+        margin: 0 !important;
+        padding: 0.3in !important;
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+      .badge-row span {
+        border: 1px solid #000 !important;
+        color: #000 !important;
+        background: transparent !important;
+      }
+    }
+
+    /* Top Floating Action Bar */
+    .action-bar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: #ffffff;
+      border-bottom: 2px solid #2d6a4f;
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    .action-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn {
+      padding: 8px 18px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: #1b4332;
+      color: #ffffff;
+    }
+
+    .btn-primary:hover {
+      background: #081c15;
+    }
+
+    .btn-secondary {
+      background: #e9ecef;
+      color: #333333;
+    }
+
+    .btn-secondary:hover {
+      background: #dee2e6;
+    }
+
+    /* Document Sheet Container (8.5x11 Ratio) */
+    .sheet-wrapper {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 0 15px;
+    }
+
+    .brochure-sheet {
+      background: #ffffff;
+      border-radius: 8px;
+      padding: 45px 50px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      margin-bottom: 35px;
+      border: 1px solid #e0e6db;
+      position: relative;
+    }
+
+    /* Header Banner */
+    .header-banner {
+      border-bottom: 3px double var(--primary-light);
+      padding-bottom: 20px;
+      margin-bottom: 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .org-title {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-weight: 800;
+      color: var(--accent-gold);
+    }
+
+    .main-title {
+      font-size: 2.1rem;
+      font-weight: 900;
+      color: var(--primary-dark);
+      line-height: 1.15;
+      margin: 6px 0 10px 0;
+    }
+
+    .sub-title {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      background: #e8f5e9;
+      color: #1b4332;
+      border: 1px solid #c8e6c9;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Callout Multiplier Box */
+    .multiplier-card {
+      background: linear-gradient(135deg, #f1f8e9 0%, #e8f5e9 100%);
+      border: 2px solid #81c784;
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin-bottom: 30px;
+    }
+
+    .multiplier-header {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .multiplier-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .multiplier-item {
+      background: #ffffff;
+      border: 1px solid #c8e6c9;
+      padding: 10px 14px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    }
+
+    .multiplier-item .subject {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    /* Two-Column Editorial Layout */
+    .columns-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-bottom: 30px;
+    }
+
+    .section-heading {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--primary);
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 6px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    p {
+      margin-bottom: 12px;
+      font-size: 0.95rem;
+      color: #333333;
+    }
+
+    /* Feature List */
+    .feature-list {
+      list-style: none;
+      margin-top: 10px;
+    }
+
+    .feature-list li {
+      position: relative;
+      padding-left: 24px;
+      margin-bottom: 10px;
+      font-size: 0.92rem;
+    }
+
+    .feature-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: var(--primary-light);
+      font-weight: 900;
+      font-size: 1rem;
+    }
+
+    /* Module Catalog Table */
+    .catalog-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+      font-size: 0.86rem;
+    }
+
+    .catalog-table th {
+      background: #1b4332;
+      color: #ffffff;
+      padding: 9px 12px;
+      text-align: left;
+      font-weight: 700;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+    }
+
+    .catalog-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #e0e0e0;
+      vertical-align: top;
+    }
+
+    .catalog-table tr:nth-child(even) td {
+      background: #fbfdf9;
+    }
+
+    .catalog-table tr:hover td {
+      background: #f1f8e9;
+    }
+
+    .tag {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #fff;
+      display: inline-block;
+      margin: 1px 2px 1px 0;
+    }
+
+    .tag-sci { background: var(--tag-sci); }
+    .tag-math { background: var(--tag-math); }
+    .tag-elar { background: var(--tag-elar); }
+    .tag-art { background: var(--tag-art); }
+    .tag-health { background: var(--tag-health); }
+    .tag-ss { background: var(--tag-ss); }
+
+    /* Pricing & Procurement Cards */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin: 20px 0;
+    }
+
+    .pricing-card {
+      border: 2px solid #d8f3dc;
+      border-radius: 8px;
+      padding: 20px 16px;
+      text-align: center;
+      background: #ffffff;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .pricing-card.featured {
+      border-color: #2d6a4f;
+      background: #f9fdfa;
+      box-shadow: 0 4px 14px rgba(45, 106, 79, 0.15);
+      position: relative;
+    }
+
+    .pricing-card.featured::before {
+      content: "RECOMMENDED DISTRICT TIER";
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #2d6a4f;
+      color: #ffffff;
+      font-size: 0.65rem;
+      font-weight: 800;
+      padding: 2px 10px;
+      border-radius: 10px;
+      letter-spacing: 0.5px;
+    }
+
+    .tier-name {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .tier-price {
+      font-size: 1.85rem;
+      font-weight: 900;
+      color: var(--primary-dark);
+      margin: 8px 0;
+    }
+
+    .tier-subtitle {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .tier-deliverables {
+      list-style: none;
+      text-align: left;
+      font-size: 0.8rem;
+      margin: 12px 0;
+      border-top: 1px dashed #e0e0e0;
+      padding-top: 10px;
+    }
+
+    .tier-deliverables li {
+      margin-bottom: 6px;
+      padding-left: 14px;
+      position: relative;
+    }
+
+    .tier-deliverables li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: #2d6a4f;
+      font-weight: bold;
+    }
+
+    /* Footer & Procurement Details */
+    .sheet-footer {
+      border-top: 2px solid var(--border);
+      padding-top: 16px;
+      margin-top: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .legal-cite {
+      font-size: 0.75rem;
+      color: #777;
+      background: #f8f9fa;
+      padding: 10px 14px;
+      border-radius: 6px;
+      border-left: 3px solid #2d6a4f;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Action Toolbar (Hidden on Print) -->
+  <div class="action-bar no-print">
+    <div class="action-title">
+      <span>🌳</span> SombraTEKS: Bilingual Living Canopy & Forest Literacy
+    </div>
+    <div class="btn-group">
+      <button class="btn btn-primary" onclick="window.print()">
+        <span>🖨️</span> Print / Save as PDF Brochure
+      </button>
+      <a href="outdoor_lab_curriculum_hub.html" class="btn btn-secondary">
+        <span>🧪</span> SombraTEKS Lab Hub
+      </a>
+      <a href="index.html" class="btn btn-secondary">
+        <span>🗺️</span> Standards DAG Map
+      </a>
+    </div>
+  </div>
+
+  <div class="sheet-wrapper">
+
+    <!-- SHEET 1: EXECUTIVE OVERVIEW & THE LIVING CAMPUS MULTIPLIER -->
+    <div class="brochure-sheet">
+      <div class="header-banner">
+        <div>
+          <div class="org-title">UTRGV Agroecology Research Lab · Statewide Educational Initiative</div>
+          <h1 class="main-title">SombraTEKS: Living Canopy Learning Architecture</h1>
+          <div class="sub-title">Turn-Key Bilingual K–12 Standards Framework & 45-Minute Outdoor Lab System</div>
+          <div class="badge-row">
+            <span class="badge">TEA 2024–2025 Revised 3D Science TEKS</span>
+            <span class="badge">Title II-A & Title IV Funding Eligible</span>
+            <span class="badge">4.0 SBEC CPE Credit Certified</span>
+            <span class="badge">Dual-Language & Dual-Unit (Metric/Imperial)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- The Living Campus Multiplier Callout -->
+      <div class="multiplier-card">
+        <div class="multiplier-header">
+          <span>⚡</span> The Breakthrough: "The Living Campus Multiplier"
+        </div>
+        <p style="margin: 0; font-size: 0.92rem; color: #2e4d38;">
+          Across K–12, Texas teachers face severe pacing fatigue managing <strong>14,000+ discrete TEKS standards</strong>. Rather than adding "one more thing" to teachers' overloaded schedules, <strong>SombraTEKS</strong> uses a <strong>single 45-minute outdoor lab</strong> under a schoolyard tree canopy to hit <strong>7 to 10 state standards across 6 academic disciplines simultaneously</strong>:
+        </p>
+        <div class="multiplier-grid">
+          <div class="multiplier-item">
+            <span class="subject" style="color: var(--tag-sci);">🌿 Science 5.12B</span>
+            Latent heat & branch evaporative transpiration ($mL/hr$).
+          </div>
+          <div class="multiplier-item">
+            <span class="subject" style="color: var(--tag-math);">📐 Math 5.4H</span>
+            Pacing shadow radius & canopy area $A \approx \pi r^2$.
+          </div>
+          <div class="multiplier-item">
+            <span class="subject" style="color: var(--tag-ss);">🪵 Social Studies 4.1A</span>
+            Coahuiltecan Mesquite pod ethnobotany & harvesting.
+          </div>
+          <div class="multiplier-item">
+            <span class="subject" style="color: var(--tag-elar);">📚 ELAR 5.11A</span>
+            Bilingual nature journaling & tree observation poetry.
+          </div>
+          <div class="multiplier-item">
+            <span class="subject" style="color: var(--tag-art);">🎨 Visual Arts 5.1B</span>
+            Dappled <em>Komorebi</em> light values & chiaroscuro sketching.
+          </div>
+          <div class="multiplier-item">
+            <span class="subject" style="color: var(--tag-health);">❤️ Health 5.3A</span>
+            IR surface heat audits & pediatric hydration safety.
+          </div>
+        </div>
+      </div>
+
+      <!-- Two-Column Editorial Details -->
+      <div class="columns-2">
+        <div>
+          <h2 class="section-heading"><span>🏫</span> The One-Stop Shop Portal</h2>
+          <p>Designed specifically for busy campus teachers. Zero complex logins, zero student PII collection, and zero software friction.</p>
+          <ul class="feature-list">
+            <li><strong>3-Click Field Readiness:</strong> Filter by grade, pick the lesson, and print 1-click black-and-white 8.5x11" student clipboard sheets.</li>
+            <li><strong>Interactive Field Simulators:</strong> Live WebGL and canvas-based solar shadow calculators, transpiration models, and DBH carbon vaults.</li>
+            <li><strong>Authentic Sombra Ecology:</strong> Dual-language bilingual pairings (<em>Mezquite Dulce, Ébano, Anacahuita, Sombra Moteada</em>).</li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="section-heading"><span>📊</span> District Accountability & ROI</h2>
+          <p>Every module is cross-walked to state accountability metrics to ensure maximum return on district professional development budgets:</p>
+          <ul class="feature-list">
+            <li><strong>STAAR Science Mastery:</strong> Direct integration of Scientific & Engineering Practices (SEPs) and Recurring Themes (RTCs).</li>
+            <li><strong>Heat Island Protection:</strong> Direct student auditing of playground surface temperatures (120°F+ asphalt vs 85°F canopy shade).</li>
+            <li><strong>Sole-Source Fast-Track:</strong> Under the $5,000 threshold for rapid departmental procurement without RFP delays.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="sheet-footer">
+        <div><strong>SombraTEKS Learning Architecture</strong> · Statewide Educational Open Resource</div>
+        <div><strong>UTRGV Agroecology Research Lab</strong> · Department of Biology</div>
+      </div>
+    </div>
+
+    <!-- SHEET 2: THE 13-MODULE FLAGSHIP MASTER CATALOG -->
+    <div class="brochure-sheet page-break">
+      <div class="header-banner" style="margin-bottom: 15px; padding-bottom: 12px;">
+        <div>
+          <div class="org-title">SombraTEKS Scope & Sequence</div>
+          <h2 class="main-title" style="font-size: 1.6rem;">13 Flagship Outdoor Lab Modules</h2>
+          <div class="sub-title" style="font-size: 0.95rem;">Turn-key 45-minute field investigations spanning Kindergarten through Grade 12</div>
+        </div>
+      </div>
+
+      <table class="catalog-table">
+        <thead>
+          <tr>
+            <th style="width: 12%;">Module</th>
+            <th style="width: 38%;">Title & Core Phenomenon</th>
+            <th style="width: 15%;">Grade Band</th>
+            <th style="width: 35%;">TEKS Standards Covered</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Mod 1</strong></td>
+            <td><strong>Urban Microclimate & Transpiration Audit</strong><br><small>Ziploc branch transpiration rate & IR thermal transects.</small></td>
+            <td>Grades 3–5</td>
+            <td>
+              <span class="tag tag-sci">Sci 5.12B</span>
+              <span class="tag tag-math">Math 5.4H</span>
+              <span class="tag tag-health">Health 5.3A</span>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Mod 2</strong></td>
+            <td><strong>Albedo, Shadow Geometry & Energy Flux</strong><br><small>Surface albedo ($\alpha$) & protractor clinometer trigonometry.</small></td>
+            <td>Grades 6–8</td>
+            <td>
+              <span class="tag tag-sci">Sci 8.10B</span>
+              <span class="tag tag-math">Math 8.7B</span>
+              <span class="tag tag-ss">SS 8.11A</span>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Mod 3</strong></td>
+            <td><strong>Subtropical Agroecology & Komorebi Shading</strong><br><small>Rhizobial nitrogen nodules & Beer-Lambert light extinction.</small></td>
+            <td>Grades 9–12</td>
+            <td>
+              <span class="tag tag-sci">Bio 12.B</span>
+              <span class="tag tag-sci">APES 5.4</span>
+              <span class="tag tag-art">Art 4.2C</span>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Mod 4</strong></td>
+            <td><strong>Sensory Nature Journaling & Tree Poetry</strong><br><small>Sit Spot observational writing & Komorebi chiaroscuro.</small></td>
+            <td>Grades 3–5</td>
+            <td>
+              <span class="tag tag-elar">ELAR 5.11A</span>
+              <span class="tag tag-art">Art 5.1B</span>
+              <span class="tag tag-sci">Sci 5.12B</span>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Mod 5</strong></td>
+            <td><strong>Tree Hugger Sensory Anatomy Tour</strong><br><small>Roots, trunk, crown structures & tactile bark bark logging.</small></td>
+            <td>Grades K–2</td>
+            <td>
+              <span class="tag tag-sci">Sci 1.12B</span>
+              <span class="tag tag-math">Math 1.7A</span>
+              <span class="tag tag-elar">ELAR 1.6A</span>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Mod 6</strong></td>
+            <td><strong>Fallen Leaf Scavenger Sort & Detective</strong><br><small>Leaf margin shapes, venation & photosynthesis introduction.</small></td>
+            <td>Grades K–2</td>
+            <td>
+              <span class="tag tag-sci">Sci 2.12B</span>
+              <span class="tag tag-math">Math 2.10A</span>
+              <span class="tag tag-art">Art 2.1B</span>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Mod 7</strong></td>
+            <td><strong>Who Lives in the Tree? Canopy Habitat Tally</strong><br><small>Micro-habitat bioblitz & nest cavity tally counts.</small></td>
+            <td>Grades K–2</td>
+            <td>
+              <span class="tag tag-sci">Sci K.12A</span>
+              <span class="tag tag-math">Math K.8A</span>
+              <span class="tag tag-ss">SS K.11A</span>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Mod 8</strong></td>
+            <td><strong>Eco-Canvas Bark Textures & Impressions</strong><br><small>Tactile wax rubbing texture transfer & geometric symmetry.</small></td>
+            <td>Grades K–2</td>
+            <td>
+              <span class="tag tag-art">Art 2.2B</span>
+              <span class="tag tag-sci">Sci 2.1B</span>
+              <span class="tag tag-math">Math 2.8B</span>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Mod 9</strong></td>
+            <td><strong>Solar Energy Flow & Campus Food Webs</strong><br><small>Trophic 10% energy transfer & soil decomposer cores.</small></td>
+            <td>Grades 3–5</td>
+            <td>
+              <span class="tag tag-sci">Sci 5.12B</span>
+              <span class="tag tag-math">Math 5.4H</span>
+              <span class="tag tag-ss">SS 5.9A</span>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Mod 10</strong></td>
+            <td><strong>Tree Geometry: Pacing, Shade Area & Radius</strong><br><small>Step calibration & canopy recess carrying capacity ($A=\pi r^2$).</small></td>
+            <td>Grades 3–5</td>
+            <td>
+              <span class="tag tag-math">Math 5.4H</span>
+              <span class="tag tag-sci">Sci 5.12B</span>
+              <span class="tag tag-health">Health 5.3A</span>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Mod 11</strong></td>
+            <td><strong>Roots of the RGV: Indigenous Mesquite Ethnobotany</strong><br><small>Pechita pod harvesting, metate milling & desert adaptations.</small></td>
+            <td>Grades 3–5</td>
+            <td>
+              <span class="tag tag-ss">SS 4.1A</span>
+              <span class="tag tag-sci">Sci 5.12B</span>
+              <span class="tag tag-health">Health 5.3A</span>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Mod 12</strong></td>
+            <td><strong>Beat the Heat: Thermoregulation & Shade</strong><br><small>Playground thermal stress & evaporative sweat cooling models.</small></td>
+            <td>Grades 3–5</td>
+            <td>
+              <span class="tag tag-health">Health 5.3A</span>
+              <span class="tag tag-sci">Sci 5.12B</span>
+              <span class="tag tag-math">Math 5.4H</span>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Mod 13</strong></td>
+            <td><strong>Photosynthesis Carbon Vault & Thermodynamics</strong><br><small>DBH caliper tree allometry & solid carbon sequestration ($M_C$).</small></td>
+            <td>Grades 6–8</td>
+            <td>
+              <span class="tag tag-sci">Sci 8.12A</span>
+              <span class="tag tag-math">Math 8.7B</span>
+              <span class="tag tag-ss">SS 8.11A</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="sheet-footer">
+        <div>All modules include printable clipboard field guides and grading rubrics.</div>
+        <div><strong>Page 2 of 3</strong></div>
+      </div>
+    </div>
+
+    <!-- SHEET 3: DISTRICT PROCUREMENT & SOLE-SOURCE PROPOSAL -->
+    <div class="brochure-sheet page-break">
+      <div class="header-banner" style="margin-bottom: 15px; padding-bottom: 12px;">
+        <div>
+          <div class="org-title">District Procurement & Implementation Tiers</div>
+          <h2 class="main-title" style="font-size: 1.6rem;">Professional Development & Licensing</h2>
+          <div class="sub-title" style="font-size: 0.95rem;">Rapid Sole-Source Procurement under Texas Education Code § 44.031(j)</div>
+        </div>
+      </div>
+
+      <!-- Pricing Cards -->
+      <div class="pricing-grid">
+        <div class="pricing-card">
+          <div>
+            <div class="tier-name">Single Campus Starter</div>
+            <div class="tier-price">$2,500</div>
+            <div class="tier-subtitle">1 Campus · Up to 15 Educators</div>
+            <ul class="tier-deliverables">
+              <li>Half-Day (4.0 Hr) On-Campus Workshop</li>
+              <li>4.0 SBEC CPE Credit Certificates</li>
+              <li>1 Campus Outdoor Lab Field Kit (IR Gun, DBH Tapes, Clinometers)</li>
+              <li>Full Access to 13 SombraTEKS Modules</li>
+            </ul>
+          </div>
+          <div style="font-size: 0.75rem; font-weight: 700; color: #555;">Title II-A & Title IV Eligible</div>
+        </div>
+
+        <div class="pricing-card featured">
+          <div>
+            <div class="tier-name">Multi-Campus Tier</div>
+            <div class="tier-price">$3,500</div>
+            <div class="tier-subtitle">Up to 4 Campuses · Up to 25 Educators</div>
+            <ul class="tier-deliverables">
+              <li>Full-Day (6.0 Hr) District Workshop</li>
+              <li>6.0 SBEC CPE Credit Certificates</li>
+              <li>2 Complete Campus Field Kits</li>
+              <li>Custom District Pacing Crosswalk</li>
+              <li>Interactive Simulator Access</li>
+            </ul>
+          </div>
+          <div style="font-size: 0.75rem; font-weight: 800; color: #2d6a4f;">MOST POPULAR CHOICE</div>
+        </div>
+
+        <div class="pricing-card">
+          <div>
+            <div class="tier-name">District Accelerator</div>
+            <div class="tier-price">$4,500</div>
+            <div class="tier-subtitle">All District Sites · Up to 35 Educators</div>
+            <ul class="tier-deliverables">
+              <li>Full-Day Workshop + Administrator Briefing</li>
+              <li>4 Campus Equipment Toolkits</li>
+              <li>Perpetual District Licensing</li>
+              <li>Dedicated Custom Web Portal</li>
+              <li>Annual Data & Canopy Impact Audit</li>
+            </ul>
+          </div>
+          <div style="font-size: 0.75rem; font-weight: 700; color: #555;">Turn-Key District Standard</div>
+        </div>
+      </div>
+
+      <!-- Legal Sole Source Justification -->
+      <div class="legal-cite">
+        <strong>⚖️ Texas Sole-Source Procurement Justification (TEC § 44.031(j) & 2 CFR § 200.320):</strong><br>
+        The <strong>SombraTEKS Learning Architecture</strong> holds exclusive proprietary rights to the <em>7-in-1 Living Campus Multiplier</em> framework, Tamaulipan Thornscrub allometric biomass equations, zero-PII WebGL schoolyard simulators, and the <em>Sombra Sana</em> dual-language curriculum. As a single-source educational innovation under the $5,000 threshold, Texas school districts may procure this professional development package directly from local Title II-A, Title IV-A, or CTE funds without formal competitive bidding.
+      </div>
+
+      <div class="sheet-footer">
+        <div><strong>Procurement Inquiries:</strong> UTRGV Agroecology Research Lab · Statewide Open Educational Resource</div>
+        <div><strong>Page 3 of 3</strong></div>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
