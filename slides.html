@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SombraTEKS Module 01: Interactive Classroom Presentation (5-Minute Hook)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700;800&family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --terracotta: #a64b38;
+      --rust-dark: #803020;
+      --sage-green: #4a6b4b;
+      --forest-dark: #244230;
+      --pechita-gold: #d89a42;
+      --pechita-light: #fbe8c3;
+      --soil-rich: #3a2618;
+      --soil-dark: #1e130b;
+      --bg-cream: #fcfaf3;
+      --card-white: #ffffff;
+      --text-main: #2a221b;
+      --text-muted: #61564d;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: #1a120c;
+      color: #ffffff;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Top Presenter Bar */
+    .top-bar {
+      background: #261b12;
+      border-bottom: 2px solid var(--terracotta);
+      padding: 10px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+    }
+
+    .brand-title {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--pechita-gold);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .slide-nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-btn {
+      background: #3d2d20;
+      color: #ffffff;
+      border: 1px solid #5a4535;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .nav-btn:hover {
+      background: var(--terracotta);
+      border-color: var(--terracotta);
+    }
+
+    .slide-counter {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: #dfd7cc;
+      min-width: 65px;
+      text-align: center;
+    }
+
+    /* Presentation Slide Stage (16:9 Aspect Ratio) */
+    .stage-container {
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      position: relative;
+    }
+
+    .slide-deck {
+      width: 100%;
+      max-width: 1100px;
+      height: 90%;
+      max-height: 640px;
+      position: relative;
+    }
+
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--bg-cream);
+      color: var(--text-main);
+      border-radius: 12px;
+      padding: 40px 50px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      border: 2px solid #dfd6c4;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(30px);
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(0);
+    }
+
+    /* Slide Typography & Layouts */
+    .slide-header {
+      border-bottom: 3px double var(--terracotta);
+      padding-bottom: 14px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .slide-category {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--terracotta);
+    }
+
+    .slide-title {
+      font-family: 'Fredoka', 'Montserrat', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      line-height: 1.15;
+      color: var(--forest-dark);
+      margin-top: 4px;
+    }
+
+    .slide-body {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    /* Split 2-Column Visual Cards */
+    .split-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 25px;
+      align-items: center;
+    }
+
+    .thermal-box {
+      background: linear-gradient(135deg, #2b0b0b 0%, #7a1f1d 100%);
+      color: #ffffff;
+      border-radius: 10px;
+      padding: 24px;
+      text-align: center;
+      border: 2px solid #b83232;
+      box-shadow: 0 8px 20px rgba(122, 31, 29, 0.3);
+    }
+
+    .cool-box {
+      background: linear-gradient(135deg, #0e2b1d 0%, #24583d 100%);
+      color: #ffffff;
+      border-radius: 10px;
+      padding: 24px;
+      text-align: center;
+      border: 2px solid #489b6e;
+      box-shadow: 0 8px 20px rgba(36, 88, 61, 0.3);
+    }
+
+    .temp-large {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 3.5rem;
+      font-weight: 800;
+      line-height: 1;
+      margin: 8px 0;
+    }
+
+    .temp-label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .feature-card {
+      background: #ffffff;
+      border: 1.5px solid #ded5c2;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.02);
+    }
+
+    .feature-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--forest-dark);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .feature-text {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Teacher Script Prompt (Bottom Callout) */
+    .teacher-script-bar {
+      background: #fbf7ee;
+      border-left: 5px solid var(--terracotta);
+      padding: 12px 18px;
+      border-radius: 4px;
+      margin-top: 15px;
+    }
+
+    .script-tag {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--terracotta);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 2px;
+    }
+
+    .script-text {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-style: italic;
+      font-size: 0.95rem;
+      color: var(--soil-rich);
+    }
+
+    /* Keyboard navigation hint */
+    .hint-bar {
+      text-align: center;
+      font-size: 0.75rem;
+      color: #8c7d70;
+      padding-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Presenter Bar -->
+  <div class="top-bar">
+    <div class="brand-title">
+      <span>🌳</span> SombraTEKS · 5-Minute Smartboard Hook · Module 01
+    </div>
+    <div class="slide-nav-controls">
+      <button class="nav-btn" onclick="prevSlide()">◀ Previous</button>
+      <div class="slide-counter" id="slideCounter">1 / 5</div>
+      <button class="nav-btn" onclick="nextSlide()">Next ▶</button>
+      <a href="lesson1.html" class="nav-btn" style="background: var(--terracotta);">📋 Open Printable Field Dossier</a>
+    </div>
+  </div>
+
+  <!-- Stage -->
+  <div class="stage-container">
+    <div class="slide-deck">
+
+      <!-- ====================================================================
+           SLIDE 1: THE ANCHOR PHENOMENON (ASPHALT FRYING PAN)
+           ==================================================================== -->
+      <div class="slide active" id="slide1">
+        <div class="slide-header">
+          <div>
+            <div class="slide-category">Phase 1: Engage · Anchor Mystery</div>
+            <h2 class="slide-title">The 135°F Asphalt Frying Pan</h2>
+          </div>
+          <span style="font-size: 0.8rem; font-weight: 800; background: #faebd7; color: var(--terracotta); padding: 4px 10px; border-radius: 4px;">
+            TEKS Science 5.12B
+          </span>
+        </div>
+
+        <div class="slide-body">
+          <div class="split-2">
+            <div class="thermal-box">
+              <div class="temp-label">🔥 Unshaded Blacktop</div>
+              <div class="temp-large">136°F</div>
+              <div style="font-size: 0.82rem; opacity: 0.9;">Causes pediatric contact burns in &lt; 5 seconds</div>
+            </div>
+
+            <div class="cool-box">
+              <div class="temp-label">❄️ Living Tree Canopy Shade</div>
+              <div class="temp-large">84°F</div>
+              <div style="font-size: 0.82rem; opacity: 0.9;">52°F Cooler than hot playground asphalt!</div>
+            </div>
+          </div>
+
+          <div class="teacher-script-bar">
+            <div class="script-tag">🎤 Teacher Script / Hook Question:</div>
+            <div class="script-text">
+              "Class, if you stood barefoot on our blacktop at recess, your feet would burn. Why is a canvas tent hot and stuffy, but sitting under a Honey Mesquite feels like stepping in front of an air conditioner?"
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====================================================================
+           SLIDE 2: THE LIVING WATER PUMP (TRANSPIRATION & STOMATA)
+           ==================================================================== -->
+      <div class="slide" id="slide2">
+        <div class="slide-header">
+          <div>
+            <div class="slide-category">Phase 2: The Biological Mechanism</div>
+            <h2 class="slide-title">Trees are Living Solar Water Pumps</h2>
+          </div>
+          <span style="font-size: 0.8rem; font-weight: 800; background: #e2f0d9; color: var(--forest-dark); padding: 4px 10px; border-radius: 4px;">
+            Thermodynamics & Stomata
+          </span>
+        </div>
+
+        <div class="slide-body">
+          <div class="split-2">
+            <div>
+              <div class="feature-card">
+                <div class="feature-title"><span>💧</span> 1. Deep Root Pumping</div>
+                <div class="feature-text">Roots drink hundreds of gallons of cold water deep beneath South Texas soils.</div>
+              </div>
+              <div class="feature-card">
+                <div class="feature-title"><span>🔬</span> 2. Microscopic Stomata</div>
+                <div class="feature-text">Leaves exhale pure water vapor through millions of microscopic mouth-like pores.</div>
+              </div>
+              <div class="feature-card">
+                <div class="feature-title"><span>❄️</span> 3. Latent Heat Absorption</div>
+                <div class="feature-text">When liquid water evaporates into gas, it <strong>sucks heat directly out of the school air</strong>!</div>
+              </div>
+            </div>
+
+            <div style="background: #f4efe2; border: 2px dashed #cfc3ae; border-radius: 10px; padding: 25px; text-align: center;">
+              <div style="font-size: 3rem;">🌳 ➔ 💧 ➔ 🌬️</div>
+              <div style="font-family: 'Fredoka', sans-serif; font-size: 1.5rem; color: var(--forest-dark); margin: 8px 0;">
+                "Active Evaporative Cooling"
+              </div>
+              <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.45;">
+                Just like humans sweat to cool off during soccer practice, trees sweat to cool the entire schoolyard!
+              </p>
+            </div>
+          </div>
+
+          <div class="teacher-script-bar">
+            <div class="script-tag">🎤 Teacher Explanation Prompt:</div>
+            <div class="script-text">
+              "Today, we are going to seal a plastic bag over a tree branch. By the time we return, we will harvest the water the tree breathed out!"
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====================================================================
+           SLIDE 3: STEP PACING & THE SHADE GEOMETRY (MATH 5.4H)
+           ==================================================================== -->
+      <div class="slide" id="slide3">
+        <div class="slide-header">
+          <div>
+            <div class="slide-category">Phase 3: The Math Multiplier</div>
+            <h2 class="slide-title">Becoming a Human Measuring Tape</h2>
+          </div>
+          <span style="font-size: 0.8rem; font-weight: 800; background: #e0eaf5; color: #1c324b; padding: 4px 10px; border-radius: 4px;">
+            TEKS Math 5.4H ($A \approx \pi r^2$)
+          </span>
+        </div>
+
+        <div class="slide-body">
+          <div class="split-2">
+            <div>
+              <div class="feature-card" style="border-left: 5px solid #1c324b;">
+                <div class="feature-title"><span>🚶‍♂️</span> Step 1: Calibrate Your Pace</div>
+                <div class="feature-text">Walk 10 normal paces along our 10m tape measure. 10 paces = 10 meters! (1 pace = 1.0 m).</div>
+              </div>
+              <div class="feature-card" style="border-left: 5px solid var(--terracotta);">
+                <div class="feature-title"><span>📐</span> Step 2: Measure Radius ($r$)</div>
+                <div class="feature-text">Pace from tree trunk to shadow edge in 4 directions: North, South, East, West.</div>
+              </div>
+              <div class="feature-card" style="border-left: 5px solid var(--forest-dark);">
+                <div class="feature-title"><span>🛡️</span> Step 3: Compute Recess Refuge</div>
+                <div class="feature-text">$\text{Area} = 3.14 \times r^2$. Divide by $1.5\,\text{m}^2$ to find how many students fit in the shade!</div>
+              </div>
+            </div>
+
+            <div style="background: #ffffff; border: 2px solid #d8cfc0; border-radius: 10px; padding: 20px; text-align: center;">
+              <div style="font-family: 'Montserrat', sans-serif; font-weight: 800; color: var(--terracotta); font-size: 1.1rem;">
+                CANOPY SHADOW FORMULA:
+              </div>
+              <div style="font-family: 'Fredoka', sans-serif; font-size: 2.2rem; color: var(--forest-dark); margin: 8px 0;">
+                $\text{Area} = 3.14 \times r^2$
+              </div>
+              <div style="background: #eef7eb; border-radius: 6px; padding: 10px; font-size: 0.82rem; color: var(--forest-dark); font-weight: 700;">
+                Example: Radius $r = 3\,\text{m}$ ➔ $\text{Area} \approx 28.3\,\text{m}^2$ ➔ <strong>18 Students Protected!</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="teacher-script-bar">
+            <div class="script-tag">🎤 Teacher Script:</div>
+            <div class="script-text">
+              "We aren't just doing science today—we are surveying engineers calculating our campus thermal safety capacity."
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====================================================================
+           SLIDE 4: THE 6-ZONE INFRARED LASER MISSION
+           ==================================================================== -->
+      <div class="slide" id="slide4">
+        <div class="slide-header">
+          <div>
+            <div class="slide-category">Phase 4: Field Protocol & Safety</div>
+            <h2 class="slide-title">The 6-Zone Infrared Audit</h2>
+          </div>
+          <span style="font-size: 0.8rem; font-weight: 800; background: #ffe3e3; color: #c92a2a; padding: 4px 10px; border-radius: 4px;">
+            Health 5.3A Heat Safety
+          </span>
+        </div>
+
+        <div class="slide-body">
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 10px;">
+            <div class="feature-card" style="margin: 0; text-align: center;">
+              <div style="font-size: 1.5rem;">🏀</div>
+              <div style="font-weight: 800; font-size: 0.85rem; color: var(--soil-rich);">Zone 1: Blacktop</div>
+              <div style="font-size: 0.75rem; color: var(--text-muted);">Asphalt basketball court</div>
+            </div>
+            <div class="feature-card" style="margin: 0; text-align: center;">
+              <div style="font-size: 1.5rem;">🛝</div>
+              <div style="font-weight: 800; font-size: 0.85rem; color: var(--soil-rich);">Zone 2: Turf / Rubber</div>
+              <div style="font-size: 0.75rem; color: var(--text-muted);">Playground play area</div>
+            </div>
+            <div class="feature-card" style="margin: 0; text-align: center;">
+              <div style="font-size: 1.5rem;">☀️</div>
+              <div style="font-weight: 800; font-size: 0.85rem; color: var(--soil-rich);">Zone 3: Sun Grass</div>
+              <div style="font-size: 0.75rem; color: var(--text-muted);">Open lawn in full sun</div>
+            </div>
+            <div class="feature-card" style="margin: 0; text-align: center; background: #f0f7ee; border-color: #a3d49b;">
+              <div style="font-size: 1.5rem;">🌳</div>
+              <div style="font-weight: 800; font-size: 0.85rem; color: var(--forest-dark);">Zone 4: Tree Shade</div>
+              <div style="font-size: 0.75rem; color: var(--forest-dark);">Soil beneath tree canopy</div>
+            </div>
+            <div class="feature-card" style="margin: 0; text-align: center;">
+              <div style="font-size: 1.5rem;">🪵</div>
+              <div style="font-weight: 800; font-size: 0.85rem; color: var(--soil-rich);">Zone 5: Trunk Bark</div>
+              <div style="font-size: 0.75rem; color: var(--text-muted);">North/South tree bark</div>
+            </div>
+            <div class="feature-card" style="margin: 0; text-align: center; background: #f0f7ee; border-color: #a3d49b;">
+              <div style="font-size: 1.5rem;">🍃</div>
+              <div style="font-weight: 800; font-size: 0.85rem; color: var(--forest-dark);">Zone 6: Canopy Leaf</div>
+              <div style="font-size: 0.75rem; color: var(--forest-dark);">Living leaves in crown</div>
+            </div>
+          </div>
+
+          <div style="background: #ffe3e3; border: 1.5px solid #ffa8a8; border-radius: 6px; padding: 10px 14px; color: #a51818; font-size: 0.82rem; font-weight: 700;">
+            ⚠️ IR SAFETY RULE: Never aim the laser at anyone's eyes or face. Hold the gun 12 inches straight down from the ground.
+          </div>
+        </div>
+      </div>
+
+      <!-- ====================================================================
+           SLIDE 5: SQUAD ROLES & OUTDOOR MISSION TRIGGER
+           ==================================================================== -->
+      <div class="slide" id="slide5">
+        <div class="slide-header">
+          <div>
+            <div class="slide-category">Phase 5: Field Team Deployment</div>
+            <h2 class="slide-title">Grab Your Clipboards & Head Outside!</h2>
+          </div>
+          <span style="font-size: 0.8rem; font-weight: 800; background: var(--terracotta); color: #ffffff; padding: 4px 10px; border-radius: 4px;">
+            Squad Roles
+          </span>
+        </div>
+
+        <div class="slide-body">
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+            <div style="background: #ffffff; border: 2px solid #ded5c2; border-radius: 8px; padding: 18px; text-align: center;">
+              <div style="font-size: 2rem;">🔫</div>
+              <div style="font-family: 'Montserrat', sans-serif; font-weight: 800; color: var(--terracotta); font-size: 1rem; margin-top: 4px;">
+                Role 1: Laser Tech
+              </div>
+              <div style="font-size: 0.82rem; color: var(--text-muted); margin-top: 6px;">
+                Operates the IR thermometer gun and calls out exact temperatures for 3 trials.
+              </div>
+            </div>
+
+            <div style="background: #ffffff; border: 2px solid #ded5c2; border-radius: 8px; padding: 18px; text-align: center;">
+              <div style="font-size: 2rem;">📐</div>
+              <div style="font-family: 'Montserrat', sans-serif; font-weight: 800; color: #1c324b; font-size: 1rem; margin-top: 4px;">
+                Role 2: Pace Surveyor
+              </div>
+              <div style="font-size: 0.82rem; color: var(--text-muted); margin-top: 6px;">
+                Paces the 4 shadow radii and seals the transpiration bag on the branch.
+              </div>
+            </div>
+
+            <div style="background: #ffffff; border: 2px solid #ded5c2; border-radius: 8px; padding: 18px; text-align: center;">
+              <div style="font-size: 2rem;">📋</div>
+              <div style="font-family: 'Montserrat', sans-serif; font-weight: 800; color: var(--forest-dark); font-size: 1rem; margin-top: 4px;">
+                Role 3: Lead Recorder
+              </div>
+              <div style="font-size: 0.82rem; color: var(--text-muted); margin-top: 6px;">
+                Records all trial numbers on the clipboard worksheet and computes averages.
+              </div>
+            </div>
+          </div>
+
+          <div style="text-align: center; margin-top: 20px;">
+            <a href="lesson1.html" class="nav-btn" style="background: var(--terracotta); font-size: 1.05rem; padding: 12px 28px; border-radius: 30px;">
+              🚀 Launch 30-Minute Outdoor Lab
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="hint-bar">
+    Use ◀ Left / Right ▶ Arrow Keys or Spacebar to Navigate Slides · Press [F] for Fullscreen
+  </div>
+
+  <script>
+    let currentSlide = 1;
+    const totalSlides = 5;
+
+    function showSlide(index) {
+      if (index < 1) index = 1;
+      if (index > totalSlides) index = totalSlides;
+      currentSlide = index;
+
+      for (let i = 1; i <= totalSlides; i++) {
+        const slide = document.getElementById('slide' + i);
+        if (slide) {
+          if (i === currentSlide) {
+            slide.classList.add('active');
+          } else {
+            slide.classList.remove('active');
+          }
+        }
+      }
+
+      document.getElementById('slideCounter').innerText = `${currentSlide} / ${totalSlides}`;
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides) {
+        showSlide(currentSlide + 1);
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 1) {
+        showSlide(currentSlide - 1);
+      }
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
+        nextSlide();
+      } else if (e.key === 'ArrowLeft') {
+        prevSlide();
+      } else if (e.key === 'f' || e.key === 'F') {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen();
+        } else {
+          document.exitFullscreen();
+        }
+      }
+    });
+  </script>
+</body>
+</html>
