@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SombraTEKS Module 01: Urban Microclimate & Transpiration Audit (Master Field Dossier)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700;800&family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --terracotta: #a64b38;
+      --rust-dark: #803020;
+      --sage-green: #4a6b4b;
+      --forest-dark: #244230;
+      --deep-canopy: #142a1f;
+      --pechita-gold: #d89a42;
+      --pechita-light: #f4d48a;
+      --soil-rich: #3a2618;
+      --soil-deep: #1e130b;
+      --bg-cream: #fcfaf3;
+      --bg-warm: #f6f2e6;
+      --card-white: #ffffff;
+      --text-main: #2a221b;
+      --text-muted: #5a4f46;
+      --border-dotted: #b5a494;
+      --tag-sci: #244230;
+      --tag-math: #1c324b;
+      --tag-health: #8c1d1d;
+      --tag-elar: #5e284f;
+      --tag-art: #a04e22;
+      --tag-ss: #695213;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: #e8e2d4;
+      color: var(--text-main);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Top Floating Toolbar (Hidden on Print) */
+    .action-bar {
+      position: sticky;
+      top: 0;
+      z-index: 9999;
+      background: #ffffff;
+      border-bottom: 3px solid var(--terracotta);
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    }
+    .action-bar .brand {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--forest-dark);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .action-bar .btn-group {
+      display: flex;
+      gap: 10px;
+    }
+    .btn {
+      padding: 8px 16px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      border-radius: 6px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+    }
+    .btn-print {
+      background: var(--terracotta);
+      color: #ffffff;
+    }
+    .btn-print:hover {
+      background: var(--rust-dark);
+    }
+    .btn-link {
+      background: #e4ddc8;
+      color: var(--soil-rich);
+    }
+    .btn-link:hover {
+      background: #d4cbaf;
+    }
+
+    /* 8.5x11 Letter Container */
+    .dossier-wrapper {
+      max-width: 890px;
+      margin: 30px auto;
+      padding: 0 15px;
+    }
+
+    .lesson-sheet {
+      background: var(--bg-cream);
+      width: 100%;
+      min-height: 1120px;
+      border-radius: 4px;
+      padding: 45px 50px 35px 50px;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.1);
+      margin-bottom: 35px;
+      border: 1px solid #ddd5c4;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+    }
+
+    /* Print Stylesheet */
+    @page {
+      size: letter portrait;
+      margin: 0.35in;
+    }
+    @media print {
+      body {
+        background: #ffffff !important;
+      }
+      .action-bar {
+        display: none !important;
+      }
+      .dossier-wrapper {
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      .lesson-sheet {
+        box-shadow: none !important;
+        border: none !important;
+        margin: 0 !important;
+        padding: 0.25in !important;
+        page-break-before: always;
+        break-before: page;
+        min-height: 98vh !important;
+      }
+      .lesson-sheet.cover-sheet {
+        min-height: 98vh !important;
+      }
+    }
+
+    /* ==========================================================================
+       ARTISTIC BOTANICAL ACCENTS & GRAPHIC FLAIR
+       ========================================================================== */
+    .botanical-header-banner {
+      background: linear-gradient(135deg, #1b382b 0%, #2d503b 100%);
+      border-radius: 8px;
+      padding: 30px 35px;
+      color: #ffffff;
+      position: relative;
+      border-bottom: 5px solid var(--pechita-gold);
+      box-shadow: 0 6px 18px rgba(27, 56, 43, 0.2);
+      overflow: hidden;
+    }
+
+    .botanical-bg-art {
+      position: absolute;
+      right: -20px;
+      bottom: -30px;
+      opacity: 0.15;
+      pointer-events: none;
+    }
+
+    .badge-stamp {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--terracotta);
+      color: #ffffff;
+      padding: 4px 12px;
+      border-radius: 4px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 0.75rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .module-num-strap {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--pechita-gold);
+      margin: 10px 0 4px 0;
+    }
+
+    .module-main-title {
+      font-family: 'Fredoka', 'Montserrat', sans-serif;
+      font-size: 2.35rem;
+      font-weight: 800;
+      line-height: 1.1;
+      color: #ffffff;
+      margin-bottom: 8px;
+      text-shadow: 2px 3px 0px rgba(0,0,0,0.25);
+    }
+
+    .module-subtitle {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: #e0eee4;
+      line-height: 1.4;
+    }
+
+    /* UTRGV Signature Two-Column Layout with Rotated Spine */
+    .sheet-grid {
+      display: grid;
+      grid-template-columns: 46px 1fr;
+      gap: 24px;
+      height: 100%;
+    }
+
+    .sidebar-spine {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .vertical-title {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.45rem;
+      font-weight: 900;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      color: var(--soil-rich);
+      white-space: nowrap;
+      margin-bottom: 12px;
+    }
+
+    .dotted-spine {
+      flex-grow: 1;
+      width: 2px;
+      border-left: 3px dotted var(--border-dotted);
+      margin: 8px 0;
+    }
+
+    .sheet-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* Section Headings */
+    .section-title {
+      font-family: 'Fredoka', 'Montserrat', sans-serif;
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: var(--terracotta);
+      line-height: 1.15;
+      margin-bottom: 6px;
+    }
+
+    .section-strap {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+      font-weight: 500;
+    }
+
+    .dotted-divider {
+      width: 100%;
+      border-top: 3px dotted var(--terracotta);
+      margin: 14px 0 18px 0;
+    }
+
+    /* Callout & Phenomenon Card */
+    .phenomenon-card {
+      background: #fbf7ee;
+      border: 2px solid #e2d7c3;
+      border-left: 6px solid var(--sage-green);
+      border-radius: 6px;
+      padding: 16px 20px;
+      margin: 14px 0;
+      position: relative;
+    }
+
+    .phenomenon-card .header {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--forest-dark);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+
+    .phenomenon-card .quote {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--soil-rich);
+      line-height: 1.45;
+    }
+
+    /* Standards Alignment Grid */
+    .standards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 14px 0;
+    }
+
+    .standard-pill-card {
+      background: #ffffff;
+      border: 1px solid #dfd6c4;
+      border-radius: 6px;
+      padding: 10px 12px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    }
+
+    .standard-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 3px;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+
+    .standard-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--soil-rich);
+      margin-bottom: 2px;
+    }
+
+    .standard-desc {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+
+    /* 5E Step Boxes */
+    .step-5e-card {
+      background: #ffffff;
+      border: 1px solid #e0d8c8;
+      border-radius: 6px;
+      padding: 14px 18px;
+      margin-bottom: 12px;
+      position: relative;
+    }
+
+    .step-5e-badge {
+      position: absolute;
+      top: -10px;
+      left: 16px;
+      background: var(--terracotta);
+      color: #ffffff;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 2px 10px;
+      border-radius: 12px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .step-5e-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: var(--forest-dark);
+      margin-top: 4px;
+      margin-bottom: 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .step-5e-time {
+      font-size: 0.78rem;
+      color: var(--pechita-gold);
+      font-weight: 700;
+    }
+
+    .step-5e-text {
+      font-size: 0.84rem;
+      color: var(--text-main);
+      line-height: 1.45;
+    }
+
+    /* Field Equipment & Tape Accents */
+    .equipment-box {
+      background: #fbf9f2;
+      border: 2px dashed #cfc2ad;
+      border-radius: 6px;
+      padding: 12px 16px;
+      margin: 12px 0;
+      position: relative;
+    }
+
+    .tape-accent {
+      position: absolute;
+      width: 50px;
+      height: 16px;
+      background: rgba(220, 208, 175, 0.8);
+      transform: rotate(-8deg);
+      top: -6px;
+      right: 20px;
+    }
+
+    /* Student Field Worksheet Form Styling */
+    .field-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0;
+      font-size: 0.82rem;
+    }
+
+    .field-table th {
+      background: var(--forest-dark);
+      color: #ffffff;
+      padding: 8px 10px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.74rem;
+      font-weight: 800;
+      text-align: left;
+      text-transform: uppercase;
+    }
+
+    .field-table td {
+      padding: 8px 10px;
+      border-bottom: 1px solid #dfd7c5;
+      background: #ffffff;
+    }
+
+    .field-table tr:nth-child(even) td {
+      background: #f8f5ed;
+    }
+
+    .fill-box {
+      display: inline-block;
+      min-width: 50px;
+      border-bottom: 1.5px solid #2a221b;
+      height: 16px;
+      margin: 0 4px;
+    }
+
+    .drawing-box {
+      background: #ffffff;
+      border: 2px solid #d4cabb;
+      border-radius: 6px;
+      height: 110px;
+      padding: 10px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .drawing-prompt {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #7a6e63;
+      text-transform: uppercase;
+    }
+
+    /* Graph Grid Container */
+    .graph-grid-container {
+      background: #ffffff;
+      border: 1.5px solid #cfc2ad;
+      border-radius: 6px;
+      padding: 12px 16px;
+      margin: 10px 0;
+    }
+
+    .bar-chart-visual {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      height: 120px;
+      align-items: flex-end;
+      border-bottom: 2px solid var(--soil-rich);
+      border-left: 2px solid var(--soil-rich);
+      padding: 10px 15px 0 15px;
+      position: relative;
+      margin-top: 20px;
+    }
+
+    .chart-bar-zone {
+      background: repeating-linear-gradient(45deg, #f0e6d2, #f0e6d2 6px, #e4d8c0 6px, #e4d8c0 12px);
+      border: 1.5px solid var(--border-dotted);
+      border-bottom: none;
+      height: 100%;
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding-top: 4px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--soil-rich);
+    }
+
+    .threshold-danger-line {
+      position: absolute;
+      top: 35%;
+      left: 0;
+      right: 0;
+      border-top: 2px dashed #c92a2a;
+      z-index: 10;
+    }
+
+    .threshold-danger-label {
+      position: absolute;
+      top: -14px;
+      right: 6px;
+      font-size: 0.68rem;
+      font-weight: 800;
+      color: #c92a2a;
+      background: #ffe3e3;
+      padding: 1px 6px;
+      border-radius: 3px;
+    }
+
+    /* Page Numbers */
+    .page-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 12px;
+      margin-top: 15px;
+      border-top: 1px solid #ded5c2;
+    }
+
+    .page-footer-left {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .page-number-retro {
+      font-family: 'Fredoka', 'Montserrat', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--soil-rich);
+      letter-spacing: 1px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Navigation Actions -->
+  <div class="action-bar">
+    <div class="brand">
+      <span>🌳</span> SombraTEKS Master Field Dossier · Module 01
+    </div>
+    <div class="btn-group">
+      <button class="btn btn-print" onclick="window.print()">
+        <span>🖨️</span> Print Complete 5-Page Dossier
+      </button>
+      <a href="guide.html" class="btn btn-link">
+        <span>📖</span> Program Field Guide
+      </a>
+      <a href="outdoor_lab_curriculum_hub.html" class="btn btn-link">
+        <span>🧪</span> All 13 Modules
+      </a>
+    </div>
+  </div>
+
+  <div class="dossier-wrapper">
+
+    <!-- ========================================================================
+         PAGE 1: DOSSIER COVER & ARCHITECTURE
+         ======================================================================== -->
+    <div class="lesson-sheet cover-sheet">
+      <div>
+        <div class="botanical-header-banner">
+          <!-- Background SVG Silhouette -->
+          <svg class="botanical-bg-art" width="220" height="220" viewBox="0 0 100 100" fill="none">
+            <path d="M50 90 Q40 50 10 30 T80 10 Q60 50 50 90 Z" fill="#ffffff"/>
+            <circle cx="25" cy="40" r="10" fill="#ffffff"/>
+            <circle cx="75" cy="30" r="8" fill="#ffffff"/>
+          </svg>
+
+          <div class="badge-stamp">UTRGV AGROECOLOGY CERTIFIED · 2026</div>
+          <div class="module-num-strap">K–12 OUTDOOR LAB MODULE 01</div>
+          <h1 class="module-main-title">Urban Microclimate & Transpiration Audit</h1>
+          <div class="module-subtitle">Empirical Thermodynamics, Pediatric Heat Safety & Evaporative Canopy Cooling</div>
+        </div>
+
+        <div style="display: flex; gap: 12px; margin: 16px 0;">
+          <span style="font-size: 0.78rem; font-weight: 800; background: #e3eedd; color: var(--forest-dark); padding: 4px 10px; border-radius: 4px; border: 1px solid #c4dec0;">
+            🎯 Grade Band: Grades 3–5 (Elementary)
+          </span>
+          <span style="font-size: 0.78rem; font-weight: 800; background: #faebd7; color: var(--terracotta); padding: 4px 10px; border-radius: 4px; border: 1px solid #ebd0b5;">
+            ⏱️ Duration: 45–90 Min (1–2 Outdoor Sessions)
+          </span>
+          <span style="font-size: 0.78rem; font-weight: 800; background: #e0eaf5; color: #1c324b; padding: 4px 10px; border-radius: 4px; border: 1px solid #c2d6eb;">
+            📐 Core Model: Dual-Unit ($mL/hr$ & $A \approx \pi r^2$)
+          </span>
+        </div>
+
+        <!-- Anchor Phenomenon Callout -->
+        <div class="phenomenon-card">
+          <div class="header">
+            <!-- Thermometer Icon SVG -->
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg>
+            Anchor Phenomenon & Central Field Mystery
+          </div>
+          <div class="quote">
+            "On a 95°F afternoon in South Texas, why does an asphalt basketball court heat up to over 135°F—hot enough to cause pediatric skin burns—while the soil beneath a mature Honey Mesquite tree stays a cool 85°F? And why does a dry plastic bag sealed over a leafy tree branch fill with pure, clean liquid water drops in under an hour?"
+          </div>
+        </div>
+
+        <h3 style="font-family: 'Montserrat', sans-serif; font-size: 0.95rem; font-weight: 800; color: var(--soil-rich); text-transform: uppercase; letter-spacing: 1px; margin-top: 16px; margin-bottom: 8px;">
+          TEKS State Standards Alignment Matrix:
+        </h3>
+
+        <div class="standards-grid">
+          <div class="standard-pill-card">
+            <span class="standard-tag" style="background: var(--tag-sci);">Science 5.12B</span>
+            <div class="standard-title">3D Matter & Energy Cycling</div>
+            <div class="standard-desc">Model how plants use sunlight, soil water, and air to cycle matter and release cooling water vapor via stomata.</div>
+          </div>
+          <div class="standard-pill-card">
+            <span class="standard-tag" style="background: var(--tag-math);">Math 5.4H</span>
+            <div class="standard-title">Area & Perimeter Geometry</div>
+            <div class="standard-desc">Calculate shadow radius ($r_{\text{avg}}$) and canopy cooling footprint area ($A \approx 3.14 \times r^2$).</div>
+          </div>
+          <div class="standard-pill-card">
+            <span class="standard-tag" style="background: var(--tag-health);">Health 5.3A</span>
+            <div class="standard-title">Environmental Heat Health</div>
+            <div class="standard-desc">Analyze surface heat exposure vs safe pediatric physiological thresholds ($104^\circ\text{F}$ burn limits).</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="page-footer">
+        <div class="page-footer-left">SombraTEKS Master Field Dossier · UTRGV Agroecology</div>
+        <div class="page-number-retro">01</div>
+      </div>
+    </div>
+
+    <!-- ========================================================================
+         PAGE 2: MASTER 5E TEACHER GUIDE
+         ======================================================================== -->
+    <div class="lesson-sheet">
+      <div class="sheet-grid">
+        <div class="sidebar-spine">
+          <div class="vertical-title">TEACHER 5E GUIDE</div>
+          <div class="dotted-spine"></div>
+        </div>
+
+        <div class="sheet-content">
+          <div>
+            <h2 class="section-title">5E Instructional Blueprint</h2>
+            <div class="section-strap">Turn-Key 45–90 Minute Outdoor Field Progression</div>
+            <div class="dotted-divider"></div>
+
+            <div class="step-5e-card">
+              <div class="step-5e-badge">Phase 1: Engage</div>
+              <div class="step-5e-title">
+                <span>The Asphalt Frying Pan Hook</span>
+                <span class="step-5e-time">15 Min</span>
+              </div>
+              <div class="step-5e-text">
+                Gather at the edge of the schoolyard asphalt. Touch test analogy: <em>"Why does canvas shade feel hot and stuffy, but tree shade feels like an active AC?"</em> Introduce the living solar pump mechanism. Seal a 1-gallon clear Ziploc bag over 20–30 sunlit leaves on a native Mesquite or Elm branch with a zip-tie.
+              </div>
+            </div>
+
+            <div class="step-5e-card">
+              <div class="step-5e-badge">Phase 2: Explore</div>
+              <div class="step-5e-title">
+                <span>6-Zone IR Heat Transect & Pacing</span>
+                <span class="step-5e-time">30 Min</span>
+              </div>
+              <div class="step-5e-text">
+                Calibrate 10-step pace along a 10m tape measure. Measure tree canopy shadow radius in 4 directions. Using non-contact IR guns, record 3 repeated surface temperatures across 6 zones (Asphalt, Turf, Open Grass, Tree Shade, Trunk Bark, Canopy Leaves).
+              </div>
+            </div>
+
+            <div class="step-5e-card">
+              <div class="step-5e-badge">Phase 3: Explain</div>
+              <div class="step-5e-title">
+                <span>Stomata Harvest & Latent Heat</span>
+                <span class="step-5e-time">20 Min</span>
+              </div>
+              <div class="step-5e-text">
+                Harvest the condensation bag. Pour water into a 10 mL graduated cylinder. Inspect microscopic stomata on leaf undersides using 10x hand lenses. Explain latent heat of vaporization: phase change absorbs thermal energy directly from schoolyard air.
+              </div>
+            </div>
+
+            <div class="step-5e-card">
+              <div class="step-5e-badge">Phase 4 & 5: Elaborate & Evaluate</div>
+              <div class="step-5e-title">
+                <span>Thermal Refuge Capacity & CER Synthesis</span>
+                <span class="step-5e-time">25 Min</span>
+              </div>
+              <div class="step-5e-text">
+                Compute total shade area ($A = \pi r^2$) and recess student capacity ($1.5 \text{m}^2/\text{child}$). Students write an evidence-based Claim-Evidence-Reasoning (CER) report citing exact temperature drop and transpiration milliliters.
+              </div>
+            </div>
+
+            <!-- Field Kit Checklist -->
+            <div class="equipment-box">
+              <div class="tape-accent"></div>
+              <div style="font-family: 'Montserrat', sans-serif; font-size: 0.82rem; font-weight: 800; color: var(--soil-rich); text-transform: uppercase;">
+                🎒 Team Field Kit (Per 3–4 Students):
+              </div>
+              <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 4px; line-height: 1.4;">
+                • 1 Infrared (IR) Thermometer Gun · • 1 Clear 1-Gal Ziploc + Zip-Tie · • 1 Graduated Cylinder (10 mL) · • 1 Hand Lens (10x) · • 1 Metric Tape (10m) · • 1 Field Clipboard + Worksheet.
+              </div>
+            </div>
+          </div>
+
+          <div class="page-footer">
+            <div class="page-footer-left">Module 01: Instructional Guide · Page 2 of 5</div>
+            <div class="page-number-retro">02</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================================
+         PAGE 3: STUDENT FIELD CLIPBOARD (PART A: GEOMETRY & HEAT TRANSECT)
+         ======================================================================== -->
+    <div class="lesson-sheet">
+      <div class="sheet-grid">
+        <div class="sidebar-spine">
+          <div class="vertical-title">FIELD CLIPBOARD</div>
+          <div class="dotted-spine"></div>
+        </div>
+
+        <div class="sheet-content">
+          <div>
+            <div style="display: flex; justify-content: space-between; border-bottom: 2px solid var(--forest-dark); padding-bottom: 6px; margin-bottom: 12px;">
+              <div>
+                <h2 style="font-family: 'Fredoka', sans-serif; font-size: 1.45rem; color: var(--terracotta);">Student Field Investigation</h2>
+                <div style="font-size: 0.78rem; font-weight: 700; color: var(--forest-dark); text-transform: uppercase;">Part A: Pace Calibration & 6-Zone Thermal Transect</div>
+              </div>
+              <div style="text-align: right; font-size: 0.78rem; color: var(--text-muted);">
+                Name: <span class="fill-box" style="min-width: 140px;"></span><br>
+                Date: <span class="fill-box" style="min-width: 80px;"></span> Period: <span class="fill-box" style="min-width: 40px;"></span>
+              </div>
+            </div>
+
+            <!-- Part 1: Step Pace Calibration -->
+            <div style="background: #ffffff; border: 1px solid #ded5c2; border-radius: 6px; padding: 10px 14px; margin-bottom: 10px;">
+              <div style="font-family: 'Montserrat', sans-serif; font-size: 0.78rem; font-weight: 800; color: var(--soil-rich); text-transform: uppercase;">
+                1. Personal Step Pace Calibration (Math 5.4H)
+              </div>
+              <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 2px;">
+                Walk 10 natural strides along the 10-meter tape. Total Distance: <span class="fill-box" style="min-width: 60px;"></span> meters.<br>
+                <strong>Personal Pace Factor:</strong> (Distance ÷ 10) = <strong style="color: var(--terracotta);"><span class="fill-box" style="min-width: 60px;"></span> meters / step</strong>.
+              </div>
+            </div>
+
+            <!-- Part 2: Canopy Shadow Radius & Area Calculation -->
+            <div style="background: #ffffff; border: 1px solid #ded5c2; border-radius: 6px; padding: 10px 14px; margin-bottom: 10px;">
+              <div style="font-family: 'Montserrat', sans-serif; font-size: 0.78rem; font-weight: 800; color: var(--soil-rich); text-transform: uppercase;">
+                2. Canopy Shade Radius & Area Geometry ($A \approx \pi r^2$)
+              </div>
+              <div style="font-size: 0.76rem; color: var(--text-muted); margin-top: 2px;">
+                North Radius ($r_1$): <span class="fill-box"></span> m · South ($r_2$): <span class="fill-box"></span> m · East ($r_3$): <span class="fill-box"></span> m · West ($r_4$): <span class="fill-box"></span> m.<br>
+                <strong>Average Radius ($r_{\text{avg}}$):</strong> <span class="fill-box" style="min-width: 50px;"></span> m. ➔ <strong>Shaded Area:</strong> $3.14 \times (r_{\text{avg}})^2 =$ <strong style="color: var(--forest-dark);"><span class="fill-box" style="min-width: 70px;"></span> $\text{m}^2$</strong>.<br>
+                <strong>Recess Student Capacity:</strong> ($\text{Area} \div 1.5$) = <strong style="color: var(--terracotta);"><span class="fill-box" style="min-width: 50px;"></span> students protected!</strong>
+              </div>
+            </div>
+
+            <!-- Part 3: 6-Zone IR Temperature Table -->
+            <div style="font-family: 'Montserrat', sans-serif; font-size: 0.8rem; font-weight: 800; color: var(--soil-rich); text-transform: uppercase; margin-top: 12px; margin-bottom: 4px;">
+              3. 6-Zone Infrared Surface Temperature Audit (Science 5.12B)
+            </div>
+
+            <table class="field-table">
+              <thead>
+                <tr>
+                  <th>Campus Microclimate Zone</th>
+                  <th>Trial 1</th>
+                  <th>Trial 2</th>
+                  <th>Trial 3</th>
+                  <th>Average Temp (°F)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>1. Unshaded Blacktop Asphalt</strong></td>
+                  <td>_____°F</td>
+                  <td>_____°F</td>
+                  <td>_____°F</td>
+                  <td><strong style="color: #c92a2a;">_________°F</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>2. Unshaded Synthetic Turf / Playground</strong></td>
+                  <td>_____°F</td>
+                  <td>_____°F</td>
+                  <td>_____°F</td>
+                  <td><strong style="color: #c92a2a;">_________°F</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>3. Unshaded Lawn Grass (Full Sun)</strong></td>
+                  <td>_____°F</td>
+                  <td>_____°F</td>
+                  <td>_____°F</td>
+                  <td><strong>_________°F</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>4. Shaded Grass/Soil Beneath Tree Canopy</strong></td>
+                  <td>_____°F</td>
+                  <td>_____°F</td>
+                  <td>_____°F</td>
+                  <td><strong style="color: var(--forest-dark);">_________°F</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>5. Living Tree Trunk Bark (North Face)</strong></td>
+                  <td>_____°F</td>
+                  <td>_____°F</td>
+                  <td>_____°F</td>
+                  <td><strong>_________°F</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>6. Living Tree Leaves in Canopy Crown</strong></td>
+                  <td>_____°F</td>
+                  <td>_____°F</td>
+                  <td>_____°F</td>
+                  <td><strong style="color: var(--forest-dark);">_________°F</strong></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div style="background: #eef7eb; border: 1.5px solid #b8dfb0; border-radius: 6px; padding: 8px 12px; font-size: 0.8rem; color: var(--forest-dark); font-weight: 700; margin-top: 6px;">
+              ❄️ Active Thermal Cooling Difference: Asphalt Avg (<span class="fill-box" style="min-width: 40px;"></span>°F) − Tree Shade Avg (<span class="fill-box" style="min-width: 40px;"></span>°F) = <span class="fill-box" style="min-width: 50px;"></span>°F COOLER!
+            </div>
+          </div>
+
+          <div class="page-footer">
+            <div class="page-footer-left">Module 01: Student Clipboard · Page 3 of 5</div>
+            <div class="page-number-retro">03</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================================
+         PAGE 4: STUDENT FIELD CLIPBOARD (PART B: TRANSPIRATION & CER)
+         ======================================================================== -->
+    <div class="lesson-sheet">
+      <div class="sheet-grid">
+        <div class="sidebar-spine">
+          <div class="vertical-title">DATA & SYNTHESIS</div>
+          <div class="dotted-spine"></div>
+        </div>
+
+        <div class="sheet-content">
+          <div>
+            <div style="display: flex; justify-content: space-between; border-bottom: 2px solid var(--forest-dark); padding-bottom: 6px; margin-bottom: 12px;">
+              <div>
+                <h2 style="font-family: 'Fredoka', sans-serif; font-size: 1.45rem; color: var(--terracotta);">Student Field Investigation</h2>
+                <div style="font-size: 0.78rem; font-weight: 700; color: var(--forest-dark); text-transform: uppercase;">Part B: Transpiration Harvest, Bar Chart & CER</div>
+              </div>
+              <div style="text-align: right; font-size: 0.78rem; color: var(--text-muted);">
+                Tree Tag ID: <span class="fill-box" style="min-width: 100px;"></span>
+              </div>
+            </div>
+
+            <!-- Part 4: Transpiration Harvest & Stomata -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+              <div style="background: #ffffff; border: 1px solid #ded5c2; border-radius: 6px; padding: 10px 12px;">
+                <div style="font-family: 'Montserrat', sans-serif; font-size: 0.78rem; font-weight: 800; color: var(--soil-rich); text-transform: uppercase;">
+                  4. Transpiration Water Harvest
+                </div>
+                <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px; line-height: 1.5;">
+                  • Bag Sealed Time: <span class="fill-box" style="min-width: 50px;"></span><br>
+                  • Bag Harvest Time: <span class="fill-box" style="min-width: 50px;"></span> (Elapsed: <span class="fill-box" style="min-width: 30px;"></span> min)<br>
+                  • Liquid Harvested: <strong style="color: var(--terracotta);"><span class="fill-box" style="min-width: 40px;"></span> mL</strong>.<br>
+                  • <strong>Transpiration Rate:</strong> <span class="fill-box" style="min-width: 50px;"></span> $\text{mL}/\text{hour}$.
+                </div>
+              </div>
+
+              <div class="drawing-box">
+                <div class="drawing-prompt">🔬 Stomata Hand Lens Sketch (10x)</div>
+                <div style="font-size: 0.68rem; color: #999; text-align: center;">[ Sketch the microscopic stomatal leaf pores below ]</div>
+                <div style="font-size: 0.7rem; font-weight: 600; color: var(--forest-dark);">Leaf Species: _________________</div>
+              </div>
+            </div>
+
+            <!-- Part 5: Bar Graph Visual -->
+            <div class="graph-grid-container">
+              <div style="font-family: 'Montserrat', sans-serif; font-size: 0.78rem; font-weight: 800; color: var(--soil-rich); text-transform: uppercase;">
+                5. Microclimate Temperature Bar Graph (Math 5.1D)
+              </div>
+              <div class="bar-chart-visual">
+                <div class="threshold-danger-line">
+                  <div class="threshold-danger-label">⚠️ 104°F PEDIATRIC BURN THRESHOLD</div>
+                </div>
+                <div class="chart-bar-zone">Zone 1<br>(Asphalt)</div>
+                <div class="chart-bar-zone">Zone 2<br>(Turf)</div>
+                <div class="chart-bar-zone">Zone 3<br>(Sun Grass)</div>
+                <div class="chart-bar-zone" style="background: #dbeef2; border-color: #72b3c7;">Zone 4<br>(Tree Shade)</div>
+              </div>
+            </div>
+
+            <!-- Part 6: Claim-Evidence-Reasoning (CER) Scaffold -->
+            <div style="margin-top: 12px;">
+              <div style="font-family: 'Montserrat', sans-serif; font-size: 0.82rem; font-weight: 800; color: var(--terracotta); text-transform: uppercase;">
+                6. Scientific CER Synthesis Report (Science 5.12B / ELAR 5.11A)
+              </div>
+              <div style="font-size: 0.74rem; font-weight: 700; color: var(--soil-rich); margin-top: 4px;">
+                CLAIM (Answer: How do campus trees cool schoolyards and protect health?):
+              </div>
+              <div style="border-bottom: 1.5px solid #2a221b; height: 20px; margin-bottom: 4px;"></div>
+              <div style="font-size: 0.74rem; font-weight: 700; color: var(--soil-rich);">
+                EVIDENCE (Cite specific temperatures from Zone 1 vs Zone 4 and transpiration mL):
+              </div>
+              <div style="border-bottom: 1.5px solid #2a221b; height: 20px; margin-bottom: 4px;"></div>
+              <div style="border-bottom: 1.5px solid #2a221b; height: 20px;"></div>
+            </div>
+          </div>
+
+          <div class="page-footer">
+            <div class="page-number-retro">04</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================================
+         PAGE 5: SCORING RUBRIC & BILINGUAL GLOSSARY
+         ======================================================================== -->
+    <div class="lesson-sheet">
+      <div class="sheet-grid">
+        <div class="sidebar-spine">
+          <div class="vertical-title">RUBRIC & GLOSSARY</div>
+          <div class="dotted-spine"></div>
+        </div>
+
+        <div class="sheet-content">
+          <div>
+            <h2 class="section-title">Mastery Rubric & Glossary</h2>
+            <div class="section-strap">4-Level STAAR Science & Math Standards Evaluation</div>
+            <div class="dotted-divider"></div>
+
+            <table class="field-table" style="font-size: 0.78rem;">
+              <thead>
+                <tr>
+                  <th style="width: 20%;">Criteria</th>
+                  <th style="width: 20%;">4 - Exemplary</th>
+                  <th style="width: 20%;">3 - Proficient</th>
+                  <th style="width: 20%;">2 - Developing</th>
+                  <th style="width: 20%;">1 - Beginning</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Thermal Audit Data (Sci 5.12B)</strong></td>
+                  <td>All 6 zones measured with 3 precise trials & correct averages.</td>
+                  <td>4–5 zones measured accurately with minor calculation error.</td>
+                  <td>2–3 zones measured; lacks multiple repeated trials.</td>
+                  <td>Incomplete data table; missing temperature averages.</td>
+                </tr>
+                <tr>
+                  <td><strong>Shade Geometry (Math 5.4H)</strong></td>
+                  <td>Pace factor correctly calibrated; accurate canopy area $A=\pi r^2$.</td>
+                  <td>Canopy area calculated accurately with slight rounding variance.</td>
+                  <td>Pace factor applied incorrectly; formula miscalculated.</td>
+                  <td>Area calculation omitted or unsupported by radius data.</td>
+                </tr>
+                <tr>
+                  <td><strong>CER Synthesis (ELAR 5.11A)</strong></td>
+                  <td>Clear claim, 2+ numerical data points, explains latent heat cooling.</td>
+                  <td>Accurate claim supported by 1–2 temperature numbers.</td>
+                  <td>Claim made without specific numeric evidence from audit.</td>
+                  <td>Incomplete CER statement; missing scientific reasoning.</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <!-- Sombra Sana Bilingual Vocabulary -->
+            <div style="background: #fdfbf7; border: 1.5px solid #ded5c2; border-radius: 6px; padding: 14px 18px; margin-top: 16px;">
+              <div style="font-family: 'Montserrat', sans-serif; font-size: 0.85rem; font-weight: 800; color: var(--forest-dark); text-transform: uppercase;">
+                🌐 Sombra Sana Dual-Language Academic Word Bank:
+              </div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; font-size: 0.76rem; line-height: 1.4;">
+                <div>• <strong>Transpiración / Transpiration:</strong> Evaporative loss of water vapor through leaf stomata.</div>
+                <div>• <strong>Estomas / Stomata:</strong> Microscopic leaf pores regulating gas exchange and moisture.</div>
+                <div>• <strong>Microclima / Microclimate:</strong> Local atmospheric zone differing from surrounding area.</div>
+                <div>• <strong>Sombra Moteada / Dappled Shade:</strong> Filtered sunlight beneath living native canopy.</div>
+              </div>
+            </div>
+
+            <!-- GT / Advanced Math Extension -->
+            <div class="equipment-box" style="margin-top: 14px;">
+              <div style="font-family: 'Montserrat', sans-serif; font-size: 0.8rem; font-weight: 800; color: var(--pechita-gold); text-transform: uppercase;">
+                🚀 Advanced / GT Extension: The Campus Water Pump
+              </div>
+              <div style="font-size: 0.76rem; color: var(--soil-rich); margin-top: 4px;">
+                If a mature Honey Mesquite tree transpires <strong>35 gallons (132 Liters)</strong> of water per sunny day, calculate how many liters of cooling water vapor a 25-tree schoolyard microforest pumps into your campus atmosphere during a 5-day school week!
+              </div>
+            </div>
+          </div>
+
+          <div class="page-footer">
+            <div class="page-number-retro">05</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
