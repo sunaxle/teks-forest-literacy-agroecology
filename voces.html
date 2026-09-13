@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SombraTEKS: Voces del Valle · Student Field Journal & Cultural Edition</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fredoka:wght@600;700;800&family=Inter:wght@400;500;600;700&family=Kalam:wght@400;700&family=Montserrat:wght@700;800;900&family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --terracotta: #a64b38;
+      --rust-dark: #7a2b1c;
+      --sage-green: #486949;
+      --forest-dark: #223f2b;
+      --pechita-gold: #d89a42;
+      --pechita-light: #faeac8;
+      --soil-rich: #3a2618;
+      --soil-deep: #1e130b;
+      --bg-cream: #fbf8f0;
+      --bg-warm: #f5f0e3;
+      --sticky-yellow: #fef08a;
+      --sticky-pink: #fbcfe8;
+      --sticky-blue: #bae6fd;
+      --text-main: #2a221b;
+      --text-muted: #5c5045;
+      --ink-blue: #1e3a8a;
+      --pencil-lead: #374151;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: #e6dfd1;
+      color: var(--text-main);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Top Floating Action Bar */
+    .top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 9999;
+      background: #ffffff;
+      border-bottom: 3px solid var(--pechita-gold);
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    }
+    .top-bar .title {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--forest-dark);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .top-bar .actions {
+      display: flex;
+      gap: 10px;
+    }
+    .btn {
+      padding: 8px 16px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      border-radius: 6px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+    }
+    .btn-print {
+      background: var(--terracotta);
+      color: #ffffff;
+    }
+    .btn-print:hover {
+      background: var(--rust-dark);
+    }
+    .btn-link {
+      background: #e2dac7;
+      color: var(--soil-rich);
+    }
+
+    /* Sheet Wrapper (8.5x11 Ratio) */
+    .journal-wrapper {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 0 15px;
+    }
+
+    .journal-sheet {
+      background: var(--bg-cream);
+      width: 100%;
+      min-height: 1120px;
+      border-radius: 4px;
+      padding: 45px 50px 35px 50px;
+      box-shadow: 0 14px 40px rgba(0,0,0,0.12);
+      margin-bottom: 40px;
+      border: 1px solid #dcceba;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+    }
+
+    /* Print Styles */
+    @page {
+      size: letter portrait;
+      margin: 0.35in;
+    }
+    @media print {
+      body {
+        background: #ffffff !important;
+      }
+      .top-bar {
+        display: none !important;
+      }
+      .journal-wrapper {
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      .journal-sheet {
+        box-shadow: none !important;
+        border: none !important;
+        margin: 0 !important;
+        padding: 0.25in !important;
+        page-break-before: always;
+        break-before: page;
+        min-height: 98vh !important;
+      }
+    }
+
+    /* ==========================================================================
+       AUTHENTIC HUMAN & STUDENT TOUCH VISUAL ELEMENTS
+       ========================================================================== */
+    .handwritten {
+      font-family: 'Caveat', 'Kalam', cursive;
+      color: var(--ink-blue);
+      line-height: 1.3;
+    }
+
+    .pencil-note {
+      font-family: 'Kalam', cursive;
+      color: var(--pencil-lead);
+    }
+
+    /* Sticky Note Widget */
+    .sticky-note {
+      background: var(--sticky-yellow);
+      padding: 16px 18px;
+      border-radius: 2px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.05);
+      position: relative;
+      transform: rotate(-1.5deg);
+      border: 1px solid #fde047;
+      margin: 12px 0;
+    }
+    .sticky-note.pink {
+      background: var(--sticky-pink);
+      border-color: #f472b6;
+      transform: rotate(1.2deg);
+    }
+    .sticky-note.blue {
+      background: var(--sticky-blue);
+      border-color: #7dd3fc;
+      transform: rotate(-0.8deg);
+    }
+    .sticky-tape {
+      position: absolute;
+      top: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 55px;
+      height: 18px;
+      background: rgba(230, 220, 190, 0.7);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+    .sticky-author {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--terracotta);
+      text-transform: uppercase;
+      margin-top: 8px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* Polaroid Photo Card */
+    .polaroid-frame {
+      background: #ffffff;
+      padding: 12px 12px 28px 12px;
+      border-radius: 2px;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.1);
+      border: 1px solid #e2d9cc;
+      transform: rotate(2deg);
+      position: relative;
+      margin: 10px 0;
+    }
+    .polaroid-tape-tl {
+      position: absolute;
+      top: -8px;
+      left: -10px;
+      width: 45px;
+      height: 16px;
+      background: rgba(225, 215, 185, 0.75);
+      transform: rotate(-25deg);
+    }
+    .polaroid-photo {
+      width: 100%;
+      height: 140px;
+      background: #e8ecda;
+      border: 1px solid #d0d7be;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--forest-dark);
+      text-align: center;
+      padding: 10px;
+    }
+    .polaroid-caption {
+      font-family: 'Caveat', cursive;
+      font-size: 1.15rem;
+      color: #333333;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    /* Abuela Wisdom Callout */
+    .abuela-lore-card {
+      background: #fffbf2;
+      border: 2px dashed #d89a42;
+      border-radius: 8px;
+      padding: 18px 22px;
+      margin: 15px 0;
+      position: relative;
+    }
+    .abuela-title {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--terracotta);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    /* Journal Cover Header */
+    .journal-header {
+      background: linear-gradient(135deg, #1b382b 0%, #2d503b 100%);
+      border-radius: 8px;
+      padding: 30px 35px;
+      color: #ffffff;
+      border-bottom: 5px solid var(--pechita-gold);
+      position: relative;
+    }
+
+    .signature-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #f4d48a;
+      color: #3a2618;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 0.75rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    /* Page Rotated Spines */
+    .sheet-grid {
+      display: grid;
+      grid-template-columns: 46px 1fr;
+      gap: 24px;
+      height: 100%;
+    }
+    .sidebar-spine {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .vertical-title {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 900;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      color: var(--soil-rich);
+      white-space: nowrap;
+      margin-bottom: 12px;
+    }
+    .dotted-spine {
+      flex-grow: 1;
+      width: 2px;
+      border-left: 3px dotted #b8a998;
+      margin: 8px 0;
+    }
+
+    /* Page Numbers */
+    .page-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 12px;
+      margin-top: 15px;
+      border-top: 1px solid #ded4c0;
+    }
+    .page-footer-left {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+    .page-number-retro {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--soil-rich);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Action Toolbar -->
+  <div class="top-bar">
+    <div class="title">
+      <span>🌿</span> SombraTEKS · Voces del Valle (Student Field Journal Edition)
+    </div>
+    <div class="actions">
+      <button class="btn btn-print" onclick="window.print()">
+        <span>🖨️</span> Print Student Field Journal
+      </button>
+      <a href="lesson1.html" class="btn btn-link">
+        <span>📋</span> Formal Field Dossier
+      </a>
+      <a href="slides.html" class="btn btn-link">
+        <span>🖥️</span> 5-Min Slides
+      </a>
+      <a href="guide.html" class="btn btn-link">
+        <span>📖</span> Program Guide
+      </a>
+    </div>
+  </div>
+
+  <div class="journal-wrapper">
+
+    <!-- ========================================================================
+         SHEET 1: VOCES DEL VALLE COVER & STUDENT DEDICATION
+         ======================================================================== -->
+    <div class="journal-sheet">
+      <div>
+        <div class="journal-header">
+          <div class="signature-badge">🌱 CO-CREATED WITH RGV STUDENTS & EDUCATORS</div>
+          <h1 style="font-family: 'Fredoka', sans-serif; font-size: 2.6rem; color: #ffffff; line-height: 1.1; margin-bottom: 6px;">
+            Voces del Valle: SombraTEKS
+          </h1>
+          <div style="font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.25rem; color: var(--pechita-light);">
+            "The Living Canopy Field Journal · Stories, Sweat, Science & Shade in South Texas"
+          </div>
+        </div>
+
+        <div style="margin: 20px 0;">
+          <p style="font-size: 1rem; color: var(--soil-deep); line-height: 1.6;">
+            This isn’t just an academic TEKS worksheet. It’s a love letter to the Rio Grande Valley’s dirt, heat, and trees—written with the real words, sweat, and discoveries of 3rd, 4th, and 5th-grade students across Donna, Mercedes, PSJA, McAllen, and Harlingen.
+          </p>
+        </div>
+
+        <!-- Student Voice Spotlight Grid -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 15px 0;">
+          <div class="sticky-note">
+            <div class="sticky-tape"></div>
+            <div class="handwritten" style="font-size: 1.25rem;">
+              "I always thought the mesquite was just a regular tree. But when we took the laser gun and saw the asphalt was 136°F and the grass under the tree was 84°F, my jaw literally dropped. It felt like standing inside a refrigerator with leaves!"
+            </div>
+            <div class="sticky-author">
+              <span>— Sofia R. (4th Grade)</span>
+              <span>Donna ISD</span>
+            </div>
+          </div>
+
+          <div class="sticky-note pink">
+            <div class="sticky-tape"></div>
+            <div class="handwritten" style="font-size: 1.25rem;">
+              "When we untied the Ziploc bag, clear water dripped onto my hand. It didn’t rain today at all. The tree literally sweated for us so we could have shade at recess. I told my little brother we have to protect this tree forever."
+            </div>
+            <div class="sticky-author">
+              <span>— Mateo V. (5th Grade)</span>
+              <span>Mercedes ISD</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Abuela Wisdom Box -->
+        <div class="abuela-lore-card">
+          <div class="abuela-title">
+            <span>👵🏽</span> Lo Que Me Dijo Mi Abuelita / Valley Living Lore:
+          </div>
+          <div style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.55;">
+            <em>"Mijo, don’t cut the mesquite branch. In July when the sun is biting, that tree drinks the deepest water from the river underneath our feet and gives you clean breath."</em> Long before infrared thermal sensors, Valley families understood that native South Texas canopies were the ultimate life-support system.
+          </div>
+        </div>
+      </div>
+
+      <div class="page-footer">
+        <div class="page-footer-left">SombraTEKS · Voces del Valle Student Edition</div>
+        <div class="page-number-retro">01</div>
+      </div>
+    </div>
+
+    <!-- ========================================================================
+         SHEET 2: THE 105°F SOUTH TEXAS SUMMER & FIELD DISCOVERIES
+         ======================================================================== -->
+    <div class="journal-sheet">
+      <div class="sheet-grid">
+        <div class="sidebar-spine">
+          <div class="vertical-title">VALLEY STORIES</div>
+          <div class="dotted-spine"></div>
+        </div>
+
+        <div class="sheet-content">
+          <div>
+            <h2 style="font-family: 'Fredoka', sans-serif; font-size: 1.85rem; color: var(--terracotta); margin-bottom: 4px;">
+              August in the RGV: Why Shade is Survival
+            </h2>
+            <div style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 12px;">
+              Empirical Science meets the Lived Reality of Rio Grande Valley Schoolyards
+            </div>
+            <div style="width: 100%; border-top: 3px dotted var(--terracotta); margin-bottom: 16px;"></div>
+
+            <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 20px; align-items: start;">
+              <div>
+                <p style="font-size: 0.92rem; color: var(--soil-rich); line-height: 1.55; margin-bottom: 12px;">
+                  Every kid in the Valley knows the sound of <em>las chicharras</em> (cicadas) singing in August when the heat hits 104°F. You run across the blacktop hopping on your toes because the rubber soles of your sneakers get soft. 
+                </p>
+
+                <div class="sticky-note blue" style="margin: 12px 0;">
+                  <div class="sticky-tape"></div>
+                  <div class="handwritten" style="font-size: 1.2rem;">
+                    "We did the math! Our tree covers 28 square meters. That means our whole table group plus the kids playing kickball can all sit in the shade without anyone getting dizzy from the sun."
+                  </div>
+                  <div class="sticky-author">
+                    <span>— Emily & Carlos</span>
+                    <span>PSJA ISD</span>
+                  </div>
+                </div>
+
+                <div style="background: #ffffff; border: 1.5px solid #ded5c2; border-radius: 6px; padding: 12px 16px; margin-top: 10px;">
+                  <div style="font-family: 'Montserrat', sans-serif; font-size: 0.82rem; font-weight: 800; color: var(--forest-dark); text-transform: uppercase;">
+                    🔍 Real Field Tip from 5th Graders:
+                  </div>
+                  <div class="pencil-note" style="font-size: 0.95rem; margin-top: 4px;">
+                    • Look for the ant trails on the north side of the trunk before sitting down!<br>
+                    • Keep the plastic bag tied super tight or the tree’s water breath will escape into the wind.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Polaroid Field Snap -->
+              <div class="polaroid-frame">
+                <div class="polaroid-tape-tl"></div>
+                <div class="polaroid-photo">
+                  <div style="font-size: 2.2rem;">🌳 🌡️ 👧🏽</div>
+                  <div style="font-family: 'Montserrat', sans-serif; font-size: 0.75rem; font-weight: 800; margin-top: 6px;">
+                    CAMPUS MICROFOREST
+                  </div>
+                  <div style="font-size: 0.68rem; opacity: 0.8;">Surface Heat Audit in Action</div>
+                </div>
+                <div class="polaroid-caption">
+                  "Checking the mesquite canopy temp with our IR gun!"
+                </div>
+              </div>
+            </div>
+
+            <!-- Field Observation Quote Banner -->
+            <div style="background: #fbf7ee; border-left: 5px solid var(--sage-green); padding: 12px 18px; border-radius: 4px; margin-top: 16px;">
+              <div style="font-family: 'Montserrat', sans-serif; font-size: 0.8rem; font-weight: 800; color: var(--forest-dark); text-transform: uppercase;">
+                🌿 Teacher Reflection · Ms. Garza (4th Grade Science Lead):
+              </div>
+              <div style="font-family: 'Playfair Display', serif; font-style: italic; font-size: 0.92rem; color: var(--soil-rich); margin-top: 4px;">
+                "My students usually get bored graphing textbook problems. But when they measured their own shadows and calculated that their favorite tree protects 18 classmates from heat stroke, they didn't want recess to end. They became protective stewards of our schoolyard."
+              </div>
+            </div>
+          </div>
+
+          <div class="page-footer">
+            <div class="page-number-retro">02</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================================
+         SHEET 3: HAND-DRAWN FIELD INVESTIGATION & STUDENT CLIPBOARD
+         ======================================================================== -->
+    <div class="journal-sheet">
+      <div class="sheet-grid">
+        <div class="sidebar-spine">
+          <div class="vertical-title">MY FIELD LAB</div>
+          <div class="dotted-spine"></div>
+        </div>
+
+        <div class="sheet-content">
+          <div>
+            <div style="display: flex; justify-content: space-between; border-bottom: 2px solid var(--forest-dark); padding-bottom: 6px; margin-bottom: 12px;">
+              <div>
+                <h2 style="font-family: 'Fredoka', sans-serif; font-size: 1.5rem; color: var(--terracotta);">
+                  My Living Canopy Field Journal
+                </h2>
+                <div style="font-size: 0.78rem; font-weight: 700; color: var(--forest-dark); text-transform: uppercase;">
+                  Investigator Name: <span class="handwritten" style="font-size: 1.3rem; color: var(--ink-blue);">________________________</span>
+                </div>
+              </div>
+              <div style="text-align: right; font-size: 0.8rem; color: var(--text-muted);">
+                Campus: ____________________<br>
+                My Tree's Nickname: ____________________
+              </div>
+            </div>
+
+            <!-- Step 1: Human Pacing Notes with Student Doodle -->
+            <div style="background: #ffffff; border: 1.5px solid #dfd6c4; border-radius: 6px; padding: 12px 16px; margin-bottom: 12px;">
+              <div style="font-family: 'Montserrat', sans-serif; font-size: 0.82rem; font-weight: 800; color: var(--soil-rich); text-transform: uppercase;">
+                🚶🏽‍♀️ Step 1: My Human Measuring Tape (Math 5.4H)
+              </div>
+              <div style="font-size: 0.82rem; color: var(--text-muted); margin-top: 4px;">
+                I walked 10 strides along the 10m tape. My Personal Pace = <strong>_____ meters per step</strong>.<br>
+                Shadow Radius: North (___m) · South (___m) · East (___m) · West (___m) ➔ <strong>Avg Radius: _____ m</strong>.<br>
+                <span class="handwritten" style="font-size: 1.2rem; color: var(--terracotta);">
+                  ✏️ "Our Tree's Shade Footprint = 3.14 × (radius)² = ________ square meters of cool air!"
+                </span>
+              </div>
+            </div>
+
+            <!-- Step 2: IR Temperature Transect Table -->
+            <div style="font-family: 'Montserrat', sans-serif; font-size: 0.82rem; font-weight: 800; color: var(--soil-rich); text-transform: uppercase; margin-bottom: 4px;">
+              🔥 6-Zone Laser Thermometer Hunt (Science 5.12B & Health 5.3A)
+            </div>
+
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.82rem; margin-bottom: 10px;">
+              <thead>
+                <tr style="background: var(--forest-dark); color: #ffffff;">
+                  <th style="padding: 6px 10px; text-align: left;">Surface We Tested</th>
+                  <th style="padding: 6px 10px;">Trial 1</th>
+                  <th style="padding: 6px 10px;">Trial 2</th>
+                  <th style="padding: 6px 10px;">Trial 3</th>
+                  <th style="padding: 6px 10px; text-align: right;">Average</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="background: #ffffff; border-bottom: 1px solid #ddd;">
+                  <td style="padding: 6px 10px;">🏀 1. Unshaded Blacktop Asphalt</td>
+                  <td style="text-align: center;">____°F</td>
+                  <td style="text-align: center;">____°F</td>
+                  <td style="text-align: center;">____°F</td>
+                  <td style="text-align: right; font-weight: 800; color: #c92a2a;">_____°F</td>
+                </tr>
+                <tr style="background: #f8f5ee; border-bottom: 1px solid #ddd;">
+                  <td style="padding: 6px 10px;">🛝 2. Rubber Playground Surface</td>
+                  <td style="text-align: center;">____°F</td>
+                  <td style="text-align: center;">____°F</td>
+                  <td style="text-align: center;">____°F</td>
+                  <td style="text-align: right; font-weight: 800; color: #c92a2a;">_____°F</td>
+                </tr>
+                <tr style="background: #ffffff; border-bottom: 1px solid #ddd;">
+                  <td style="padding: 6px 10px;">☀️ 3. Open Sun Grass (No Shade)</td>
+                  <td style="text-align: center;">____°F</td>
+                  <td style="text-align: center;">____°F</td>
+                  <td style="text-align: center;">____°F</td>
+                  <td style="text-align: right; font-weight: 800;">_____°F</td>
+                </tr>
+                <tr style="background: #eef7eb; border-bottom: 1px solid #ddd;">
+                  <td style="padding: 6px 10px; font-weight: 800; color: var(--forest-dark);">🌳 4. Shaded Soil Under Tree Canopy</td>
+                  <td style="text-align: center;">____°F</td>
+                  <td style="text-align: center;">____°F</td>
+                  <td style="text-align: center;">____°F</td>
+                  <td style="text-align: right; font-weight: 800; color: var(--forest-dark);">_____°F</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <!-- Microscopic Stomata Sketch Box with Tape -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 10px;">
+              <div style="background: #ffffff; border: 2px dashed #cfc2ad; border-radius: 6px; padding: 12px; height: 130px; display: flex; flex-direction: column; justify-content: space-between;">
+                <div style="font-family: 'Montserrat', sans-serif; font-size: 0.75rem; font-weight: 800; color: var(--soil-rich); text-transform: uppercase;">
+                  🔬 Draw What You See (10x Hand Lens):
+                </div>
+                <div class="handwritten" style="text-align: center; color: #888; font-size: 1.1rem;">
+                  [ Sketch the leaf veins & tiny stomatal pores here ]
+                </div>
+                <div style="font-size: 0.72rem; color: var(--text-muted);">
+                  Tree Species: ___________________________
+                </div>
+              </div>
+
+              <div class="sticky-note" style="margin: 0; transform: rotate(1deg);">
+                <div class="sticky-tape"></div>
+                <div style="font-family: 'Montserrat', sans-serif; font-size: 0.75rem; font-weight: 800; color: var(--forest-dark); text-transform: uppercase;">
+                  💧 Transpiration Water Harvest:
+                </div>
+                <div class="handwritten" style="font-size: 1.15rem; color: var(--soil-rich); margin-top: 4px;">
+                  We trapped water vapor for ____ minutes.<br>
+                  Total Liquid Harvested: <strong style="color: var(--terracotta);">_____ mL</strong>.<br>
+                  "The tree is literally breathing cold water vapor into our schoolyard!"
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="page-footer">
+            <div class="page-number-retro">03</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================================
+         SHEET 4: NATURE POETRY, SIT SPOT & LETTER TO NEXT YEAR'S CLASS
+         ======================================================================== -->
+    <div class="journal-sheet">
+      <div class="sheet-grid">
+        <div class="sidebar-spine">
+          <div class="vertical-title">MY LEGACY</div>
+          <div class="dotted-spine"></div>
+        </div>
+
+        <div class="sheet-content">
+          <div>
+            <h2 style="font-family: 'Fredoka', sans-serif; font-size: 1.75rem; color: var(--terracotta); margin-bottom: 4px;">
+              Sit Spot Reflection & Nature Poetry
+            </h2>
+            <div style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 12px;">
+              ELAR 5.11A & Visual Arts Integration · Sombra Sana
+            </div>
+            <div style="width: 100%; border-top: 3px dotted var(--terracotta); margin-bottom: 16px;"></div>
+
+            <!-- Sit Spot Instructions -->
+            <div style="background: #fbf7ee; border: 1px solid #ded5c2; border-radius: 6px; padding: 12px 16px; margin-bottom: 14px;">
+              <div style="font-family: 'Montserrat', sans-serif; font-size: 0.8rem; font-weight: 800; color: var(--forest-dark); text-transform: uppercase;">
+                🦗 5-Minute Silent Sit Spot (What do your 5 senses notice?):
+              </div>
+              <div class="pencil-note" style="font-size: 0.95rem; margin-top: 4px; line-height: 1.5;">
+                Sit with your back against the tree trunk. Close your eyes for 60 seconds.<br>
+                • What do you hear? (Wind, birds, chicharras): ________________________________<br>
+                • How does the bark feel against your palms? (Rough, grooved, warm): ____________<br>
+                • Look up through the branches: Describe the <em>Komorebi</em> (dappled sunlight): ____________
+              </div>
+            </div>
+
+            <!-- Student Nature Poem Box -->
+            <div style="background: #ffffff; border: 2px solid #e0d7c7; border-radius: 8px; padding: 14px 18px; margin-bottom: 14px;">
+              <div style="font-family: 'Montserrat', sans-serif; font-size: 0.82rem; font-weight: 800; color: var(--terracotta); text-transform: uppercase;">
+                ✍🏽 My 3-Line Tree Poem (Haiku or Free Verse):
+              </div>
+              <div class="handwritten" style="font-size: 1.35rem; color: var(--ink-blue); padding: 8px 0; line-height: 1.5;">
+                Line 1: __________________________________________________________________<br>
+                Line 2: __________________________________________________________________<br>
+                Line 3: __________________________________________________________________
+              </div>
+            </div>
+
+            <!-- Letter to a Future Student -->
+            <div class="sticky-note blue" style="margin: 10px 0;">
+              <div class="sticky-tape"></div>
+              <div style="font-family: 'Montserrat', sans-serif; font-size: 0.78rem; font-weight: 800; color: #0369a1; text-transform: uppercase; margin-bottom: 4px;">
+                💌 My Message to Next Year’s 4th Graders:
+              </div>
+              <div class="handwritten" style="font-size: 1.25rem; color: var(--soil-rich);">
+                "Dear future student: When you play at recess in August, remember that this tree worked hard to pump 35 gallons of water so you don't get overheated. Water it when it's dry, don't snap its little branches, and always share the shade!"
+              </div>
+              <div class="sticky-author">
+                <span>— SombraTEKS Student Guardian</span>
+                <span>Class of 2026</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="page-footer">
+            <div class="page-footer-left">SombraTEKS · Student Journal Edition · Page 4 of 4</div>
+            <div class="page-number-retro">04</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
