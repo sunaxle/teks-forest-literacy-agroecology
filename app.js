@@ -793,8 +793,8 @@
     if (!drawerSimContainer) return;
     drawerSimContainer.innerHTML = '';
 
-    if (node.id === 'elem_canopy_geometry' || node.id === 'ms_trig_tree_height') {
-      // Canopy Area & Trigonometric Height Sim
+    if (node.id === 'elem_canopy_geometry') {
+      // Canopy Area & Pacing Simulator
       drawerSimContainer.innerHTML = `
         <div class="lesson-block simulation">
           <div class="block-header">📐 Interactive Canopy Area & Pacing Simulator</div>
@@ -822,6 +822,12 @@
               <div class="sim-result-label">Radiant Surface Cooling</div>
             </div>
           </div>
+
+          <div style="margin-top: 14px; text-align: center;">
+            <a href="outdoor_lab_curriculum_hub.html" class="btn-header primary" style="background: #22c55e; color: #052e16; font-weight: 700; font-size: 0.82rem; padding: 6px 14px; display: inline-flex; align-items: center; gap: 6px;">
+              🧪 Launch Module 1: Microclimate & Transpiration Lab
+            </a>
+          </div>
         </div>
       `;
 
@@ -837,6 +843,162 @@
           document.getElementById('simAreaVal').textContent = `${area} m²`;
           document.getElementById('simStepsVal').textContent = `${steps} paces`;
           document.getElementById('simTempDropVal').textContent = `-${tempDrop}°F`;
+        });
+      }
+
+    } else if (node.id === 'elem_heat_safety' || node.id === 'elem_food_webs') {
+      // Module 1: Thermal Transpiration & Stomata Cooler Sim
+      drawerSimContainer.innerHTML = `
+        <div class="lesson-block simulation">
+          <div class="block-header">🌿 Thermal Transpiration & Stomata Cooling Engine</div>
+          <p class="text-xs text-muted-foreground mb-3">Simulate leaf stomatal transpiration rates (mL/hr) and phase-change evaporative cooling under South Texas solar irradiance.</p>
+          
+          <div class="sim-control-group">
+            <div class="sim-label">
+              <span>Solar Irradiance:</span>
+              <strong id="m1DrawerSolarVal">950 W/m²</strong>
+            </div>
+            <input type="range" id="m1DrawerSolarSlider" min="300" max="1100" step="50" value="950" class="sim-slider" />
+          </div>
+
+          <div class="sim-results-grid">
+            <div class="sim-result-card">
+              <div class="sim-result-val text-emerald-600" id="m1DrawerTransVal">18.4 L/day</div>
+              <div class="sim-result-label">Canopy Water Pump</div>
+            </div>
+            <div class="sim-result-card">
+              <div class="sim-result-val text-rose-600" id="m1DrawerAsphaltVal">142°F</div>
+              <div class="sim-result-label">Asphalt Blacktop</div>
+            </div>
+            <div class="sim-result-card">
+              <div class="sim-result-val text-emerald-600" id="m1DrawerCoolVal">-56°F</div>
+              <div class="sim-result-label">Thermal Delta Under Tree</div>
+            </div>
+          </div>
+
+          <div style="margin-top: 14px; text-align: center;">
+            <a href="outdoor_lab_curriculum_hub.html" class="btn-header primary" style="background: #22c55e; color: #052e16; font-weight: 700; font-size: 0.82rem; padding: 6px 14px; display: inline-flex; align-items: center; gap: 6px;">
+              🧪 Launch Module 1: Microclimate & Transpiration Lab
+            </a>
+          </div>
+        </div>
+      `;
+
+      const solarSlider = document.getElementById('m1DrawerSolarSlider');
+      if (solarSlider) {
+        solarSlider.addEventListener('input', (e) => {
+          const solar = parseFloat(e.target.value);
+          const trans = (45 * (solar / 1000) * 0.44).toFixed(1);
+          const asphalt = Math.round(96 + (solar / 1000) * 48);
+          const delta = Math.round(86 - asphalt);
+
+          document.getElementById('m1DrawerSolarVal').textContent = `${solar} W/m²`;
+          document.getElementById('m1DrawerTransVal').textContent = `${trans} L/day`;
+          document.getElementById('m1DrawerAsphaltVal').textContent = `${asphalt}°F`;
+          document.getElementById('m1DrawerCoolVal').textContent = `${delta}°F`;
+        });
+      }
+
+    } else if (node.id === 'ms_microclimate_physics' || node.id === 'ms_trig_tree_height') {
+      // Module 2: Albedo, Shadow Geometry & Radiation Flux Sim
+      drawerSimContainer.innerHTML = `
+        <div class="lesson-block simulation">
+          <div class="block-header">☀️ Albedo, Clinometer Height & Radiation Flux Lab</div>
+          <p class="text-xs text-muted-foreground mb-3">Model right-triangle clinometer height ($H = D \cdot \tan\theta + h_{\\text{eye}}$) and surface albedo net radiation ($R_n$).</p>
+          
+          <div class="sim-control-group">
+            <div class="sim-label">
+              <span>Clinometer Angle (θ):</span>
+              <strong id="m2DrawerAngleVal">45°</strong>
+            </div>
+            <input type="range" id="m2DrawerAngleSlider" min="20" max="70" step="1" value="45" class="sim-slider" />
+          </div>
+
+          <div class="sim-results-grid">
+            <div class="sim-result-card">
+              <div class="sim-result-val text-sky-600" id="m2DrawerHeightVal">16.5 m</div>
+              <div class="sim-result-label">Computed Tree Height</div>
+            </div>
+            <div class="sim-result-card">
+              <div class="sim-result-val" id="m2DrawerNetRadVal">770 W/m²</div>
+              <div class="sim-result-label">Net Rad (Canopy α=0.23)</div>
+            </div>
+            <div class="sim-result-card">
+              <div class="sim-result-val text-emerald-600" id="m2DrawerLatentVal">75% Latent</div>
+              <div class="sim-result-label">Cooling Heat Flux</div>
+            </div>
+          </div>
+
+          <div style="margin-top: 14px; text-align: center;">
+            <a href="outdoor_lab_curriculum_hub.html" class="btn-header primary" style="background: #22c55e; color: #052e16; font-weight: 700; font-size: 0.82rem; padding: 6px 14px; display: inline-flex; align-items: center; gap: 6px;">
+              🧪 Launch Module 2: Albedo & Shadow Geometry Lab
+            </a>
+          </div>
+        </div>
+      `;
+
+      const angleSlider = document.getElementById('m2DrawerAngleSlider');
+      if (angleSlider) {
+        angleSlider.addEventListener('input', (e) => {
+          const angle = parseFloat(e.target.value);
+          const rad = (angle * Math.PI) / 180;
+          const height = (15.0 * Math.tan(rad) + 1.45).toFixed(1);
+
+          document.getElementById('m2DrawerAngleVal').textContent = `${angle}°`;
+          document.getElementById('m2DrawerHeightVal').textContent = `${height} m`;
+        });
+      }
+
+    } else if (node.id === 'hs_agroecology_systems' || node.id === 'hs_environmental_justice') {
+      // Module 3: Komorebi PAR & Rhizobial Nitrogen Fixation Sim
+      drawerSimContainer.innerHTML = `
+        <div class="lesson-block simulation">
+          <div class="block-header">🌿 Komorebi PAR Extinction & Biological Nitrogen Vault</div>
+          <p class="text-xs text-muted-foreground mb-3">Model Beer-Lambert canopy light attenuation ($I = I_0 e^{-k \\cdot \\text{LAI}}$) and annual biological nitrogen fixation (kg N/yr).</p>
+          
+          <div class="sim-control-group">
+            <div class="sim-label">
+              <span>Overstory Canopy LAI:</span>
+              <strong id="m3DrawerLaiVal">2.5 LAI</strong>
+            </div>
+            <input type="range" id="m3DrawerLaiSlider" min="0.5" max="4.5" step="0.1" value="2.5" class="sim-slider" />
+          </div>
+
+          <div class="sim-results-grid">
+            <div class="sim-result-card">
+              <div class="sim-result-val text-emerald-600" id="m3DrawerParVal">480 µmol/m²s</div>
+              <div class="sim-result-label">Understory Komorebi PAR</div>
+            </div>
+            <div class="sim-result-card">
+              <div class="sim-result-val text-sky-600" id="m3DrawerNVal">32.5 kg N/yr</div>
+              <div class="sim-result-label">Pure N Fixed (0.5 ha)</div>
+            </div>
+            <div class="sim-result-card">
+              <div class="sim-result-val text-amber-600" id="m3DrawerUreaVal">70.6 kg</div>
+              <div class="sim-result-label">Urea Fertilizer Displaced</div>
+            </div>
+          </div>
+
+          <div style="margin-top: 14px; text-align: center;">
+            <a href="outdoor_lab_curriculum_hub.html" class="btn-header primary" style="background: #22c55e; color: #052e16; font-weight: 700; font-size: 0.82rem; padding: 6px 14px; display: inline-flex; align-items: center; gap: 6px;">
+              🧪 Launch Module 3: Subtropical Agroecology Lab
+            </a>
+          </div>
+        </div>
+      `;
+
+      const laiSlider = document.getElementById('m3DrawerLaiSlider');
+      if (laiSlider) {
+        laiSlider.addEventListener('input', (e) => {
+          const lai = parseFloat(e.target.value);
+          const understoryPar = Math.round(1900 * Math.exp(-0.55 * lai));
+          const nFixed = (0.5 * 65 * Math.min(1.2, lai / 2.0)).toFixed(1);
+          const urea = (nFixed / 0.46).toFixed(1);
+
+          document.getElementById('m3DrawerLaiVal').textContent = `${lai.toFixed(1)} LAI`;
+          document.getElementById('m3DrawerParVal').textContent = `${understoryPar} µmol/m²s`;
+          document.getElementById('m3DrawerNVal').textContent = `${nFixed} kg N/yr`;
+          document.getElementById('m3DrawerUreaVal').textContent = `${urea} kg`;
         });
       }
 

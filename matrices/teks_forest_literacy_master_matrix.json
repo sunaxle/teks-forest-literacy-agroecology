@@ -8,6 +8,7 @@
   "nodes": [
     {
       "id": "k2_tree_anatomy",
+      "status": "verified",
       "title": "Parts of a Tree: Roots, Trunk, Crown & Bark",
       "tier": "k2",
       "grade_band": "Kindergarten - Grade 2",
@@ -40,6 +41,7 @@
     },
     {
       "id": "k2_leaf_detective",
+      "status": "verified",
       "title": "Leaf Shapes, Textures & Simple Patterns",
       "tier": "k2",
       "grade_band": "Kindergarten - Grade 2",
@@ -71,6 +73,7 @@
     },
     {
       "id": "k2_creature_habitats",
+      "status": "verified",
       "title": "Who Lives in the Tree? Animal & Insect Homes",
       "tier": "k2",
       "grade_band": "Kindergarten - Grade 2",
@@ -102,6 +105,7 @@
     },
     {
       "id": "k2_bark_rubbing_art",
+      "status": "verified",
       "title": "Eco-Canvas: Bark Textures & Leaf Impressions",
       "tier": "k2",
       "grade_band": "Kindergarten - Grade 2",
@@ -133,6 +137,7 @@
     },
     {
       "id": "elem_food_webs",
+      "status": "verified",
       "title": "Solar Energy Flow & Campus Food Webs",
       "tier": "3_5",
       "grade_band": "Grades 3 - 5",
@@ -164,6 +169,7 @@
     },
     {
       "id": "elem_canopy_geometry",
+      "status": "verified",
       "title": "Tree Geometry: Pacing, Shade Area & Radius",
       "tier": "3_5",
       "grade_band": "Grades 3 - 5",
@@ -196,6 +202,7 @@
     },
     {
       "id": "elem_indigenous_mesquite",
+      "status": "verified",
       "title": "Roots of the RGV: Indigenous Ethnobotany & Mesquite",
       "tier": "3_5",
       "grade_band": "Grades 3 - 5",
@@ -232,6 +239,7 @@
     },
     {
       "id": "elem_nature_journaling",
+      "status": "verified",
       "title": "Sensory Nature Journaling & Tree Poetry",
       "tier": "3_5",
       "grade_band": "Grades 3 - 5",
@@ -268,6 +276,7 @@
     },
     {
       "id": "elem_heat_safety",
+      "status": "verified",
       "title": "Beat the Heat: Thermoregulation, Hydration & Shade",
       "tier": "3_5",
       "grade_band": "Grades 3 - 5",
@@ -305,6 +314,7 @@
     },
     {
       "id": "ms_photosynthesis_carbon",
+      "status": "verified",
       "title": "Photosynthesis Thermodynamics & Carbon Sequestration",
       "tier": "6_8",
       "grade_band": "Grades 6 - 8",

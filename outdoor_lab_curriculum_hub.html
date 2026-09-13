@@ -1,0 +1,1827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Production-Ready Turn-Key Outdoor Lab Curriculum Hub for Texas Forest Literacy & UTRGV Cool Schools. Full Teacher Guides, Print-Ready Clipboard Field Worksheets, Interactive Simulators & Rubrics." />
+  <title>Outdoor Lab Curriculum Hub | TEKS Forest Literacy</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    :root {
+      --lab-bg: #f8fafc;
+      --lab-card: #ffffff;
+      --lab-border: #e2e8f0;
+      --lab-text: #0f172a;
+      --lab-primary: #15803d;
+      --lab-primary-dark: #14532d;
+      --lab-primary-light: #dcfce7;
+      --lab-accent: #0284c7;
+      --lab-accent-light: #e0f2fe;
+      --lab-warning: #b45309;
+      --lab-warning-light: #fef3c7;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    body {
+      background-color: var(--lab-bg);
+      color: var(--lab-text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+
+    /* Top Lab Header */
+    .lab-header {
+      background: linear-gradient(135deg, #14532d 0%, #1b4332 50%, #081c15 100%);
+      color: white;
+      padding: 1.5rem 2rem;
+      border-bottom: 3px solid #40916c;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
+    .lab-header-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .lab-brand {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .lab-brand-icon {
+      font-size: 2.2rem;
+      background: rgba(255, 255, 255, 0.15);
+      padding: 0.5rem 0.75rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .lab-brand-text h1 {
+      margin: 0;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .lab-brand-text h1 span {
+      color: #95d5b2;
+    }
+    .lab-brand-text p {
+      margin: 0.2rem 0 0 0;
+      font-size: 0.85rem;
+      color: #d8f3dc;
+    }
+
+    .lab-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .btn-lab {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: white;
+      color: var(--lab-primary-dark);
+      font-weight: 700;
+      font-size: 0.88rem;
+      padding: 0.6rem 1.1rem;
+      border-radius: 8px;
+      text-decoration: none;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .btn-lab:hover {
+      background: #e8f5e9;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+    .btn-lab.primary {
+      background: #22c55e;
+      color: #052e16;
+      border-color: #16a34a;
+    }
+    .btn-lab.primary:hover {
+      background: #4ade80;
+    }
+
+    /* Main Container */
+    .lab-container {
+      max-width: 1400px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+    }
+
+    /* Module Navigation Bar */
+    .module-nav-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .module-nav-card {
+      background: var(--lab-card);
+      border: 2px solid var(--lab-border);
+      border-radius: 12px;
+      padding: 1.25rem;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      position: relative;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .module-nav-card:hover {
+      border-color: #52b788;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+    }
+    .module-nav-card.active {
+      border-color: var(--lab-primary);
+      background: #f0fdf4;
+      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2), 0 4px 12px rgba(0,0,0,0.08);
+    }
+    .module-nav-badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+      margin-bottom: 0.5rem;
+    }
+    .badge-mod1 { background: #dcfce7; color: #166534; }
+    .badge-mod2 { background: #e0f2fe; color: #075985; }
+    .badge-mod3 { background: #fef3c7; color: #92400e; }
+
+    .module-nav-card h3 {
+      margin: 0 0 0.35rem 0;
+      font-size: 1.1rem;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      color: #0f172a;
+    }
+    .module-nav-card p {
+      margin: 0;
+      font-size: 0.8rem;
+      color: #64748b;
+    }
+
+    /* Tab Mode Switcher (Teacher Guide vs Clipboard vs Simulator vs Rubric) */
+    .tab-switcher {
+      display: flex;
+      gap: 0.5rem;
+      background: #e2e8f0;
+      padding: 0.35rem;
+      border-radius: 10px;
+      margin-bottom: 1.75rem;
+      flex-wrap: wrap;
+    }
+    .tab-btn {
+      flex: 1;
+      min-width: 150px;
+      background: transparent;
+      border: none;
+      padding: 0.65rem 1rem;
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: #475569;
+      border-radius: 7px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+    .tab-btn:hover {
+      color: #0f172a;
+      background: rgba(255,255,255,0.6);
+    }
+    .tab-btn.active {
+      background: white;
+      color: var(--lab-primary-dark);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    /* Content Panes */
+    .pane-content {
+      display: none;
+      background: var(--lab-card);
+      border: 1px solid var(--lab-border);
+      border-radius: 14px;
+      padding: 2rem;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+      margin-bottom: 2rem;
+    }
+    .pane-content.active {
+      display: block;
+      animation: fadeIn 0.25s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Typography & Sections inside Panes */
+    .section-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin-top: 0;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      border-bottom: 2px solid #f1f5f9;
+      padding-bottom: 0.6rem;
+    }
+    .section-title span.badge {
+      font-size: 0.75rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 6px;
+      background: #f1f5f9;
+      color: #475569;
+    }
+
+    /* 5E Step Cards */
+    .five-e-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+      margin: 1.5rem 0;
+    }
+    .five-e-card {
+      border-left: 4px solid var(--lab-primary);
+      background: #f8fafc;
+      padding: 1.25rem 1.5rem;
+      border-radius: 0 10px 10px 0;
+      border-top: 1px solid #f1f5f9;
+      border-right: 1px solid #f1f5f9;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .five-e-card h4 {
+      margin: 0 0 0.5rem 0;
+      color: #1e293b;
+      font-size: 1.05rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .five-e-card.engage { border-left-color: #e11d48; }
+    .five-e-card.explore { border-left-color: #0284c7; }
+    .five-e-card.explain { border-left-color: #7c3aed; }
+    .five-e-card.elaborate { border-left-color: #d97706; }
+    .five-e-card.evaluate { border-left-color: #16a34a; }
+
+    /* Tables */
+    .lab-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0 1.5rem 0;
+      font-size: 0.9rem;
+    }
+    .lab-table th {
+      background: #f1f5f9;
+      color: #1e293b;
+      font-weight: 700;
+      text-align: left;
+      padding: 0.75rem 1rem;
+      border: 1px solid #cbd5e1;
+    }
+    .lab-table td {
+      padding: 0.75rem 1rem;
+      border: 1px solid #cbd5e1;
+      color: #334155;
+    }
+    .lab-table tr:nth-child(even) td {
+      background: #f8fafc;
+    }
+
+    /* High-Contrast Print Clipboard Style */
+    .clipboard-paper {
+      background: #ffffff;
+      border: 2px solid #0f172a;
+      border-radius: 8px;
+      padding: 2rem;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+      font-family: 'Inter', monospace;
+      color: #000000;
+    }
+    .clipboard-header {
+      border-bottom: 2px solid #000000;
+      padding-bottom: 1rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .clipboard-header h2 {
+      margin: 0 0 0.25rem 0;
+      font-size: 1.3rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+    }
+    .clipboard-header p {
+      margin: 0;
+      font-size: 0.85rem;
+      color: #333333;
+    }
+    .clipboard-field-row {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .clipboard-field {
+      flex: 1;
+      min-width: 200px;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .clipboard-field span {
+      font-weight: 700;
+    }
+    .clipboard-field input {
+      flex: 1;
+      border: none;
+      border-bottom: 1px solid #000;
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      padding: 2px 4px;
+      background: transparent;
+      outline: none;
+    }
+
+    .clipboard-box {
+      border: 1.5px solid #000;
+      border-radius: 6px;
+      padding: 1rem 1.25rem;
+      margin: 1.25rem 0;
+      background: #ffffff;
+    }
+    .clipboard-box-title {
+      font-weight: 800;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      margin-top: 0;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px dashed #666;
+      padding-bottom: 0.4rem;
+    }
+
+    .clipboard-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0.75rem 0;
+      font-size: 0.82rem;
+    }
+    .clipboard-table th, .clipboard-table td {
+      border: 1px solid #000;
+      padding: 0.45rem 0.6rem;
+      text-align: left;
+    }
+    .clipboard-table th {
+      background: #f1f5f9;
+      font-weight: 800;
+    }
+    .clipboard-table input {
+      width: 100%;
+      box-sizing: border-box;
+      border: none;
+      background: transparent;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      outline: none;
+    }
+
+    .drawing-box {
+      border: 1.5px dashed #000;
+      height: 180px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #666;
+      font-size: 0.85rem;
+      margin: 0.75rem 0;
+      background: #fafafa;
+    }
+
+    /* Simulator Panel Styling */
+    .sim-panel {
+      background: #0f172a;
+      color: #f8fafc;
+      border-radius: 12px;
+      padding: 1.75rem;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    }
+    .sim-panel h3 {
+      color: #38bdf8;
+      font-family: 'Outfit', sans-serif;
+      margin-top: 0;
+      font-size: 1.3rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .sim-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 1.25rem;
+    }
+    .sim-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .sim-control {
+      background: #1e293b;
+      padding: 1rem;
+      border-radius: 8px;
+      border: 1px solid #334155;
+    }
+    .sim-control-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #cbd5e1;
+    }
+    .sim-control-val {
+      font-family: var(--font-mono);
+      color: #4ade80;
+      font-weight: 700;
+    }
+    .sim-slider {
+      width: 100%;
+      cursor: pointer;
+      accent-color: #22c55e;
+    }
+
+    .sim-outputs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+    .sim-output-card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      padding: 1rem;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .sim-output-num {
+      font-family: var(--font-mono);
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #38bdf8;
+    }
+    .sim-output-label {
+      font-size: 0.75rem;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-top: 0.2rem;
+    }
+
+    /* Rubric Matrix Interactive Table */
+    .rubric-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-size: 0.85rem;
+    }
+    .rubric-table th, .rubric-table td {
+      border: 1px solid #cbd5e1;
+      padding: 0.75rem;
+      vertical-align: top;
+    }
+    .rubric-table th {
+      background: #1e293b;
+      color: white;
+      text-align: left;
+      font-weight: 700;
+    }
+    .rubric-table td.rubric-cell {
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: #ffffff;
+    }
+    .rubric-table td.rubric-cell:hover {
+      background: #f0fdf4;
+      border-color: #22c55e;
+    }
+    .rubric-table td.rubric-cell.selected {
+      background: #dcfce7;
+      border: 2px solid #16a34a;
+      font-weight: 600;
+    }
+    .rubric-score-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f1f5f9;
+      padding: 1rem 1.5rem;
+      border-radius: 10px;
+      margin-top: 1rem;
+    }
+    .rubric-total {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--lab-primary-dark);
+    }
+
+    /* Print Media Queries */
+    @media print {
+      body {
+        background: white !important;
+        color: black !important;
+        font-size: 10pt;
+      }
+      .lab-header, .module-nav-grid, .tab-switcher, .sim-panel, .rubric-score-bar, .no-print, .header-actions {
+        display: none !important;
+      }
+      .lab-container {
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      .pane-content {
+        display: none !important;
+        border: none !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+      }
+      .pane-content.print-active {
+        display: block !important;
+      }
+      .clipboard-paper {
+        border: 2px solid #000 !important;
+        padding: 0.5in !important;
+        box-shadow: none !important;
+        page-break-after: always;
+      }
+      .clipboard-box {
+        border: 1px solid #000 !important;
+        page-break-inside: avoid;
+      }
+      .clipboard-table th, .clipboard-table td {
+        border: 1px solid #000 !important;
+        padding: 3px 5px !important;
+      }
+      input {
+        border-bottom: 1px solid #000 !important;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .module-nav-grid {
+        grid-template-columns: 1fr;
+      }
+      .sim-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Lab Header -->
+  <header class="lab-header">
+    <div class="lab-header-inner">
+      <div class="lab-brand">
+        <div class="lab-brand-icon">🌳</div>
+        <div class="lab-brand-text">
+          <h1>Texas Forest Literacy · <span>Outdoor Lab Hub</span></h1>
+          <p>Production-Ready Turn-Key K–12 Field Modules, Clipboard Worksheets & Teacher Guides</p>
+        </div>
+      </div>
+
+      <div class="lab-header-actions no-print">
+        <button type="button" id="btnPrintActive" class="btn-lab primary" title="Print High-Contrast Student Clipboard Worksheet">
+          🖨️ Print Clipboard Sheet
+        </button>
+        <a href="index.html" class="btn-lab" title="Return to Interactive Knowledge Graph">
+          🗺️ Knowledge Graph
+        </a>
+        <a href="story_report.html" class="btn-lab" title="View Story & TEKS Multiplier Report">
+          📰 Story Report
+        </a>
+        <a href="master_gap_assessment.html" class="btn-lab" title="View Master Gap Assessment">
+          🎯 Gap Assessment
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="lab-container">
+
+    <!-- Module Selector Cards (Top Level) -->
+    <div class="module-nav-grid no-print">
+      <!-- Module 1 -->
+      <div class="module-nav-card active" data-mod="mod1" id="navMod1">
+        <span class="module-nav-badge badge-mod1">Grades 3–5 · Elementary</span>
+        <h3>1. Urban Microclimate & Transpiration Audit</h3>
+        <p>Science 5.12B · Math 5.4H · Health 5.3A · Stomatal phase-cooling</p>
+      </div>
+
+      <!-- Module 2 -->
+      <div class="module-nav-card" data-mod="mod2" id="navMod2">
+        <span class="module-nav-badge badge-mod2">Grades 6–8 · Middle School</span>
+        <h3>2. Albedo, Shadow Geometry & Energy Flux</h3>
+        <p>Science 8.10B · Math 8.7B · Social Studies 8.11A · Clinometers</p>
+      </div>
+
+      <!-- Module 3 -->
+      <div class="module-nav-card" data-mod="mod3" id="navMod3">
+        <span class="module-nav-badge badge-mod3">Grades 9–12 / APES · High School</span>
+        <h3>3. Subtropical Agroecology & Komorebi</h3>
+        <p>Biology 12.B · EnvSci 7.A · Fine Arts 4.2C · Nitrogen Fixation</p>
+      </div>
+    </div>
+
+    <!-- Sub-Tab Mode Switcher -->
+    <div class="tab-switcher no-print">
+      <button type="button" class="tab-btn active" data-tab="guide">📘 Master Teacher Guide (5E)</button>
+      <button type="button" class="tab-btn" data-tab="sheet">📋 Student Clipboard Sheet</button>
+      <button type="button" class="tab-btn" data-tab="sim">🎮 Interactive Field Simulator</button>
+      <button type="button" class="tab-btn" data-tab="rubric">🎯 Standards Grading Rubric</button>
+    </div>
+
+    <!-- ==================================================================== -->
+    <!-- MODULE 1 CONTENT CONTAINER                                           -->
+    <!-- ==================================================================== -->
+    <div id="module1Container" class="module-wrapper">
+      
+      <!-- Tab 1: Teacher Guide -->
+      <div id="mod1GuidePane" class="pane-content active">
+        <div class="section-title">
+          <span>📘 Teacher Instructional Guide: The Urban Microclimate & Transpiration Audit</span>
+          <span class="badge">Grades 3–5</span>
+        </div>
+
+        <table class="lab-table">
+          <thead>
+            <tr>
+              <th>Standard</th>
+              <th>Type</th>
+              <th>Alignment Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Science 5.12B</strong></td>
+              <td>Core 3D TEKS</td>
+              <td>Model how matter cycles and energy flows in ecosystems; demonstrate how tree leaves use sunlight and water to transpire vapor and cool surrounding environments.</td>
+            </tr>
+            <tr>
+              <td><strong>Math 5.4H</strong></td>
+              <td>Cross-Curricular</td>
+              <td>Represent and solve perimeter and area problems ($A \approx 3.14 \times r^2$, pacing calibration factor).</td>
+            </tr>
+            <tr>
+              <td><strong>Health 5.3A</strong></td>
+              <td>Health & PE</td>
+              <td>Analyze environmental heat factors impacting personal health; calculate safe recess shade capacity.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>5E Instructional Learning Sequence</h3>
+        <div class="five-e-grid">
+          <div class="five-e-card engage">
+            <h4>🔴 1. ENGAGE (15 min) — The Asphalt Frying Pan Phenomenon</h4>
+            <p>Gather students at the edge of the asphalt basketball court. Ask: <em>"Why does asphalt feel like a frying pan (over 135°F), but sitting under an oak or mesquite feels like an air conditioner?"</em> Introduce stomata and transpiration as a living water-pump.</p>
+          </div>
+          <div class="five-e-card explore">
+            <h4>🔵 2. EXPLORE (35 min) — The 6-Zone Infrared Audit & Pacing Calibration</h4>
+            <p>Students calibrate their step pace (10-meter baseline), pace out 4 canopy shadow radii ($r_N, r_S, r_E, r_W$), and record 3 repeated surface temperature readings across asphalt, turf, sunlit grass, shade, bark, and leaves.</p>
+          </div>
+          <div class="five-e-card explain">
+            <h4>🟣 3. EXPLAIN (20 min) — Transpiration Harvest & Phase-Change Cooling</h4>
+            <p>Harvest the sealed 1-gallon branch bags after 60 min. Measure accumulated liquid water in graduated cylinders (mL). Explain that evaporating water absorbs thermal energy, chilling surrounding air like human sweat.</p>
+          </div>
+          <div class="five-e-card elaborate">
+            <h4>🟠 4. ELABORATE (15 min) — Canopy Shade Area & Recess Heat Refuge</h4>
+            <p>Calculate shaded cooling footprint: $\text{Area} = 3.14 \times (r_{\text{avg}})^2$. Determine how many students can safely seek thermal shelter (1.5 m² per student) away from dangerously hot asphalt (>104°F).</p>
+          </div>
+          <div class="five-e-card evaluate">
+            <h4>🟢 5. EVALUATE (15 min) — Claim-Evidence-Reasoning (CER) Report</h4>
+            <p>Students finalize their printable field worksheets, graphing surface temperatures and synthesizing energy flow and human health protections in an evidence-based CER paragraph.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 2: Student Clipboard Worksheet -->
+      <div id="mod1SheetPane" class="pane-content">
+        <div class="clipboard-paper">
+          <div class="clipboard-header">
+            <div>
+              <h2>Campus Microforest Field Investigation</h2>
+              <p><strong>MODULE 1:</strong> URBAN MICROCLIMATE & THERMAL TRANSPIRATION AUDIT (Grades 3–5)</p>
+            </div>
+            <div style="text-align: right; font-size: 0.8rem;">
+              <div><strong>Standards:</strong> Sci 5.12B · Math 5.4H · Health 5.3A</div>
+              <div>UTRGV Cool Schools & TTFS</div>
+            </div>
+          </div>
+
+          <div class="clipboard-field-row">
+            <div class="clipboard-field"><span>Student:</span> <input type="text" placeholder="First & Last Name" /></div>
+            <div class="clipboard-field"><span>Date:</span> <input type="text" value="2026-09-12" /></div>
+            <div class="clipboard-field"><span>Tree ID / Species:</span> <input type="text" placeholder="e.g. Honey Mesquite #04" /></div>
+          </div>
+
+          <!-- Step Pace & Radius -->
+          <div class="clipboard-box">
+            <div class="clipboard-box-title">
+              <span>Part 1: Pacing Calibration & Canopy Shadow Geometry (Math 5.4H)</span>
+              <span>Area = 3.14 × (r_avg)²</span>
+            </div>
+            <div class="clipboard-field-row">
+              <div class="clipboard-field"><span>10-Step Distance:</span> <input type="text" placeholder="e.g. 7.0 m" /></div>
+              <div class="clipboard-field"><span>My Step Pace:</span> <input type="text" placeholder="e.g. 0.70 m/step" /></div>
+              <div class="clipboard-field"><span>Avg Shadow Radius (r):</span> <input type="text" placeholder="e.g. 4.2 m" /></div>
+            </div>
+            <div style="margin-top: 0.5rem; font-size: 0.85rem;">
+              <strong>Shaded Area:</strong> 3.14 × (<input type="text" style="width: 50px;" /> m)² = <input type="text" style="width: 80px; font-weight: bold;" /> m²
+              &nbsp;|&nbsp; <strong>Student Refuge Capacity (÷ 1.5 m²):</strong> <input type="text" style="width: 60px; font-weight: bold;" /> Students
+            </div>
+          </div>
+
+          <!-- 6-Zone IR Temperature Table -->
+          <div class="clipboard-box">
+            <div class="clipboard-box-title">
+              <span>Part 2: 6-Zone Infrared Surface Temperature Audit (Science 5.12B / 5.1C)</span>
+              <span>Units: °F</span>
+            </div>
+            <table class="clipboard-table">
+              <thead>
+                <tr>
+                  <th>Microclimate Surface Zone</th>
+                  <th>Trial 1</th>
+                  <th>Trial 2</th>
+                  <th>Trial 3</th>
+                  <th>Average Temp (°F)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1. Unshaded Blacktop Asphalt</td>
+                  <td><input type="text" placeholder="138" /></td>
+                  <td><input type="text" placeholder="136" /></td>
+                  <td><input type="text" placeholder="140" /></td>
+                  <td><input type="text" placeholder="138.0°F" style="font-weight: bold;" /></td>
+                </tr>
+                <tr>
+                  <td>2. Unshaded Synthetic Playground Turf</td>
+                  <td><input type="text" placeholder="128" /></td>
+                  <td><input type="text" placeholder="130" /></td>
+                  <td><input type="text" placeholder="132" /></td>
+                  <td><input type="text" placeholder="130.0°F" style="font-weight: bold;" /></td>
+                </tr>
+                <tr>
+                  <td>3. Unshaded Lawn Grass (Full Sun)</td>
+                  <td><input type="text" placeholder="98" /></td>
+                  <td><input type="text" placeholder="100" /></td>
+                  <td><input type="text" placeholder="99" /></td>
+                  <td><input type="text" placeholder="99.0°F" style="font-weight: bold;" /></td>
+                </tr>
+                <tr>
+                  <td>4. Shaded Soil / Mulch Under Tree</td>
+                  <td><input type="text" placeholder="84" /></td>
+                  <td><input type="text" placeholder="85" /></td>
+                  <td><input type="text" placeholder="83" /></td>
+                  <td><input type="text" placeholder="84.0°F" style="font-weight: bold;" /></td>
+                </tr>
+                <tr>
+                  <td>5. Living Tree Trunk Bark</td>
+                  <td><input type="text" placeholder="88" /></td>
+                  <td><input type="text" placeholder="87" /></td>
+                  <td><input type="text" placeholder="89" /></td>
+                  <td><input type="text" placeholder="88.0°F" style="font-weight: bold;" /></td>
+                </tr>
+                <tr>
+                  <td>6. Tree Canopy Leaves (Underside)</td>
+                  <td><input type="text" placeholder="82" /></td>
+                  <td><input type="text" placeholder="83" /></td>
+                  <td><input type="text" placeholder="81" /></td>
+                  <td><input type="text" placeholder="82.0°F" style="font-weight: bold;" /></td>
+                </tr>
+              </tbody>
+            </table>
+            <div style="font-size: 0.85rem; font-weight: bold; margin-top: 0.4rem;">
+              Thermal Drop: Asphalt (Avg: _____°F) - Shaded Soil (Avg: _____°F) = <span style="text-decoration: underline;">________°F COOLER</span>!
+            </div>
+          </div>
+
+          <!-- Transpiration Bio-Harvest -->
+          <div class="clipboard-box">
+            <div class="clipboard-box-title">
+              <span>Part 3: Transpiration Water Harvest & Stomata Audit (Science 5.12B)</span>
+              <span>Phase-Change Cooling</span>
+            </div>
+            <div class="clipboard-field-row">
+              <div class="clipboard-field"><span>Elapsed Bag Time:</span> <input type="text" placeholder="60 min (1.0 hr)" /></div>
+              <div class="clipboard-field"><span>Water Volume Collected:</span> <input type="text" placeholder="e.g. 4.5 mL" /></div>
+              <div class="clipboard-field"><span>Hourly Rate:</span> <input type="text" placeholder="4.5 mL/hr" /></div>
+            </div>
+          </div>
+
+          <!-- CER Paragraph -->
+          <div class="clipboard-box">
+            <div class="clipboard-box-title">
+              <span>Part 4: Claim-Evidence-Reasoning (CER) Synthesis Report</span>
+              <span>Health & Science Integration</span>
+            </div>
+            <div style="font-size: 0.82rem; margin-bottom: 0.4rem;">
+              <strong>Prompt:</strong> How do campus trees alter microclimate energy flow to protect student health during extreme heat?
+            </div>
+            <div style="font-size: 0.8rem; line-height: 1.8;">
+              <strong>CLAIM:</strong> <input type="text" style="width: 90%;" placeholder="Living campus trees actively cool schoolyards and reduce heat danger..." /><br/>
+              <strong>EVIDENCE:</strong> <input type="text" style="width: 88%;" placeholder="Our IR thermometer recorded asphalt at 138°F compared to 84°F in shade (54°F cooler)..." /><br/>
+              <strong>REASONING:</strong> <input type="text" style="width: 87%;" placeholder="Leaves transpire water through stomata (4.5 mL/hr); evaporating water absorbs sensible heat..." />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 3: Interactive Field Simulator -->
+      <div id="mod1SimPane" class="pane-content">
+        <div class="sim-panel">
+          <h3>🎮 Interactive Thermal Transpiration & Microclimate Cooler Simulator</h3>
+          <p style="font-size: 0.85rem; color: #94a3b8;">Adjust incident solar radiation, canopy leaf area, and ambient temperature to simulate stomatal transpiration volume and real-time surface cooling.</p>
+          
+          <div class="sim-grid">
+            <div class="sim-controls">
+              <div class="sim-control">
+                <div class="sim-control-header">
+                  <span>Solar Irradiance (W/m²):</span>
+                  <span id="mod1SimSolarVal" class="sim-control-val">950 W/m²</span>
+                </div>
+                <input type="range" id="mod1SimSolarSlider" min="200" max="1100" step="50" value="950" class="sim-slider" />
+              </div>
+
+              <div class="sim-control">
+                <div class="sim-control-header">
+                  <span>Canopy Leaf Area (m² of leaves):</span>
+                  <span id="mod1SimLeafVal" class="sim-control-val">45 m²</span>
+                </div>
+                <input type="range" id="mod1SimLeafSlider" min="5" max="150" step="5" value="45" class="sim-slider" />
+              </div>
+
+              <div class="sim-control">
+                <div class="sim-control-header">
+                  <span>Ambient Air Temp (°F):</span>
+                  <span id="mod1SimAirVal" class="sim-control-val">96°F</span>
+                </div>
+                <input type="range" id="mod1SimAirSlider" min="70" max="115" step="1" value="96" class="sim-slider" />
+              </div>
+            </div>
+
+            <div class="sim-outputs">
+              <div class="sim-output-card">
+                <div class="sim-output-num" id="mod1OutTransVolume">18.4 L/day</div>
+                <div class="sim-output-label">Transpiration Water Pump</div>
+              </div>
+              <div class="sim-output-card">
+                <div class="sim-output-num" id="mod1OutAsphaltTemp">142°F</div>
+                <div class="sim-output-label">Unshaded Asphalt Temp</div>
+              </div>
+              <div class="sim-output-card">
+                <div class="sim-output-num" id="mod1OutShadeTemp">86°F</div>
+                <div class="sim-output-label">Canopy Shade Temp</div>
+              </div>
+              <div class="sim-output-card">
+                <div class="sim-output-num" style="color: #4ade80;" id="mod1OutCoolingDelta">-56°F</div>
+                <div class="sim-output-label">Radiant Heat Reduction</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 4: Standards Rubric -->
+      <div id="mod1RubricPane" class="pane-content">
+        <div class="section-title">
+          <span>🎯 Standards-Aligned 4-Level Evaluation Rubric</span>
+          <span class="badge">Module 1 (Grades 3–5)</span>
+        </div>
+        <p style="font-size: 0.85rem; color: #64748b;">Click on any criterion cell below to calculate mastery points in real time.</p>
+
+        <table class="rubric-table" id="mod1RubricTable">
+          <thead>
+            <tr>
+              <th style="width: 22%;">Dimension</th>
+              <th style="width: 19.5%;">4 - Exceeds Standard</th>
+              <th style="width: 19.5%;">3 - Meets Standard</th>
+              <th style="width: 19.5%;">2 - Developing</th>
+              <th style="width: 19.5%;">1 - Beginning</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-row="1">
+              <td><strong>Science 5.12B: Transpiration & Energy Flow</strong></td>
+              <td class="rubric-cell" data-pts="4">Accurately explains phase-change cooling and quantifies mL/hr stomatal transpiration rate.</td>
+              <td class="rubric-cell" data-pts="3">Explains that leaves transpire water vapor and that shade absorbs less sensible heat.</td>
+              <td class="rubric-cell" data-pts="2">Identifies shade is cooler, but confuses transpiration with dew or exterior rain.</td>
+              <td class="rubric-cell" data-pts="1">Cannot explain how water appeared in bag or how trees cool the air.</td>
+            </tr>
+            <tr data-row="2">
+              <td><strong>Science 5.1A / 5.1C: Data & Tool Precision</strong></td>
+              <td class="rubric-cell" data-pts="4">Records all 3 trials across all 6 zones with zero errors; measures mL with high accuracy.</td>
+              <td class="rubric-cell" data-pts="3">Collects data across all zones; calculates accurate arithmetic averages.</td>
+              <td class="rubric-cell" data-pts="2">Missing 1–2 zone measurements or makes minor arithmetic averaging errors.</td>
+              <td class="rubric-cell" data-pts="1">Major data gaps; improper usage of infrared thermometer or spillage of water.</td>
+            </tr>
+            <tr data-row="3">
+              <td><strong>Math 5.4H: Pacing & Canopy Area</strong></td>
+              <td class="rubric-cell" data-pts="4">Flawlessly calculates step pace, canopy radius, area ($3.14 \times r^2$), and student carrying capacity.</td>
+              <td class="rubric-cell" data-pts="3">Calculates pace and circle area with minor calculation slip; understands formula.</td>
+              <td class="rubric-cell" data-pts="2">Struggles with decimal multiplication or radius averaging.</td>
+              <td class="rubric-cell" data-pts="1">Uses wrong formula; unable to compute step pace or shade area.</td>
+            </tr>
+            <tr data-row="4">
+              <td><strong>Health 5.3A: CER Heat Safety Report</strong></td>
+              <td class="rubric-cell" data-pts="4">Rigorous CER report citing quantitative data, thermal thresholds (>104°F), and hydration protocols.</td>
+              <td class="rubric-cell" data-pts="3">Clear CER response citing specific temperature numbers and identifying recess heat safety.</td>
+              <td class="rubric-cell" data-pts="2">CER is incomplete or lacks numerical evidence; identifies heat risks generally.</td>
+              <td class="rubric-cell" data-pts="1">Provides opinion without supporting experimental evidence or scientific reasoning.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="rubric-score-bar">
+          <div>
+            <strong>Interactive Rubric Score:</strong> <span id="mod1RubricScoreDisplay" class="rubric-total">0 / 16 pts</span>
+          </div>
+          <button type="button" class="btn-lab" onclick="resetRubric('mod1RubricTable', 'mod1RubricScoreDisplay')">🔄 Reset Rubric</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ==================================================================== -->
+    <!-- MODULE 2 CONTENT CONTAINER                                           -->
+    <!-- ==================================================================== -->
+    <div id="module2Container" class="module-wrapper" style="display: none;">
+      
+      <!-- Tab 1: Teacher Guide -->
+      <div id="mod2GuidePane" class="pane-content active">
+        <div class="section-title">
+          <span>📘 Teacher Instructional Guide: Albedo, Shadow Geometry & Canopy Energy Flux</span>
+          <span class="badge">Grades 6–8</span>
+        </div>
+
+        <table class="lab-table">
+          <thead>
+            <tr>
+              <th>Standard</th>
+              <th>Type</th>
+              <th>Alignment Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Science 8.10B</strong></td>
+              <td>Core 3D TEKS</td>
+              <td>Describe how natural events and human activities influence climate systems and atmospheric energy transfer, including surface albedo ($\alpha$) and radiation balance ($R_n$).</td>
+            </tr>
+            <tr>
+              <td><strong>Math 8.7B</strong></td>
+              <td>Cross-Curricular</td>
+              <td>Use right-triangle trigonometry proportions ($\tan\theta$) and clinometers to solve for tree height: $H = D \cdot \tan\theta + h_{\text{eye}}$.</td>
+            </tr>
+            <tr>
+              <td><strong>Social Studies 8.11A</strong></td>
+              <td>History & Geography</td>
+              <td>Analyze how human modifications of the physical environment (urbanization, impervious surfaces) alter settlement microclimates and quality of life.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>5E Instructional Learning Sequence</h3>
+        <div class="five-e-grid">
+          <div class="five-e-card engage">
+            <h4>🔴 1. ENGAGE (15 min) — The Albedo & Radiation Balance Hook</h4>
+            <p>Compare black vs white metal cans in sunlight. Introduce Albedo ($\alpha = S_{\text{out}} / S_{\text{in}}$) and explain why dark asphalt converts 90% of solar radiation into scorching sensible heat ($H$).</p>
+          </div>
+          <div class="five-e-card explore">
+            <h4>🔵 2. EXPLORE (35 min) — Protractor Clinometer Forestry & Albedo Audit</h4>
+            <p>Construct DIY protractor clinometers. Measure a 15-meter baseline from a campus tree, sight the zenith angle ($\theta$), and compute tree height. Use upward/downward light sensors to measure albedo across 4 surfaces.</p>
+          </div>
+          <div class="five-e-card explain">
+            <h4>🟣 3. EXPLAIN (20 min) — Mathematical Energy Balance Modeling</h4>
+            <p>Model Net Solar Absorbed: $S_{\text{net}} = 1000 \times (1 - \alpha)\text{ W/m}^2$. Compare asphalt ($S_{\text{net}} \approx 920\text{ W/m}^2$, 100% sensible heat) with tree canopy ($S_{\text{net}} \approx 800\text{ W/m}^2$, 75% latent heat flux).</p>
+          </div>
+          <div class="five-e-card elaborate">
+            <h4>🟠 4. ELABORATE (15 min) — Aerial Campus Grid & Urban Heat Geography</h4>
+            <p>Map campus impervious percentage vs canopy cover on a 100-cell aerial grid. Discuss historical urban modification and shade equity in South Texas neighborhoods.</p>
+          </div>
+          <div class="five-e-card evaluate">
+            <h4>🟢 5. EVALUATE (15 min) — Synthesis & Rubric Review</h4>
+            <p>Students complete field sheets, verifying trigonometric calculations, energy flux balances, and environmental modification essays.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 2: Student Clipboard Worksheet -->
+      <div id="mod2SheetPane" class="pane-content">
+        <div class="clipboard-paper">
+          <div class="clipboard-header">
+            <div>
+              <h2>Campus Microforest Field Investigation</h2>
+              <p><strong>MODULE 2:</strong> ALBEDO, SHADOW GEOMETRY & CANOPY ENERGY FLUX (Grades 6–8)</p>
+            </div>
+            <div style="text-align: right; font-size: 0.8rem;">
+              <div><strong>Standards:</strong> Sci 8.10B · Math 8.7B · SS 8.11A</div>
+              <div>UTRGV Cool Schools & TTFS</div>
+            </div>
+          </div>
+
+          <div class="clipboard-field-row">
+            <div class="clipboard-field"><span>Student Researcher:</span> <input type="text" placeholder="Full Name" /></div>
+            <div class="clipboard-field"><span>Date:</span> <input type="text" value="2026-09-12" /></div>
+            <div class="clipboard-field"><span>Tree ID / Species:</span> <input type="text" placeholder="e.g. Cedar Elm #12" /></div>
+          </div>
+
+          <!-- Clinometer Trig -->
+          <div class="clipboard-box">
+            <div class="clipboard-box-title">
+              <span>Section 1: Clinometer Forestry Trigonometry (Math 8.7B)</span>
+              <span>Height = (D × tan θ) + h_eye</span>
+            </div>
+            <div class="clipboard-field-row">
+              <div class="clipboard-field"><span>Baseline Distance (D):</span> <input type="text" placeholder="15.0 m" /></div>
+              <div class="clipboard-field"><span>Clinometer Zenith Angle (θ):</span> <input type="text" placeholder="42°" /></div>
+              <div class="clipboard-field"><span>Observer Eye Height (h_eye):</span> <input type="text" placeholder="1.45 m" /></div>
+            </div>
+            <div style="margin-top: 0.5rem; font-size: 0.85rem;">
+              <strong>Calculation:</strong> (15.0 m × tan 42°: <input type="text" style="width: 50px;" placeholder="0.900" />) + <input type="text" style="width: 50px;" placeholder="1.45" /> m = <input type="text" style="width: 80px; font-weight: bold;" placeholder="14.95 m" /> <strong>Tree Height (H)</strong>
+            </div>
+          </div>
+
+          <!-- Albedo & Energy Flux -->
+          <div class="clipboard-box">
+            <div class="clipboard-box-title">
+              <span>Section 2: Surface Albedo (α) & Energy Flux Matrix (Science 8.10B / 8.5C)</span>
+              <span>α = S_out ÷ S_in</span>
+            </div>
+            <table class="clipboard-table">
+              <thead>
+                <tr>
+                  <th>Surface Tested</th>
+                  <th>Incident (S_in Lux)</th>
+                  <th>Reflected (S_out Lux)</th>
+                  <th>Albedo (α)</th>
+                  <th>Net Absorbed (W/m²)</th>
+                  <th>Surface Temp (°F)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1. Fresh Blacktop Asphalt</td>
+                  <td><input type="text" placeholder="85,000" /></td>
+                  <td><input type="text" placeholder="5,950" /></td>
+                  <td><input type="text" placeholder="0.07" style="font-weight: bold;" /></td>
+                  <td><input type="text" placeholder="930 W/m²" /></td>
+                  <td><input type="text" placeholder="141°F" /></td>
+                </tr>
+                <tr>
+                  <td>2. Light Concrete Sidewalk</td>
+                  <td><input type="text" placeholder="85,000" /></td>
+                  <td><input type="text" placeholder="28,900" /></td>
+                  <td><input type="text" placeholder="0.34" style="font-weight: bold;" /></td>
+                  <td><input type="text" placeholder="660 W/m²" /></td>
+                  <td><input type="text" placeholder="108°F" /></td>
+                </tr>
+                <tr>
+                  <td>3. Unshaded Turf Grass</td>
+                  <td><input type="text" placeholder="85,000" /></td>
+                  <td><input type="text" placeholder="17,000" /></td>
+                  <td><input type="text" placeholder="0.20" style="font-weight: bold;" /></td>
+                  <td><input type="text" placeholder="800 W/m²" /></td>
+                  <td><input type="text" placeholder="98°F" /></td>
+                </tr>
+                <tr>
+                  <td>4. Living Tree Canopy Shade</td>
+                  <td><input type="text" placeholder="85,000" /></td>
+                  <td><input type="text" placeholder="19,550" /></td>
+                  <td><input type="text" placeholder="0.23" style="font-weight: bold;" /></td>
+                  <td><input type="text" placeholder="770 W/m²" /></td>
+                  <td><input type="text" placeholder="84°F" /></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Social Studies Grid & Synthesis -->
+          <div class="clipboard-box">
+            <div class="clipboard-box-title">
+              <span>Section 3: Environmental Modification & Geography Synthesis (SS 8.11A)</span>
+              <span>Campus 100-Grid Audit</span>
+            </div>
+            <div class="clipboard-field-row">
+              <div class="clipboard-field"><span>Impervious Surface:</span> <input type="text" placeholder="68%" /></div>
+              <div class="clipboard-field"><span>Tree Canopy Cover:</span> <input type="text" placeholder="14%" /></div>
+              <div class="clipboard-field"><span>Open Permeable Lawn:</span> <input type="text" placeholder="18%" /></div>
+            </div>
+            <div style="font-size: 0.8rem; margin-top: 0.5rem; line-height: 1.8;">
+              <strong>Synthesis Essay:</strong> <input type="text" style="width: 95%;" placeholder="Replacing native thornscrub with low-albedo asphalt traps shortwave radiation, driving urban heat islands..." /><br/>
+              <input type="text" style="width: 98%;" placeholder="Planting 30 native microforest trees increases latent heat flux and provides equitable cooling for all students..." />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 3: Interactive Field Simulator -->
+      <div id="mod2SimPane" class="pane-content">
+        <div class="sim-panel">
+          <h3>🎮 Interactive Albedo, Shadow Geometry & Net Radiation Simulator</h3>
+          <p style="font-size: 0.85rem; color: #94a3b8;">Simulate right-triangle clinometer height, sun zenith angle, surface albedo reflectance, and net radiation balance.</p>
+          
+          <div class="sim-grid">
+            <div class="sim-controls">
+              <div class="sim-control">
+                <div class="sim-control-header">
+                  <span>Clinometer Angle (θ degrees):</span>
+                  <span id="mod2SimAngleVal" class="sim-control-val">45°</span>
+                </div>
+                <input type="range" id="mod2SimAngleSlider" min="15" max="75" step="1" value="45" class="sim-slider" />
+              </div>
+
+              <div class="sim-control">
+                <div class="sim-control-header">
+                  <span>Baseline Distance (D meters):</span>
+                  <span id="mod2SimDistVal" class="sim-control-val">15.0 m</span>
+                </div>
+                <input type="range" id="mod2SimDistSlider" min="5" max="35" step="1" value="15" class="sim-slider" />
+              </div>
+
+              <div class="sim-control">
+                <div class="sim-control-header">
+                  <span>Surface Albedo (α):</span>
+                  <span id="mod2SimAlbedoVal" class="sim-control-val">0.08 (Asphalt)</span>
+                </div>
+                <input type="range" id="mod2SimAlbedoSlider" min="0.05" max="0.50" step="0.01" value="0.08" class="sim-slider" />
+              </div>
+            </div>
+
+            <div class="sim-outputs">
+              <div class="sim-output-card">
+                <div class="sim-output-num" id="mod2OutTreeHeight">16.4 m</div>
+                <div class="sim-output-label">Computed Tree Height</div>
+              </div>
+              <div class="sim-output-card">
+                <div class="sim-output-num" id="mod2OutShadowLen">16.4 m</div>
+                <div class="sim-output-label">Current Ground Shadow</div>
+              </div>
+              <div class="sim-output-card">
+                <div class="sim-output-num" id="mod2OutNetRad">920 W/m²</div>
+                <div class="sim-output-label">Net Absorbed Radiation</div>
+              </div>
+              <div class="sim-output-card">
+                <div class="sim-output-num" style="color: #38bdf8;" id="mod2OutSensibleHeat">92% Sensible</div>
+                <div class="sim-output-label">Thermal Heat Flux Ratio</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 4: Standards Rubric -->
+      <div id="mod2RubricPane" class="pane-content">
+        <div class="section-title">
+          <span>🎯 Standards-Aligned 4-Level Evaluation Rubric</span>
+          <span class="badge">Module 2 (Grades 6–8)</span>
+        </div>
+
+        <table class="rubric-table" id="mod2RubricTable">
+          <thead>
+            <tr>
+              <th style="width: 22%;">Dimension</th>
+              <th style="width: 19.5%;">4 - Exceeds Standard</th>
+              <th style="width: 19.5%;">3 - Meets Standard</th>
+              <th style="width: 19.5%;">2 - Developing</th>
+              <th style="width: 19.5%;">1 - Beginning</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-row="1">
+              <td><strong>Science 8.10B / 8.5C: Albedo & Radiation Flux</strong></td>
+              <td class="rubric-cell" data-pts="4">Flawlessly calculates albedo ($\alpha$) and models sensible vs latent heat thermodynamic fluxes.</td>
+              <td class="rubric-cell" data-pts="3">Accurately computes albedo from $S_{\text{out}} / S_{\text{in}}$ and explains why dark surfaces absorb more heat.</td>
+              <td class="rubric-cell" data-pts="2">Calculates albedo with arithmetic errors; confuses albedo with surface temperature.</td>
+              <td class="rubric-cell" data-pts="1">Incomplete albedo data; unable to explain solar radiation reflectance.</td>
+            </tr>
+            <tr data-row="2">
+              <td><strong>Math 8.7B: Forestry Clinometer Trig</strong></td>
+              <td class="rubric-cell" data-pts="4">Solves right triangles using tangent ratios ($D \cdot \tan\theta + h_{\text{eye}}$) and projects solar noon shadows.</td>
+              <td class="rubric-cell" data-pts="3">Solves tree height using tangent formula with minor arithmetic error.</td>
+              <td class="rubric-cell" data-pts="2">Sights angle correctly but forgets to add observer eye height ($h_{\text{eye}}$).</td>
+              <td class="rubric-cell" data-pts="1">Unable to construct right triangle model; fails to use tangent ratios.</td>
+            </tr>
+            <tr data-row="3">
+              <td><strong>Social Studies 8.11A: Environmental Modification</strong></td>
+              <td class="rubric-cell" data-pts="4">Synthesizes aerial grid data to articulate links between impervious surfaces, heat equity, and zoning history.</td>
+              <td class="rubric-cell" data-pts="3">Analyzes campus grid percentages and explains how human modifications create urban heat.</td>
+              <td class="rubric-cell" data-pts="2">Calculates grid percentages but provides superficial explanations.</td>
+              <td class="rubric-cell" data-pts="1">Leaves social studies synthesis blank or shows no connection to human modifications.</td>
+            </tr>
+            <tr data-row="4">
+              <td><strong>Science SEPs 8.1A / 8.1C: Tool Precision</strong></td>
+              <td class="rubric-cell" data-pts="4">Exemplary tool handling (light meter inversion, clinometer plumb line stabilization); zero errors.</td>
+              <td class="rubric-cell" data-pts="3">Handles all sensors responsibly; records complete quantitative data with units.</td>
+              <td class="rubric-cell" data-pts="2">Requires occasional teacher guidance on sensor orientation or clinometer sighting.</td>
+              <td class="rubric-cell" data-pts="1">Careless handling of equipment; incomplete data; ignores outdoor safety.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="rubric-score-bar">
+          <div>
+            <strong>Interactive Rubric Score:</strong> <span id="mod2RubricScoreDisplay" class="rubric-total">0 / 16 pts</span>
+          </div>
+          <button type="button" class="btn-lab" onclick="resetRubric('mod2RubricTable', 'mod2RubricScoreDisplay')">🔄 Reset Rubric</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ==================================================================== -->
+    <!-- MODULE 3 CONTENT CONTAINER                                           -->
+    <!-- ==================================================================== -->
+    <div id="module3Container" class="module-wrapper" style="display: none;">
+      
+      <!-- Tab 1: Teacher Guide -->
+      <div id="mod3GuidePane" class="pane-content active">
+        <div class="section-title">
+          <span>📘 Teacher Instructional Guide: Subtropical Agroecology, Nitrogen Fixation & Komorebi</span>
+          <span class="badge">Grades 9–12 / APES</span>
+        </div>
+
+        <table class="lab-table">
+          <thead>
+            <tr>
+              <th>Standard</th>
+              <th>Type</th>
+              <th>Alignment Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Biology 12.B</strong></td>
+              <td>Core 3D TEKS</td>
+              <td>Analyze ecological relationships and symbiotic interactions, including mutualism in biological nitrogen fixation ($N_2 \to NH_4^+$) and multi-strata niche differentiation.</td>
+            </tr>
+            <tr>
+              <td><strong>Env Science 7.A / APES</strong></td>
+              <td>Cross-Curricular</td>
+              <td>Evaluate agroforestry systems, soil fertility regeneration, closed-loop nutrient cycling, and displacement of synthetic Haber-Bosch fertilizers.</td>
+            </tr>
+            <tr>
+              <td><strong>Fine Arts 4.2C</strong></td>
+              <td>Advanced Art</td>
+              <td>Produce original observational botanical illustrations utilizing chiaroscuro tonal shading to capture dappled light (*Komorebi*).</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>5E Instructional Learning Sequence</h3>
+        <div class="five-e-grid">
+          <div class="five-e-card engage">
+            <h4>🔴 1. ENGAGE (15 min) — The Nitrogen Dilemma & Komorebi Phenomenon</h4>
+            <p>Contrast industrial Haber-Bosch fertilizer runoff with ancient Tamaulipan thornscrub polycultures. Introduce <em>Komorebi</em> (filtered canopy light) and photoinhibition prevention.</p>
+          </div>
+          <div class="five-e-card explore">
+            <h4>🔵 2. EXPLORE (40 min) — Rhizobial Root Bioassay & PAR Profile</h4>
+            <p>Micro-trench legume roots (Honey Mesquite, Texas Ebony). Bisect nodules to verify pink <strong>leghaemoglobin</strong> activity. Measure vertical PAR profile ($I_0 \to I_{\text{soil}}$) and soil nitrates.</p>
+          </div>
+          <div class="five-e-card explain">
+            <h4>🟣 3. EXPLAIN (25 min) — Nitrogenase Biochemistry & Beer-Lambert Law</h4>
+            <p>Model the reduction of atmospheric $N_2 \to NH_4^+$ and apply Beer-Lambert canopy light extinction: $I = I_0 \cdot e^{-k \cdot \text{LAI}}$.</p>
+          </div>
+          <div class="five-e-card elaborate">
+            <h4>🟠 4. ELABORATE (25 min) — Chiaroscuro Botanical Drawing & Polyculture Design</h4>
+            <p>Students execute an observational chiaroscuro sketch of bipinnate leaves and active nodules using 5 tonal values, then architect a 3-tier agroforestry food forest.</p>
+          </div>
+          <div class="five-e-card evaluate">
+            <h4>🟢 5. EVALUATE (15 min) — Synthesis & APES Argumentation</h4>
+            <p>Students finalize their field notebooks, compiling nodule bioassays, light transmittance calculations, botanical artwork, and agroecological design arguments.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 2: Student Clipboard Worksheet -->
+      <div id="mod3SheetPane" class="pane-content">
+        <div class="clipboard-paper">
+          <div class="clipboard-header">
+            <div>
+              <h2>Campus Agroecology Field Laboratory</h2>
+              <p><strong>MODULE 3:</strong> SUBTROPICAL AGROECOLOGY, NITROGEN FIXATION & KOMOREBI (Grades 9–12 / APES)</p>
+            </div>
+            <div style="text-align: right; font-size: 0.8rem;">
+              <div><strong>Standards:</strong> Bio 12.B · EnvSci 7.A · Art 4.2C</div>
+              <div>UTRGV Cool Schools & TTFS</div>
+            </div>
+          </div>
+
+          <div class="clipboard-field-row">
+            <div class="clipboard-field"><span>Lead Researcher:</span> <input type="text" placeholder="Full Name" /></div>
+            <div class="clipboard-field"><span>Date:</span> <input type="text" value="2026-09-12" /></div>
+            <div class="clipboard-field"><span>Legume Species:</span> <input type="text" placeholder="Prosopis glandulosa / Ebenopsis ebano" /></div>
+          </div>
+
+          <!-- Root Nodule Bioassay -->
+          <div class="clipboard-box">
+            <div class="clipboard-box-title">
+              <span>Section 1: Rhizobial Root Nodule Bioassay (Biology 12.B / APES 5.4)</span>
+              <span>Leghaemoglobin Active Fixation</span>
+            </div>
+            <table class="clipboard-table">
+              <thead>
+                <tr>
+                  <th>Nodule Sample</th>
+                  <th>Diameter (mm)</th>
+                  <th>Internal Core Color</th>
+                  <th>Nitrogenase Status</th>
+                  <th>Leghaemoglobin Oxygen Buffer</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Nodule A (Mesquite Lateral)</td>
+                  <td><input type="text" placeholder="3.2 mm" /></td>
+                  <td><input type="text" placeholder="Ruby Red / Deep Pink" /></td>
+                  <td><input type="text" placeholder="Active (N2 -> NH4+)" style="font-weight: bold;" /></td>
+                  <td><input type="text" placeholder="Active Buffer Present" /></td>
+                </tr>
+                <tr>
+                  <td>Nodule B (Mesquite Deep)</td>
+                  <td><input type="text" placeholder="2.8 mm" /></td>
+                  <td><input type="text" placeholder="Pink" /></td>
+                  <td><input type="text" placeholder="Active" style="font-weight: bold;" /></td>
+                  <td><input type="text" placeholder="Active Buffer Present" /></td>
+                </tr>
+                <tr>
+                  <td>Nodule C (Senescent Lateral)</td>
+                  <td><input type="text" placeholder="1.5 mm" /></td>
+                  <td><input type="text" placeholder="Pale White / Green" /></td>
+                  <td><input type="text" placeholder="Inactive / Immature" style="font-weight: bold;" /></td>
+                  <td><input type="text" placeholder="Low / None" /></td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="clipboard-field-row" style="margin-top: 0.5rem;">
+              <div class="clipboard-field"><span>Canopy Soil Nitrate:</span> <input type="text" placeholder="38 ppm NO3-" /></div>
+              <div class="clipboard-field"><span>Open Lawn Soil Nitrate:</span> <input type="text" placeholder="8 ppm NO3-" /></div>
+              <div class="clipboard-field"><span>N-Enrichment Delta:</span> <input type="text" placeholder="+30 ppm Higher" style="font-weight: bold;" /></div>
+            </div>
+          </div>
+
+          <!-- Komorebi PAR Extinction -->
+          <div class="clipboard-box">
+            <div class="clipboard-box-title">
+              <span>Section 2: Komorebi PAR Light Extinction Profile (Biology 12.B / RTC 1.5C)</span>
+              <span>I = I_0 × e^(-k × LAI)</span>
+            </div>
+            <div class="clipboard-field-row">
+              <div class="clipboard-field"><span>Incident Solar PAR (I_0):</span> <input type="text" placeholder="1,950 µmol/m²s" /></div>
+              <div class="clipboard-field"><span>Understory PAR at 0m (I_soil):</span> <input type="text" placeholder="520 µmol/m²s" /></div>
+              <div class="clipboard-field"><span>Transmittance (T%):</span> <input type="text" placeholder="26.7%" style="font-weight: bold;" /></div>
+            </div>
+            <div style="font-size: 0.8rem; margin-top: 0.4rem;">
+              <strong>Ecological Insight:</strong> Full sun (1950 µmol/m²s) causes severe photoinhibition in understory crops. Komorebi light (520 µmol/m²s) optimizes Photosystem II efficiency while preventing heat-induced stomatal closure.
+            </div>
+          </div>
+
+          <!-- Chiaroscuro Drawing Box -->
+          <div class="clipboard-box">
+            <div class="clipboard-box-title">
+              <span>Section 3: Botanical Chiaroscuro Field Drawing (Fine Arts 4.2C)</span>
+              <span>5-Step Value Scale: [1] White [2] Light [3] Mid [4] Dark [5] Core Black</span>
+            </div>
+            <div class="drawing-box">
+              [ BOTANICAL FIELD DRAWING: Render bipinnate compound leaves, pulvini joints, active pink nodules, and dappled Komorebi sunfleck patterns ]
+            </div>
+          </div>
+
+          <!-- CER Agroecology Design Argument -->
+          <div class="clipboard-box">
+            <div class="clipboard-box-title">
+              <span>Section 4: Claim-Evidence-Reasoning Agroecology Design Report</span>
+              <span>APES & Biology Synthesis</span>
+            </div>
+            <div style="font-size: 0.8rem; line-height: 1.8;">
+              <strong>CLAIM:</strong> <input type="text" style="width: 90%;" placeholder="Native leguminous agroforest polycultures eliminate the need for synthetic nitrogen fertilizers..." /><br/>
+              <strong>EVIDENCE:</strong> <input type="text" style="width: 88%;" placeholder="Active pink leghaemoglobin nodules increased canopy soil nitrates by +30 ppm while transmitting 26.7% PAR..." /><br/>
+              <strong>REASONING:</strong> <input type="text" style="width: 87%;" placeholder="Symbiotic Rhizobia fix atmospheric N2 without fossil-fuel inputs; Komorebi light buffers understory crops..." />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 3: Interactive Field Simulator -->
+      <div id="mod3SimPane" class="pane-content">
+        <div class="sim-panel">
+          <h3>🎮 Interactive Komorebi PAR Extinction & Nitrogen Fixation Simulator</h3>
+          <p style="font-size: 0.85rem; color: #94a3b8;">Simulate Beer-Lambert canopy light attenuation ($I = I_0 e^{-k \cdot \text{LAI}}$) and annual biological nitrogen fixation mass balances.</p>
+          
+          <div class="sim-grid">
+            <div class="sim-controls">
+              <div class="sim-control">
+                <div class="sim-control-header">
+                  <span>Incident Solar PAR (I_0 µmol/m²s):</span>
+                  <span id="mod3SimParVal" class="sim-control-val">1900 µmol/m²s</span>
+                </div>
+                <input type="range" id="mod3SimParSlider" min="500" max="2200" step="50" value="1900" class="sim-slider" />
+              </div>
+
+              <div class="sim-control">
+                <div class="sim-control-header">
+                  <span>Overstory Leaf Area Index (LAI):</span>
+                  <span id="mod3SimLaiVal" class="sim-control-val">2.5 LAI</span>
+                </div>
+                <input type="range" id="mod3SimLaiSlider" min="0.5" max="5.0" step="0.1" value="2.5" class="sim-slider" />
+              </div>
+
+              <div class="sim-control">
+                <div class="sim-control-header">
+                  <span>Legume Agroforest Area (Hectares):</span>
+                  <span id="mod3SimAreaVal" class="sim-control-val">0.50 ha</span>
+                </div>
+                <input type="range" id="mod3SimAreaSlider" min="0.1" max="5.0" step="0.1" value="0.5" class="sim-slider" />
+              </div>
+            </div>
+
+            <div class="sim-outputs">
+              <div class="sim-output-card">
+                <div class="sim-output-num" id="mod3OutUnderstoryPar">480 µmol/m²s</div>
+                <div class="sim-output-label">Understory Komorebi PAR</div>
+              </div>
+              <div class="sim-output-card">
+                <div class="sim-output-num" style="color: #4ade80;" id="mod3OutPhotoStatus">Optimal (No Stress)</div>
+                <div class="sim-output-label">Photosynthetic State</div>
+              </div>
+              <div class="sim-output-card">
+                <div class="sim-output-num" id="mod3OutNFixed">32.5 kg N/yr</div>
+                <div class="sim-output-label">Pure Biological N Fixed</div>
+              </div>
+              <div class="sim-output-card">
+                <div class="sim-output-num" style="color: #38bdf8;" id="mod3OutUreaDisplaced">70.6 kg Urea</div>
+                <div class="sim-output-label">Synthetic Fertilizer Displaced</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 4: Standards Rubric -->
+      <div id="mod3RubricPane" class="pane-content">
+        <div class="section-title">
+          <span>🎯 Standards-Aligned 4-Level Evaluation Rubric</span>
+          <span class="badge">Module 3 (Grades 9–12 / APES)</span>
+        </div>
+
+        <table class="rubric-table" id="mod3RubricTable">
+          <thead>
+            <tr>
+              <th style="width: 22%;">Dimension</th>
+              <th style="width: 19.5%;">4 - Exceeds Standard</th>
+              <th style="width: 19.5%;">3 - Meets Standard</th>
+              <th style="width: 19.5%;">2 - Developing</th>
+              <th style="width: 19.5%;">1 - Beginning</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-row="1">
+              <td><strong>Biology 12.B: Mutualism & Nitrogen Fixation</strong></td>
+              <td class="rubric-cell" data-pts="4">Demonstrates mastery of $N_2$ reduction, leghaemoglobin $O_2$ buffering, and quantifies biological nitrogen mass balances.</td>
+              <td class="rubric-cell" data-pts="3">Correctly identifies active pink nodules, explains mutualism, and records soil nitrate deltas.</td>
+              <td class="rubric-cell" data-pts="2">Confuses nitrogen fixation with photosynthesis or struggles to explain nodule color.</td>
+              <td class="rubric-cell" data-pts="1">Incomplete root nodule assay; unable to explain soil nitrogen enrichment.</td>
+            </tr>
+            <tr data-row="2">
+              <td><strong>Env Science 7.A / APES: Agroforestry & Soil</strong></td>
+              <td class="rubric-cell" data-pts="4">Critically evaluates multi-strata polycultures, computes annual fertilizer displacement, and models closed-loop cycles.</td>
+              <td class="rubric-cell" data-pts="3">Explains benefits of agroforestry over monoculture; computes campus nitrogen production.</td>
+              <td class="rubric-cell" data-pts="2">Lists basic benefits of trees in gardens but provides superficial soil analysis.</td>
+              <td class="rubric-cell" data-pts="1">Fails to evaluate agroecological practices or complete nitrate comparison.</td>
+            </tr>
+            <tr data-row="3">
+              <td><strong>Fine Arts 4.2C: Chiaroscuro Botanical Sketch</strong></td>
+              <td class="rubric-cell" data-pts="4">Exceptional botanical illustration with accurate bipinnate morphology, visible nodules, and 5-value chiaroscuro range.</td>
+              <td class="rubric-cell" data-pts="3">Clean observational sketch showing recognizable leaf structures and clear light-to-dark shading.</td>
+              <td class="rubric-cell" data-pts="2">Basic line drawing with minimal tonal variation; missing structural details.</td>
+              <td class="rubric-cell" data-pts="1">Incomplete or rushed sketch lacking botanical accuracy or tonal shading.</td>
+            </tr>
+            <tr data-row="4">
+              <td><strong>Science SEPs 1.A / 1.C: Data & CER Argument</strong></td>
+              <td class="rubric-cell" data-pts="4">Synthesizes PAR light profiles, Beer-Lambert models, and nodule assays into a rigorous evidence-based CER design argument.</td>
+              <td class="rubric-cell" data-pts="3">Solid CER response citing specific sensor data (ppm nitrate, PAR $\mu\text{mol/m}^2\text{s}$, transmittance).</td>
+              <td class="rubric-cell" data-pts="2">CER argument is vague or relies on general statements rather than collected field data.</td>
+              <td class="rubric-cell" data-pts="1">Incomplete CER response lacking scientific claim and experimental evidence.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="rubric-score-bar">
+          <div>
+            <strong>Interactive Rubric Score:</strong> <span id="mod3RubricScoreDisplay" class="rubric-total">0 / 16 pts</span>
+          </div>
+          <button type="button" class="btn-lab" onclick="resetRubric('mod3RubricTable', 'mod3RubricScoreDisplay')">🔄 Reset Rubric</button>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Client Interactive Controller Script -->
+  <script>
+    (function () {
+      'use strict';
+
+      let currentModule = 'mod1';
+      let currentTab = 'guide';
+
+      // Elements
+      const navCards = document.querySelectorAll('.module-nav-card');
+      const tabBtns = document.querySelectorAll('.tab-btn');
+      const btnPrint = document.getElementById('btnPrintActive');
+
+      // Module Containers
+      const modContainers = {
+        mod1: document.getElementById('module1Container'),
+        mod2: document.getElementById('module2Container'),
+        mod3: document.getElementById('module3Container')
+      };
+
+      // 1. Module Selector Click Handling
+      navCards.forEach(card => {
+        card.addEventListener('click', () => {
+          const mod = card.getAttribute('data-mod');
+          switchModule(mod);
+        });
+      });
+
+      function switchModule(mod) {
+        currentModule = mod;
+        navCards.forEach(c => c.classList.toggle('active', c.getAttribute('data-mod') === mod));
+        
+        Object.keys(modContainers).forEach(k => {
+          if (modContainers[k]) {
+            modContainers[k].style.display = (k === mod) ? 'block' : 'none';
+          }
+        });
+
+        switchTab(currentTab);
+      }
+
+      // 2. Tab Mode Switching
+      tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const tab = btn.getAttribute('data-tab');
+          switchTab(tab);
+        });
+      });
+
+      function switchTab(tab) {
+        currentTab = tab;
+        tabBtns.forEach(b => b.classList.toggle('active', b.getAttribute('data-tab') === tab));
+
+        // Update active pane inside current module
+        const prefix = currentModule; // mod1, mod2, mod3
+        const paneMap = {
+          guide: document.getElementById(`${prefix}GuidePane`),
+          sheet: document.getElementById(`${prefix}SheetPane`),
+          sim: document.getElementById(`${prefix}SimPane`),
+          rubric: document.getElementById(`${prefix}RubricPane`)
+        };
+
+        Object.keys(paneMap).forEach(k => {
+          if (paneMap[k]) {
+            paneMap[k].classList.toggle('active', k === tab);
+          }
+        });
+      }
+
+      // 3. Print Active Sheet Handler
+      if (btnPrint) {
+        btnPrint.addEventListener('click', () => {
+          // Switch to student sheet tab before print
+          switchTab('sheet');
+          
+          // Mark the active sheet pane with print-active class
+          const activeSheet = document.getElementById(`${currentModule}SheetPane`);
+          document.querySelectorAll('.pane-content').forEach(p => p.classList.remove('print-active'));
+          if (activeSheet) {
+            activeSheet.classList.add('print-active');
+          }
+
+          setTimeout(() => {
+            window.print();
+          }, 150);
+        });
+      }
+
+      // 4. Interactive Simulators
+
+      // Module 1 Simulator
+      const mod1Solar = document.getElementById('mod1SimSolarSlider');
+      const mod1Leaf = document.getElementById('mod1SimLeafSlider');
+      const mod1Air = document.getElementById('mod1SimAirSlider');
+
+      function updateMod1Sim() {
+        if (!mod1Solar || !mod1Leaf || !mod1Air) return;
+        const solar = parseFloat(mod1Solar.value);
+        const leafArea = parseFloat(mod1Leaf.value);
+        const airTemp = parseFloat(mod1Air.value);
+
+        document.getElementById('mod1SimSolarVal').textContent = `${solar} W/m²`;
+        document.getElementById('mod1SimLeafVal').textContent = `${leafArea} m²`;
+        document.getElementById('mod1SimAirVal').textContent = `${airTemp}°F`;
+
+        // Physics: Transpiration (L/day) ≈ leafArea * (solar / 1000) * 0.45 * (airTemp / 90)
+        const transLiters = (leafArea * (solar / 1000) * 0.44 * (airTemp / 90)).toFixed(1);
+        // Asphalt temp ≈ airTemp + (solar / 1000) * 48
+        const asphaltTemp = Math.round(airTemp + (solar / 1000) * 48);
+        // Canopy shade temp ≈ airTemp - (transLiters / leafArea) * 22
+        const shadeTemp = Math.max(72, Math.round(airTemp - 8 - (transLiters / leafArea) * 12));
+        const delta = shadeTemp - asphaltTemp;
+
+        document.getElementById('mod1OutTransVolume').textContent = `${transLiters} L/day`;
+        document.getElementById('mod1OutAsphaltTemp').textContent = `${asphaltTemp}°F`;
+        document.getElementById('mod1OutShadeTemp').textContent = `${shadeTemp}°F`;
+        document.getElementById('mod1OutCoolingDelta').textContent = `${delta}°F`;
+      }
+
+      if (mod1Solar) {
+        mod1Solar.addEventListener('input', updateMod1Sim);
+        mod1Leaf.addEventListener('input', updateMod1Sim);
+        mod1Air.addEventListener('input', updateMod1Sim);
+        updateMod1Sim();
+      }
+
+      // Module 2 Simulator
+      const mod2Angle = document.getElementById('mod2SimAngleSlider');
+      const mod2Dist = document.getElementById('mod2SimDistSlider');
+      const mod2Albedo = document.getElementById('mod2SimAlbedoSlider');
+
+      function updateMod2Sim() {
+        if (!mod2Angle || !mod2Dist || !mod2Albedo) return;
+        const angleDeg = parseFloat(mod2Angle.value);
+        const dist = parseFloat(mod2Dist.value);
+        const albedo = parseFloat(mod2Albedo.value);
+
+        document.getElementById('mod2SimAngleVal').textContent = `${angleDeg}°`;
+        document.getElementById('mod2SimDistVal').textContent = `${dist.toFixed(1)} m`;
+        document.getElementById('mod2SimAlbedoVal').textContent = `${albedo.toFixed(2)}`;
+
+        // Height = D * tan(angle) + 1.45
+        const rad = (angleDeg * Math.PI) / 180;
+        const height = (dist * Math.tan(rad) + 1.45).toFixed(1);
+        // Shadow length at 45 solar elevation = height / tan(45)
+        const shadowLen = (height / Math.tan((55 * Math.PI) / 180)).toFixed(1);
+        const netRad = Math.round(1000 * (1 - albedo));
+        const sensibleRatio = Math.round((1 - albedo) * 100);
+
+        document.getElementById('mod2OutTreeHeight').textContent = `${height} m`;
+        document.getElementById('mod2OutShadowLen').textContent = `${shadowLen} m`;
+        document.getElementById('mod2OutNetRad').textContent = `${netRad} W/m²`;
+        document.getElementById('mod2OutSensibleHeat').textContent = `${sensibleRatio}% Sensible`;
+      }
+
+      if (mod2Angle) {
+        mod2Angle.addEventListener('input', updateMod2Sim);
+        mod2Dist.addEventListener('input', updateMod2Sim);
+        mod2Albedo.addEventListener('input', updateMod2Sim);
+        updateMod2Sim();
+      }
+
+      // Module 3 Simulator
+      const mod3Par = document.getElementById('mod3SimParSlider');
+      const mod3Lai = document.getElementById('mod3SimLaiSlider');
+      const mod3Area = document.getElementById('mod3SimAreaSlider');
+
+      function updateMod3Sim() {
+        if (!mod3Par || !mod3Lai || !mod3Area) return;
+        const par = parseFloat(mod3Par.value);
+        const lai = parseFloat(mod3Lai.value);
+        const area = parseFloat(mod3Area.value);
+
+        document.getElementById('mod3SimParVal').textContent = `${par} µmol/m²s`;
+        document.getElementById('mod3SimLaiVal').textContent = `${lai.toFixed(1)} LAI`;
+        document.getElementById('mod3SimAreaVal').textContent = `${area.toFixed(2)} ha`;
+
+        // Beer-Lambert: I = I_0 * exp(-0.55 * LAI)
+        const understoryPar = Math.round(par * Math.exp(-0.55 * lai));
+        const nFixed = (area * 65 * Math.min(1.2, lai / 2.0)).toFixed(1);
+        const ureaDisplaced = (nFixed / 0.46).toFixed(1);
+
+        let photoStatus = 'Optimal (No Stress)';
+        let photoColor = '#4ade80';
+        if (understoryPar > 900) {
+          photoStatus = 'Photoinhibition Risk';
+          photoColor = '#f87171';
+        } else if (understoryPar < 250) {
+          photoStatus = 'Light Limited';
+          photoColor = '#fbbf24';
+        }
+
+        document.getElementById('mod3OutUnderstoryPar').textContent = `${understoryPar} µmol/m²s`;
+        const statusEl = document.getElementById('mod3OutPhotoStatus');
+        statusEl.textContent = photoStatus;
+        statusEl.style.color = photoColor;
+        document.getElementById('mod3OutNFixed').textContent = `${nFixed} kg N/yr`;
+        document.getElementById('mod3OutUreaDisplaced').textContent = `${ureaDisplaced} kg Urea`;
+      }
+
+      if (mod3Par) {
+        mod3Par.addEventListener('input', updateMod3Sim);
+        mod3Lai.addEventListener('input', updateMod3Sim);
+        mod3Area.addEventListener('input', updateMod3Sim);
+        updateMod3Sim();
+      }
+
+      // 5. Interactive Rubric Matrix Scorer
+      function initRubrics() {
+        ['mod1RubricTable', 'mod2RubricTable', 'mod3RubricTable'].forEach(tableId => {
+          const table = document.getElementById(tableId);
+          if (!table) return;
+
+          const displayId = tableId.replace('Table', 'ScoreDisplay');
+          const rows = table.querySelectorAll('tbody tr');
+
+          rows.forEach(row => {
+            const cells = row.querySelectorAll('.rubric-cell');
+            cells.forEach(cell => {
+              cell.addEventListener('click', () => {
+                cells.forEach(c => c.classList.remove('selected'));
+                cell.classList.add('selected');
+                calculateRubricScore(tableId, displayId);
+              });
+            });
+          });
+        });
+      }
+
+      function calculateRubricScore(tableId, displayId) {
+        const table = document.getElementById(tableId);
+        const display = document.getElementById(displayId);
+        if (!table || !display) return;
+
+        let total = 0;
+        const selected = table.querySelectorAll('.rubric-cell.selected');
+        selected.forEach(c => {
+          total += parseInt(c.getAttribute('data-pts') || 0, 10);
+        });
+
+        display.textContent = `${total} / 16 pts (${Math.round((total / 16) * 100)}%)`;
+      }
+
+      window.resetRubric = function(tableId, displayId) {
+        const table = document.getElementById(tableId);
+        const display = document.getElementById(displayId);
+        if (table) {
+          table.querySelectorAll('.rubric-cell').forEach(c => c.classList.remove('selected'));
+        }
+        if (display) {
+          display.textContent = '0 / 16 pts';
+        }
+      };
+
+      initRubrics();
+
+    })();
+  </script>
+</body>
+</html>
