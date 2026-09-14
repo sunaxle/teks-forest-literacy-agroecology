@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SombraTEKS: Complete Visual Component Showcase & Video Tour</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700;800&family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@700;800;900&family=JetBrains+Mono:wght@500;700&family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #090e0c;
+      --panel-bg: #121a16;
+      --card-bg: rgba(22, 34, 29, 0.9);
+      --card-border: rgba(88, 214, 141, 0.25);
+      --terracotta: #d96245;
+      --terracotta-dark: #a64b38;
+      --forest-green: #244230;
+      --sage-green: #4a6b4b;
+      --emerald-glow: #2ecc71;
+      --pechita-gold: #f5b041;
+      --cyan-bright: #00d2d3;
+      --text-main: #f0f7f4;
+      --text-sub: #b2c9be;
+      --text-muted: #71887e;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Inter', -apple-system, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px;
+      overflow-x: hidden;
+    }
+
+    /* Container Header */
+    .master-header {
+      width: 100%;
+      max-width: 1240px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .master-title {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--emerald-glow);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .timing-toggle-group {
+      display: flex;
+      background: #192420;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 30px;
+      padding: 4px;
+      gap: 4px;
+    }
+
+    .btn-toggle {
+      background: transparent;
+      border: none;
+      color: var(--text-sub);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-toggle.active {
+      background: var(--emerald-glow);
+      color: #090e0c;
+      box-shadow: 0 2px 10px rgba(46, 204, 113, 0.4);
+    }
+
+    /* Main Showcase Video Frame */
+    .showcase-stage {
+      width: 100%;
+      max-width: 1240px;
+      height: 680px;
+      background: #0f1613;
+      border: 2px solid var(--card-border);
+      border-radius: 24px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.8), 0 0 60px rgba(46, 204, 113, 0.08);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Ambient Background Gradients */
+    .ambient-glow {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(46, 204, 113, 0.12) 0%, rgba(0,0,0,0) 70%);
+      top: -200px;
+      right: -100px;
+      border-radius: 50%;
+      pointer-events: none;
+      filter: blur(50px);
+    }
+
+    /* Slide Screens */
+    .slide-viewport {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      padding: 36px 48px;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 36px;
+      align-items: center;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateX(40px) scale(0.98);
+      transition: all 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .slide.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0) scale(1);
+    }
+
+    /* Left Column: Visual Mockup / Photo / Graphic */
+    .slide-visual {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .mockup-frame {
+      width: 100%;
+      height: 480px;
+      background: #18231e;
+      border: 2px solid rgba(255,255,255,0.15);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .mockup-top-bar {
+      height: 32px;
+      background: #111a16;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      gap: 6px;
+    }
+
+    .dot { width: 9px; height: 9px; border-radius: 50%; }
+    .dot-red { background: #ff5f56; }
+    .dot-yellow { background: #ffbd2e; }
+    .dot-green { background: #27c93f; }
+    .mockup-url {
+      flex: 1;
+      text-align: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+    }
+
+    .mockup-body {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      background: #ffffff;
+      color: #1a1a1a;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Component 1: DAG Graph Mockup */
+    .graph-mockup {
+      background: #0d1512;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 20px;
+    }
+
+    /* Component 2: Field Guide Mockup */
+    .guide-mockup {
+      background: #fbf9f4;
+      border-left: 18px solid #244230;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* Component 3: Student Journal Mockup */
+    .journal-mockup {
+      background: #fffdf9;
+      border: 2px dashed #b5a494;
+      padding: 20px;
+      margin: 12px;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* Component 4: Brochure Mockup */
+    .brochure-mockup {
+      background: #ffffff;
+      padding: 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    /* Component 5: Pricing Matrix Mockup */
+    .pricing-mockup {
+      background: #141f1a;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      color: #ffffff;
+    }
+
+    /* Right Column: Narrative & Meta */
+    .slide-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 18px;
+    }
+
+    .slide-category {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--pechita-gold);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .slide-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.1rem;
+      font-weight: 900;
+      line-height: 1.15;
+      color: #ffffff;
+    }
+
+    .slide-desc {
+      font-size: 1.05rem;
+      line-height: 1.55;
+      color: var(--text-sub);
+    }
+
+    .feature-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .feature-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: rgba(46, 204, 113, 0.2);
+      color: var(--emerald-glow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 900;
+    }
+
+    .btn-inspect {
+      align-self: flex-start;
+      margin-top: 6px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #ffffff;
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .btn-inspect:hover {
+      background: var(--emerald-glow);
+      color: #090e0c;
+      border-color: var(--emerald-glow);
+    }
+
+    /* Teleprompter Text Banner */
+    .teleprompter-strip {
+      background: rgba(5, 8, 7, 0.92);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 14px 36px;
+      min-height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .teleprompter-voice {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #ffffff;
+      line-height: 1.45;
+      max-width: 1040px;
+    }
+
+    .teleprompter-voice strong {
+      color: var(--pechita-gold);
+    }
+
+    /* Bottom Video Control Dock */
+    .control-dock {
+      background: #0b110e;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 12px 28px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .btn-play-dock {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--emerald-glow);
+      color: #090e0c;
+      border: none;
+      font-size: 1.1rem;
+      font-weight: 900;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s;
+    }
+
+    .btn-play-dock:hover {
+      transform: scale(1.08);
+    }
+
+    .time-tracker {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.88rem;
+      color: var(--text-sub);
+      min-width: 100px;
+    }
+
+    .scrubber-track {
+      flex: 1;
+      height: 8px;
+      background: rgba(255,255,255,0.12);
+      border-radius: 4px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .scrubber-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--terracotta), var(--pechita-gold), var(--emerald-glow));
+      border-radius: 4px;
+      transition: width 0.1s linear;
+    }
+
+    .dock-thumbnails {
+      display: flex;
+      gap: 6px;
+    }
+
+    .thumb-btn {
+      padding: 4px 10px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 6px;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .thumb-btn.active {
+      background: var(--emerald-glow);
+      color: #090e0c;
+      border-color: var(--emerald-glow);
+      font-weight: 900;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Master Header -->
+  <div class="master-header">
+    <div class="master-title">
+      <span>🌳</span> SombraTEKS Master Visual Showcase
+    </div>
+    <div class="timing-toggle-group">
+      <button class="btn-toggle" id="btn90s">⚡ 90-Sec Executive Pitch</button>
+      <button class="btn-toggle active" id="btn180s">🎬 3-Min Full Visual Tour</button>
+    </div>
+  </div>
+
+  <!-- Showcase Stage -->
+  <div class="showcase-stage" id="showcaseStage">
+    <div class="ambient-glow"></div>
+
+    <div class="slide-viewport">
+
+      <!-- SLIDE 1: The Problem & Thermal Comparison -->
+      <div class="slide active" id="slide0">
+        <div class="slide-visual">
+          <div class="mockup-frame">
+            <div class="mockup-top-bar">
+              <div class="dot dot-red"></div>
+              <div class="dot dot-yellow"></div>
+              <div class="dot dot-green"></div>
+              <div class="mockup-url">coolschools-heat-equity-audit.pdf</div>
+            </div>
+            <div class="mockup-body" style="padding: 20px; background: #141b18; color: #fff; justify-content: space-around;">
+              <div style="text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">
+                <div style="font-size: 0.8rem; letter-spacing: 2px; color: #f5b041; font-weight: 700;">SOUTH TEXAS SCHOOLYARD THERMAL AUDIT</div>
+                <div style="font-size: 1.1rem; font-weight: 800; margin-top: 4px;">Surface Temperature vs. Active Living Canopy</div>
+              </div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+                <div style="background: rgba(166, 75, 56, 0.25); border: 2px solid #d96245; border-radius: 10px; padding: 16px; text-align: center;">
+                  <div style="font-size: 0.75rem; font-weight: 700; color: #ff7657;">UNSHADED ASPHALT</div>
+                  <div style="font-family: 'Fredoka', sans-serif; font-size: 2.8rem; font-weight: 800; color: #ff5252; margin: 6px 0;">135°F</div>
+                  <div style="font-size: 0.7rem; color: #ffb8b8;">Exceeds safe pediatric burn threshold (104°F)</div>
+                </div>
+                <div style="background: rgba(46, 204, 113, 0.2); border: 2px solid #2ecc71; border-radius: 10px; padding: 16px; text-align: center;">
+                  <div style="font-size: 0.75rem; font-weight: 700; color: #58d68d;">MESQUITE CANOPY SHADE</div>
+                  <div style="font-family: 'Fredoka', sans-serif; font-size: 2.8rem; font-weight: 800; color: #2ecc71; margin: 6px 0;">85°F</div>
+                  <div style="font-size: 0.7rem; color: #a9dfbf;">-50°F active phase-change evaporative cooling</div>
+                </div>
+              </div>
+              <div style="background: rgba(255,255,255,0.05); padding: 8px 12px; border-radius: 6px; font-size: 0.75rem; text-align: center; color: #a0b2a6;">
+                Texas Teachers Face <strong>14,000+ Discrete TEKS Standards</strong> with zero time for traditional disconnected field trips.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="slide-info">
+          <div class="slide-category">COMPONENT 01 &bull; THE PROBLEM & ANCHOR</div>
+          <h2 class="slide-title">Extreme Heat & Pacing Fatigue</h2>
+          <p class="slide-desc">
+            In South Texas, unshaded playgrounds easily reach <strong>135°F</strong> while teachers struggle under the weight of 14,000 state standards. SombraTEKS turns campus trees into the solution.
+          </p>
+          <div class="feature-list">
+            <div class="feature-item"><span class="feature-icon">✓</span> 50°F Surface Temperature Drop under Native Shade</div>
+            <div class="feature-item"><span class="feature-icon">✓</span> Solves Science 5.12B Latent Heat & Health 5.3A Heat Safety</div>
+            <div class="feature-item"><span class="feature-icon">✓</span> Zero Transportation Costs — On-Campus Microforests</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 2: The Multiplier Diagram -->
+      <div class="slide" id="slide1">
+        <div class="slide-visual">
+          <div class="mockup-frame">
+            <div class="mockup-top-bar">
+              <div class="dot dot-red"></div>
+              <div class="dot dot-yellow"></div>
+              <div class="dot dot-green"></div>
+              <div class="mockup-url">living-campus-multiplier.svg</div>
+            </div>
+            <div class="mockup-body" style="padding: 16px; background: #0c1410; color: #fff; justify-content: space-between;">
+              <div style="text-align: center; background: #192a20; padding: 10px; border-radius: 8px; border: 1px solid #2ecc71;">
+                <div style="font-size: 0.8rem; color: #58d68d; font-weight: 700;">ONE 45-MINUTE OUTDOOR LAB</div>
+                <div style="font-size: 1.15rem; font-weight: 800;">7–10 State TEKS Covered Simultaneously</div>
+              </div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.75rem;">
+                <div style="background: rgba(36,66,48,0.6); padding: 8px; border-left: 3px solid #2ecc71; border-radius: 4px;">
+                  <strong style="color: #2ecc71;">🌿 Science 5.12B:</strong> Transpiration & Stomata
+                </div>
+                <div style="background: rgba(28,50,75,0.6); padding: 8px; border-left: 3px solid #3498db; border-radius: 4px;">
+                  <strong style="color: #3498db;">📐 Math 5.4H:</strong> Pacing & Shadow Area A=πr²
+                </div>
+                <div style="background: rgba(105,82,19,0.6); padding: 8px; border-left: 3px solid #f1c40f; border-radius: 4px;">
+                  <strong style="color: #f1c40f;">🪵 Soc Studies 4.1A:</strong> Mesquite Ethnobotany
+                </div>
+                <div style="background: rgba(94,40,79,0.6); padding: 8px; border-left: 3px solid #e056fd; border-radius: 4px;">
+                  <strong style="color: #e056fd;">📚 ELAR 5.11A:</strong> Nature Journaling & Verse
+                </div>
+                <div style="background: rgba(160,78,34,0.6); padding: 8px; border-left: 3px solid #e67e22; border-radius: 4px;">
+                  <strong style="color: #e67e22;">🎨 Art 5.1B:</strong> Komorebi Light & Shadow Values
+                </div>
+                <div style="background: rgba(140,29,29,0.6); padding: 8px; border-left: 3px solid #e74c3c; border-radius: 4px;">
+                  <strong style="color: #e74c3c;">❤️ Health 5.3A:</strong> Heat Safety & Thermography
+                </div>
+              </div>
+              <div style="text-align: center; color: #f5b041; font-weight: 700; font-size: 0.8rem;">
+                Multiplies Instructional Time & Relieves Pacing Stress
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="slide-info">
+          <div class="slide-category">COMPONENT 02 &bull; THE CORE FORMULA</div>
+          <h2 class="slide-title">The Living Campus Multiplier</h2>
+          <p class="slide-desc">
+            Instead of teaching biology in isolation, each lesson integrates 6 disciplines at once. In a single class period under a tree, teachers achieve cross-curricular mastery without adding extra instructional days.
+          </p>
+          <div class="feature-list">
+            <div class="feature-item"><span class="feature-icon">✓</span> Interdisciplinary Science, Math, History, Art & Writing</div>
+            <div class="feature-item"><span class="feature-icon">✓</span> Real-World STEM Investigations with Standard Lab Tools</div>
+            <div class="feature-item"><span class="feature-icon">✓</span> Formally Aligned with 2024–2025 Revised 3D TEKS</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 3: The 52-Node Master DAG Knowledge Graph -->
+      <div class="slide" id="slide2">
+        <div class="slide-visual">
+          <div class="mockup-frame">
+            <div class="mockup-top-bar">
+              <div class="dot dot-red"></div>
+              <div class="dot dot-yellow"></div>
+              <div class="dot dot-green"></div>
+              <div class="mockup-url">http://localhost:8000/index.html (Interactive Graph)</div>
+            </div>
+            <div class="mockup-body graph-mockup">
+              <!-- Mockup of Interactive Cytoscape Nodes -->
+              <svg width="100%" height="100%" viewBox="0 0 400 300">
+                <!-- Edges -->
+                <line x1="60" y1="70" x2="140" y2="130" stroke="#244230" stroke-width="3" />
+                <line x1="60" y1="220" x2="140" y2="130" stroke="#244230" stroke-width="3" />
+                <line x1="140" y1="130" x2="240" y2="90" stroke="#2ecc71" stroke-width="3" />
+                <line x1="140" y1="130" x2="240" y2="200" stroke="#244230" stroke-width="3" />
+                <line x1="240" y1="90" x2="340" y2="150" stroke="#2ecc71" stroke-width="3" />
+                <line x1="240" y1="200" x2="340" y2="150" stroke="#2ecc71" stroke-width="3" />
+
+                <!-- Nodes -->
+                <!-- K-2 -->
+                <circle cx="60" cy="70" r="18" fill="#1b2a22" stroke="#2ecc71" stroke-width="2" />
+                <text x="60" y="74" fill="#fff" font-size="9" text-anchor="middle" font-weight="bold">K-2</text>
+                <circle cx="60" cy="220" r="18" fill="#1b2a22" stroke="#2ecc71" stroke-width="2" />
+                <text x="60" y="224" fill="#fff" font-size="9" text-anchor="middle" font-weight="bold">K.1</text>
+
+                <!-- Grade 3-5 -->
+                <circle cx="140" cy="130" r="22" fill="#244230" stroke="#f5b041" stroke-width="3" />
+                <text x="140" y="134" fill="#f5b041" font-size="10" text-anchor="middle" font-weight="bold">Mod 1</text>
+
+                <!-- Grade 6-8 -->
+                <circle cx="240" cy="90" r="20" fill="#1b2a22" stroke="#3498db" stroke-width="2" />
+                <text x="240" y="94" fill="#fff" font-size="9" text-anchor="middle" font-weight="bold">MS.13</text>
+                <circle cx="240" cy="200" r="20" fill="#1b2a22" stroke="#3498db" stroke-width="2" />
+                <text x="240" y="204" fill="#fff" font-size="9" text-anchor="middle" font-weight="bold">MS.20</text>
+
+                <!-- High School / Agroecology -->
+                <circle cx="340" cy="150" r="24" fill="#142a1f" stroke="#2ecc71" stroke-width="3" />
+                <text x="340" y="154" fill="#2ecc71" font-size="10" text-anchor="middle" font-weight="bold">HS.45</text>
+              </svg>
+              <div style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.7); padding: 4px 10px; border-radius: 4px; font-size: 0.7rem; color: #58d68d;">
+                52 Nodes &bull; 51 Progression Edges &bull; 0 Cycles
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="slide-info">
+          <div class="slide-category">COMPONENT 03 &bull; KNOWLEDGE ARCHITECTURE</div>
+          <h2 class="slide-title">52-Node Master DAG Graph</h2>
+          <p class="slide-desc">
+            A mathematically rigorous Directed Acyclic Graph (DAG) with full vertical articulation. Every module has clear prerequisites, learning outcomes, and automated state management.
+          </p>
+          <div class="feature-list">
+            <div class="feature-item"><span class="feature-icon">✓</span> 4 Seasonal Quarters: Fall, Winter, Spring & Heat Equity</div>
+            <div class="feature-item"><span class="feature-icon">✓</span> Interactive Cytoscape Canvas with Live Filtering</div>
+            <div class="feature-item"><span class="feature-icon">✓</span> 100% Passed Mechanical Validation Gate</div>
+          </div>
+          <a href="file:///Users/dr3/Documents/Antigravity%20Designs/work/teks-forest-literacy-agroecology/index.html" target="_blank" class="btn-inspect">Open Live Graph ↗</a>
+        </div>
+      </div>
+
+      <!-- SLIDE 4: SombraTEKS Field & Educator Guide -->
+      <div class="slide" id="slide3">
+        <div class="slide-visual">
+          <div class="mockup-frame">
+            <div class="mockup-top-bar">
+              <div class="dot dot-red"></div>
+              <div class="dot dot-yellow"></div>
+              <div class="dot dot-green"></div>
+              <div class="mockup-url">sombrateks_field_guide.html (Educator Manual)</div>
+            </div>
+            <div class="mockup-body guide-mockup">
+              <div style="border-bottom: 2px solid #a64b38; padding-bottom: 8px; display: flex; justify-content: space-between; align-items: baseline;">
+                <div>
+                  <div style="font-family: 'Fredoka', sans-serif; font-size: 1.25rem; font-weight: 800; color: #244230;">SombraTEKS Field Guide</div>
+                  <div style="font-size: 0.75rem; color: #a64b38; font-weight: 700; text-transform: uppercase;">UTRGV Agroecology Edition 2024</div>
+                </div>
+                <div style="font-size: 0.7rem; background: #e8e2d4; padding: 2px 8px; border-radius: 4px; font-weight: 700;">VOL. 01</div>
+              </div>
+              <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 10px; font-size: 0.72rem; color: #2a221b;">
+                <div style="background: #ffffff; padding: 10px; border-radius: 6px; border: 1px solid #d4cbaf;">
+                  <strong style="color: #244230;">🌿 Native Canopy Profiles:</strong><br>
+                  &bull; Honey Mesquite (<em>Prosopis glandulosa</em>)<br>
+                  &bull; Cedar Elm (<em>Ulmus crassifolia</em>)<br>
+                  &bull; Mexican Olive (<em>Cordia boissieri</em>)<br>
+                  &bull; Anacua (<em>Ehretia anacua</em>)
+                </div>
+                <div style="background: #ffffff; padding: 10px; border-radius: 6px; border: 1px solid #d4cbaf;">
+                  <strong style="color: #a64b38;">🎯 Decision Flowchart:</strong><br>
+                  Visual keys for stomatal density, crown radius geometry, and soil organic matter.
+                </div>
+              </div>
+              <div style="background: #244230; color: #fff; padding: 8px 12px; border-radius: 6px; font-size: 0.75rem; display: flex; justify-content: space-between;">
+                <span>Bilingual Spanish / English</span>
+                <span>Includes Full Pacing Times</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="slide-info">
+          <div class="slide-category">COMPONENT 04 &bull; PUBLICATION ARTIFACT</div>
+          <h2 class="slide-title">SombraTEKS Field Guide</h2>
+          <p class="slide-desc">
+            Designed as an exact visual and philosophical sibling to Dr. Racelis's <strong>UTRGV Agroecology Grower’s Guide</strong>. Uses rustic display fonts, vertical spine banners, and practical field routines.
+          </p>
+          <div class="feature-list">
+            <div class="feature-item"><span class="feature-icon">✓</span> High-Yield Native Canopy Species of the RGV</div>
+            <div class="feature-item"><span class="feature-icon">✓</span> Sensory Decision Flowcharts for Outdoor Classes</div>
+            <div class="feature-item"><span class="feature-icon">✓</span> Bilingual Field Vocabulary & Safety Protocols</div>
+          </div>
+          <a href="file:///Users/dr3/Documents/Antigravity%20Designs/work/teks-forest-literacy-agroecology/sombrateks_field_guide.html" target="_blank" class="btn-inspect">Open Field Guide ↗</a>
+        </div>
+      </div>
+
+      <!-- SLIDE 5: Student Field Journal & Worksheets -->
+      <div class="slide" id="slide4">
+        <div class="slide-visual">
+          <div class="mockup-frame">
+            <div class="mockup-top-bar">
+              <div class="dot dot-red"></div>
+              <div class="dot dot-yellow"></div>
+              <div class="dot dot-green"></div>
+              <div class="mockup-url">sombrateks_student_journal_edition.html</div>
+            </div>
+            <div class="mockup-body journal-mockup">
+              <div style="text-align: center; border-bottom: 1px dashed #a64b38; padding-bottom: 6px;">
+                <div style="font-family: 'Fredoka', sans-serif; font-size: 1.1rem; color: #244230; font-weight: 700;">STUDENT OUTDOOR FIELD JOURNAL</div>
+                <div style="font-size: 0.7rem; color: #5a4f46;">Name: ______________________ Date: ___________ Tree ID: #14</div>
+              </div>
+              <div style="background: #ffffff; border: 1px solid #d4cbaf; border-radius: 4px; padding: 8px; font-size: 0.72rem;">
+                <strong style="color: #244230;">[ DATA TABLE: 6-Zone Thermal Transect ]</strong>
+                <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 4px; margin-top: 4px; border-top: 1px solid #eee; padding-top: 4px;">
+                  <span>1. Unshaded Blacktop</span><span>136.2°F</span><span style="color:#e74c3c;">Danger</span>
+                  <span>2. Shaded Mesquite Soil</span><span>84.8°F</span><span style="color:#27ae60;">Safe</span>
+                </div>
+              </div>
+              <div style="background: #ffffff; border: 1px dashed #b5a494; height: 90px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; color: #888;">
+                [ Botanical Sketch Zone & Komorebi Light Values ]
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="slide-info">
+          <div class="slide-category">COMPONENT 05 &bull; STUDENT WORKBOOK</div>
+          <h2 class="slide-title">Student Field Journal Edition</h2>
+          <p class="slide-desc">
+            A dedicated, clip-board ready student workbook featuring bilingual inquiry prompts, data recording tables, botanical sketch zones, and Claim-Evidence-Reasoning (CER) writing scaffolds.
+          </p>
+          <div class="feature-list">
+            <div class="feature-item"><span class="feature-icon">✓</span> Multi-Trial Infrared Temperature Capture Tables</div>
+            <div class="feature-item"><span class="feature-icon">✓</span> Step-Pace Shadow Geometry Calculation Workspaces</div>
+            <div class="feature-item"><span class="feature-icon">✓</span> STAAR 2.0 Formative Assessment Prompts</div>
+          </div>
+          <a href="file:///Users/dr3/Documents/Antigravity%20Designs/work/teks-forest-literacy-agroecology/sombrateks_student_journal_edition.html" target="_blank" class="btn-inspect">Open Student Journal ↗</a>
+        </div>
+      </div>
+
+      <!-- SLIDE 6: District Pricing & Regional Scale -->
+      <div class="slide" id="slide5">
+        <div class="slide-visual">
+          <div class="mockup-frame">
+            <div class="mockup-top-bar">
+              <div class="dot dot-red"></div>
+              <div class="dot dot-yellow"></div>
+              <div class="dot dot-green"></div>
+              <div class="mockup-url">docs/EXECUTIVE_MEETING_PORTFOLIO_RACELIS.md</div>
+            </div>
+            <div class="mockup-body pricing-mockup">
+              <div style="font-size: 0.8rem; letter-spacing: 1.5px; color: #f5b041; font-weight: 700;">REGIONAL DISTRICT ROLLOUT TIERS</div>
+              <div style="display: flex; flex-direction: column; gap: 8px;">
+                <div style="background: rgba(46, 204, 113, 0.15); border: 1px solid #2ecc71; border-radius: 8px; padding: 10px; display: flex; justify-content: space-between; align-items: center;">
+                  <div>
+                    <div style="font-weight: 800; font-size: 0.95rem;">Campus Starter Pack</div>
+                    <div style="font-size: 0.7rem; color: #a0d8b3;">10 IR Guns, Calipers, 50 Journals, Teacher Cert</div>
+                  </div>
+                  <div style="font-family: 'Fredoka', sans-serif; font-size: 1.5rem; font-weight: 800; color: #2ecc71;">$4,950</div>
+                </div>
+                <div style="background: rgba(245, 176, 65, 0.15); border: 1px solid #f5b041; border-radius: 8px; padding: 10px; display: flex; justify-content: space-between; align-items: center;">
+                  <div>
+                    <div style="font-weight: 800; font-size: 0.95rem;">Donna ISD Cohort (22 Campuses)</div>
+                    <div style="font-size: 0.7rem; color: #f5d48a;">Full district implementation + UTRGV site audits</div>
+                  </div>
+                  <div style="font-family: 'Fredoka', sans-serif; font-size: 1.5rem; font-weight: 800; color: #f5b041;">$108.9K</div>
+                </div>
+                <div style="background: rgba(0, 210, 211, 0.15); border: 1px solid #00d2d3; border-radius: 8px; padding: 10px; display: flex; justify-content: space-between; align-items: center;">
+                  <div>
+                    <div style="font-weight: 800; font-size: 0.95rem;">Region One Scale (38 Districts)</div>
+                    <div style="font-size: 0.7rem; color: #a0f0f1;">USDA NIFA & Perkins V grant-funded scale</div>
+                  </div>
+                  <div style="font-family: 'Fredoka', sans-serif; font-size: 1.5rem; font-weight: 800; color: #00d2d3;">$1.98M</div>
+                </div>
+              </div>
+              <div style="font-size: 0.72rem; color: #a0b2a6; text-align: center;">
+                100% Fundable via <strong>Title I Part A &bull; Title IV Part A &bull; USDA Agroecology Grants</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="slide-info">
+          <div class="slide-category">COMPONENT 06 &bull; ECONOMICS & PROCUREMENT</div>
+          <h2 class="slide-title">Turnkey Financial Model</h2>
+          <p class="slide-desc">
+            A friction-free procurement package designed for immediate school board and grant approval. Requires zero local tax increases and aligns directly with federal Title I and USDA NIFA funding streams.
+          </p>
+          <div class="feature-list">
+            <div class="feature-item"><span class="feature-icon">✓</span> Turnkey $4,950 Campus Starter Package</div>
+            <div class="feature-item"><span class="feature-icon">✓</span> Pilot Ready: Donna ISD 22-Campus Rollout</div>
+            <div class="feature-item"><span class="feature-icon">✓</span> Co-Branded UTRGV Agroecology / Cool Schools Partnership</div>
+          </div>
+          <a href="file:///Users/dr3/Documents/Antigravity%20Designs/work/teks-forest-literacy-agroecology/docs/EXECUTIVE_MEETING_PORTFOLIO_RACELIS.md" target="_blank" class="btn-inspect">Open Executive Portfolio ↗</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Teleprompter Strip -->
+    <div class="teleprompter-strip">
+      <div class="teleprompter-voice" id="teleprompterVoice">
+        Loading presentation script...
+      </div>
+    </div>
+
+    <!-- Control Dock -->
+    <div class="control-dock">
+      <button class="btn-play-dock" id="btnPlayDock">&#9658;</button>
+      <div class="time-tracker" id="timeTracker">0:00 / 3:00</div>
+      <div class="scrubber-track" id="scrubberTrack">
+        <div class="scrubber-fill" id="scrubberFill"></div>
+      </div>
+      <div class="dock-thumbnails">
+        <button class="thumb-btn active" data-idx="0">1. Crisis</button>
+        <button class="thumb-btn" data-idx="1">2. Multiplier</button>
+        <button class="thumb-btn" data-idx="2">3. DAG Graph</button>
+        <button class="thumb-btn" data-idx="3">4. Field Guide</button>
+        <button class="thumb-btn" data-idx="4">5. Journal</button>
+        <button class="thumb-btn" data-idx="5">6. Economics</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let mode = '180s'; // '90s' or '180s'
+    let totalDuration = 180; // 3 minutes default
+
+    const scripts = {
+      '90s': [
+        { start: 0, end: 15, text: "Dr. Racelis, Texas teachers face <strong>14,000+ state TEKS</strong> while students play on unshaded asphalt hitting <strong>135°F</strong>." },
+        { start: 15, end: 30, text: "We engineered the <strong>Living Campus Multiplier</strong>: one 45-minute lab under a tree knocks out <strong>7 to 10 TEKS simultaneously</strong> across 6 subjects." },
+        { start: 30, end: 48, text: "Our <strong>52-node validated DAG graph</strong> maps all K–12 standards with complete vertical progression across all 4 seasonal quarters." },
+        { start: 48, end: 63, text: "The <strong>SombraTEKS Field Guide</strong> is an exact visual sibling to your UTRGV Agroecology Grower’s Guide, with bilingual keys and flowcharts." },
+        { start: 63, end: 78, text: "Students use clip-board ready <strong>Field Journals</strong> with multi-trial thermal data capture, geometry workspaces, and CER rubrics." },
+        { start: 78, end: 90, text: "A turnkey <strong>$4,950 Campus Starter Pack</strong> that scales to Donna ISD and Region One—100% grant fundable. Let's review on Monday." }
+      ],
+      '180s': [
+        { start: 0, end: 30, text: "Dr. Racelis, Texas public school educators face an unprecedented dilemma: covering over <strong>14,000 discrete TEKS standards</strong> while schoolyards in the Rio Grande Valley regularly exceed <strong>135°F</strong> on unshaded asphalt. Traditional curriculum models treat outdoor trees as an afterthought, forcing teachers to choose between standard pacing and outdoor wellness." },
+        { start: 30, end: 60, text: "We transformed this dynamic with the <strong>Living Campus Multiplier</strong>. In a single 45-minute outdoor lab under a native Honey Mesquite or Cedar Elm, students fulfill <strong>7 to 10 TEKS standards simultaneously</strong> across Science, Math, Social Studies, Bilingual Language Arts, Fine Arts, and Health. Trees become living, high-yield learning laboratories." },
+        { start: 60, end: 95, text: "To solve the state's coverage problem, we developed a <strong>52-Module Minimum Set-Cover DAG Knowledge Graph</strong>. Spanning Kindergarten through Grade 12 across 4 seasonal inquiry quarters, this interactive network has passed a 100% mechanical validation gate with 51 vertical progression edges and zero dangling prerequisites." },
+        { start: 95, end: 125, text: "We built the physical curriculum to honor your work: the <strong>SombraTEKS Field & Educator Guide</strong> is an exact visual and structural clone of your UTRGV Agroecology Grower’s Guide. It features rustic typography, vertical spine banners, native RGV species profiles, and tactile sensory decision flowcharts for teachers." },
+        { start: 125, end: 155, text: "For students, we designed the <strong>SombraTEKS Field Journal Edition</strong>. Complete with infrared thermal transect tables, step-pace canopy geometry workspaces ($A = \\pi r^2$), leaf morphology identification keys, and structured Claim-Evidence-Reasoning scientific reporting frames." },
+        { start: 155, end: 180, text: "The economics are turnkey: a <strong>$4,950 Campus Starter Pack</strong> that scales from a $108.9k pilot across Donna ISD's 22 campuses to a $1.98M rollout across Region One's 38 districts—<strong>100% fundable via Title I, Perkins V, and USDA NIFA Agroecology Grants</strong>. Let's launch this partnership together." }
+      ]
+    };
+
+    let currentTime = 0;
+    let isPlaying = false;
+    let timer = null;
+
+    const btnPlayDock = document.getElementById('btnPlayDock');
+    const timeTracker = document.getElementById('timeTracker');
+    const scrubberFill = document.getElementById('scrubberFill');
+    const scrubberTrack = document.getElementById('scrubberTrack');
+    const teleprompterVoice = document.getElementById('teleprompterVoice');
+    const thumbBtns = document.querySelectorAll('.thumb-btn');
+    const slideElements = document.querySelectorAll('.slide');
+    const btn90s = document.getElementById('btn90s');
+    const btn180s = document.getElementById('btn180s');
+
+    function setMode(newMode) {
+      mode = newMode;
+      totalDuration = (mode === '90s') ? 90 : 180;
+      currentTime = 0;
+      if (mode === '90s') {
+        btn90s.classList.add('active');
+        btn180s.classList.remove('active');
+      } else {
+        btn180s.classList.add('active');
+        btn90s.classList.remove('active');
+      }
+      updateUI();
+    }
+
+    btn90s.addEventListener('click', () => setMode('90s'));
+    btn180s.addEventListener('click', () => setMode('180s'));
+
+    function formatTime(sec) {
+      const m = Math.floor(sec / 60);
+      const s = Math.floor(sec % 60);
+      return `${m}:${s < 10 ? '0' : ''}${s}`;
+    }
+
+    function updateUI() {
+      // Scrubber & time
+      const pct = (currentTime / totalDuration) * 100;
+      scrubberFill.style.width = `${pct}%`;
+      timeTracker.textContent = `${formatTime(currentTime)} / ${formatTime(totalDuration)}`;
+
+      // Active slide based on current mode scripts
+      const currentList = scripts[mode];
+      let activeIdx = currentList.findIndex(item => currentTime >= item.start && currentTime < item.end);
+      if (activeIdx === -1 && currentTime >= totalDuration) {
+        activeIdx = currentList.length - 1;
+      }
+
+      slideElements.forEach((s, idx) => {
+        if (idx === activeIdx) {
+          s.classList.add('active');
+        } else {
+          s.classList.remove('active');
+        }
+      });
+
+      thumbBtns.forEach((btn, idx) => {
+        if (idx === activeIdx) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+
+      if (activeIdx >= 0 && activeIdx < currentList.length) {
+        teleprompterVoice.innerHTML = currentList[activeIdx].text;
+      }
+    }
+
+    function togglePlay() {
+      if (isPlaying) {
+        pause();
+      } else {
+        play();
+      }
+    }
+
+    function play() {
+      isPlaying = true;
+      btnPlayDock.innerHTML = '&#10074;&#10074;';
+      if (currentTime >= totalDuration) currentTime = 0;
+      timer = setInterval(() => {
+        currentTime += 0.2;
+        if (currentTime >= totalDuration) {
+          currentTime = totalDuration;
+          pause();
+        }
+        updateUI();
+      }, 200);
+    }
+
+    function pause() {
+      isPlaying = false;
+      btnPlayDock.innerHTML = '&#9658;';
+      clearInterval(timer);
+    }
+
+    function seekTo(sec) {
+      currentTime = Math.max(0, Math.min(sec, totalDuration));
+      updateUI();
+    }
+
+    btnPlayDock.addEventListener('click', togglePlay);
+
+    scrubberTrack.addEventListener('click', (e) => {
+      const rect = scrubberTrack.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const frac = clickX / rect.width;
+      seekTo(frac * totalDuration);
+    });
+
+    thumbBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const idx = parseInt(btn.getAttribute('data-idx'));
+        seekTo(scripts[mode][idx].start);
+      });
+    });
+
+    // Keyboard support
+    document.addEventListener('keydown', (e) => {
+      if (e.code === 'Space') {
+        e.preventDefault();
+        togglePlay();
+      } else if (e.code === 'ArrowRight') {
+        seekTo(currentTime + 5);
+      } else if (e.code === 'ArrowLeft') {
+        seekTo(currentTime - 5);
+      }
+    });
+
+    updateUI();
+    setTimeout(() => {
+      play();
+    }, 600);
+  </script>
+</body>
+</html>
