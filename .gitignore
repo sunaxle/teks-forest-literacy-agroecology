@@ -1,0 +1,4 @@
+.DS_Store
+marine
+*.tmp
+node_modules/
